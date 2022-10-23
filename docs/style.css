@@ -60,3 +60,19 @@ nav li{
 .titulo-centralizado.titulo_gdd{
     padding:  120px 0px 20px; 
 }
+.titulo-centralizado.titulo_h2{
+    margin: 50px 90px 20px 90px;
+    font-style: none; /*retira o itálico*/
+    font-size: 20px /*tamanho da fonte*/
+}
+
+.titulo-conteudo-gdd{
+    margin: 40px 90px 25px 90px; /*margem de 30px no topo, 90px nos lados e 0px para baixo*/
+}
+
+.conteudo-gdd p {
+    margin: 10px 140px 15px; /*margem de 30px no topo, 0px nos lados e 0px para baixo*/
+    text-align: justify; /*deixa o texto justificado*/
+    font-size: 16px; /*tamanho da fonte*/
+    line-height: 1.5; /*espaçamento entre as linhas*/
+}
