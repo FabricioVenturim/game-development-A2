@@ -57,22 +57,56 @@ nav li{
     font-size: 30px /*tamanho da fonte*/
 }
 
-.titulo-centralizado.titulo_gdd{
-    padding:  120px 0px 20px; 
-}
+
 .titulo-centralizado.titulo_h2{
     margin: 50px 90px 20px 90px;
     font-style: none; /*retira o itálico*/
     font-size: 20px /*tamanho da fonte*/
 }
 
+.titulo-centralizado.titulo_gdd{
+    padding:  120px 0px 20px; 
+}
+
 .titulo-conteudo-gdd{
-    margin: 40px 90px 25px 90px; /*margem de 30px no topo, 90px nos lados e 0px para baixo*/
+    padding:  20px 0px 20px; 
+    font-size: 18px;
+}
+
+.conteudo-gdd {
+    margin: 10px 110px 15px; /*margem de 10px no topo, 90px nos lados e 15px para baixo*/
 }
 
 .conteudo-gdd p {
-    margin: 10px 140px 15px; /*margem de 30px no topo, 0px nos lados e 0px para baixo*/
+    margin: 10px 40px 10px; /*margem de 10px no topo, 40px nos lados e 15px para baixo*/
     text-align: justify; /*deixa o texto justificado*/
-    font-size: 16px; /*tamanho da fonte*/
+    font-size: 17px; /*tamanho da fonte*/
     line-height: 1.5; /*espaçamento entre as linhas*/
+}
+
+.conteudo-gdd ul {
+    margin: 10px 75px 15px; /*margem de 30px no topo, 175px nos lados e 15 px para baixo*/
+    text-align: justify; /*deixa o texto justificado*/
+    font-size: 17px; /*tamanho da fonte*/
+    line-height: 1.5; /*espaçamento entre as linhas*/
+}
+
+.img_animacao{
+    width: 125px; /*toda largura da página*/
+}
+
+
+.container{
+    display: flex; /*Exibe os elementos como um contêiner flexível, para que todos fiquem um ao lado do outro*/
+    justify-content: space-around; /*Alinhar os itens flexíveis no centro do contêiner*/
+    align-items: center; /*align-items: Alinha os itens na vertical*/ 
+}
+
+.div_imagem{
+    margin-left: 100px;
+}
+
+
+.conteudo-gdd .div_conteudo{
+    margin: 0px 0px 0px;;
 }
