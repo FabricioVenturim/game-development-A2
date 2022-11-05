@@ -1,8 +1,7 @@
 from calendar import c
 import pygame
 from pygame.locals import *
-import os
-import sys
+
 
 
 class Personagem(pygame.sprite.Sprite):
@@ -31,20 +30,33 @@ class Personagem(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         
+        self.direita = True
         self.correr = False
 
-    def fun_correr(self): 
+    def correr_direita(self): 
+        self.direita = True
         self.correr = True
         if self.index_lista < 9:
             self.index_lista = 9
         self.rect.x += 8
 
+    def correr_esquerda(self):
+        self.direita = False
+        self.correr = True
+        if self.index_lista < 9:
+            self.index_lista = 9
+        self.rect.x -= 8
+
     def update(self):
         if self.correr:
-            if self.index_lista > 18:
+            if self.index_lista > 18:   
                 self.index_lista = 9
             self.index_lista += 0.5
             self.image = self.imagens_ninja[int(self.index_lista)]
+            
+            # vira a imagem se o personagem estiver olhando para o outro lado
+            if self.direita == False:
+                self.image = pygame.transform.flip(self.image, True, False)
             self.correr = False
             
         else: 
@@ -52,4 +64,7 @@ class Personagem(pygame.sprite.Sprite):
                 self.index_lista = 0
             self.index_lista += 0.5
             self.image = self.imagens_ninja[int(self.index_lista)]
+            # vira a imagem se o personagem estiver olhando para o outro lado
+            if self.direita == False:
+                self.image = pygame.transform.flip(self.image, True, False)
     

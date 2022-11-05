@@ -29,7 +29,10 @@ while game:
 
 
     if pygame.key.get_pressed()[K_d]:
-        girl.fun_correr() 
+        girl.correr_direita() 
+
+    if pygame.key.get_pressed()[K_a]:
+        girl.correr_esquerda() 
 
     for event in pygame.event.get():
         if event.type == QUIT:
