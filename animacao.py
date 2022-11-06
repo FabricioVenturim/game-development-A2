@@ -27,19 +27,23 @@ while game:
     relogio.tick(30)
     screen.fill((255, 255, 255))
 
-
+    
+    #Eventos de segurar a tecla
     if pygame.key.get_pressed()[K_d]:
-        girl.correr_direita() 
+        girl.correr_direita()
 
     if pygame.key.get_pressed()[K_a]:
         girl.correr_esquerda() 
 
-    if pygame.key.get_pressed()[K_w]:
-        girl.fun_pular()
-
+    #Evetos sem segurar a tecla
     for event in pygame.event.get():
         if event.type == QUIT:
             game = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_w and girl.pular == False:
+                girl.fun_pular()
+        
+    
 
     todas_as_sprites.draw(screen)
     todas_as_sprites.update()

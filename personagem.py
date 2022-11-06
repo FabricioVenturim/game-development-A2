@@ -8,9 +8,9 @@ parado = 0
 pulando = 1
 caindo = 2
 # Define a aceleração da gravidade
-gravidade = 5
+gravidade = 6
 # Define a velocidade inicial no pulo
-velo_pulo = 40
+velo_pulo = 50
 
 class Personagem(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -24,8 +24,8 @@ class Personagem(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.imagens_ninja = []
         # parado
-        for i in range(0, 9):
-            largura_inicial = 10412
+        for i in range(0, 10):
+            largura_inicial = 10180
             img = sprite_sheet.subsurface((largura_inicial + i*232,0), (232,455))
             img = pygame.transform.scale(img, (232/3, 455/3))
             self.imagens_ninja.append(img)
@@ -57,28 +57,35 @@ class Personagem(pygame.sprite.Sprite):
     def correr_direita(self): 
         self.direita = True
         self.correr = True
-        if self.index_lista < 9:
-            self.index_lista = 9
-        self.rect.x += 8
+        if self.index_lista < 10:
+            self.index_lista = 10
+        if self.pular:
+            self.rect.x += 12.5
+        else:
+            self.rect.x += 10
 
     def correr_esquerda(self):
         self.direita = False
         self.correr = True
-        if self.index_lista < 9:
-            self.index_lista = 9
-        self.rect.x -= 8
+        if self.index_lista < 10:
+            self.index_lista = 10
+        if self.pular:
+            self.rect.x -= 12.5
+        else:
+            self.rect.x -= 10
 
     def fun_pular(self):
         self.pular = True
+        self.correr = False
         self.state = 1
-        if self.index_lista < 18:
-            self.index_lista = 18
+        if self.index_lista < 19:
+            self.index_lista = 19
 
   
     def update(self):
-        if self.correr:
-            if self.index_lista > 18:   
-                self.index_lista = 9
+        if self.correr and self.pular == False:
+            if self.index_lista > 19:   
+                self.index_lista = 10
             self.index_lista += 0.5
             self.image = self.imagens_ninja[int(self.index_lista)]
             
@@ -87,11 +94,23 @@ class Personagem(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.image, True, False)
             self.correr = False
 
-        if self.pular:
+        elif self.pular:
+            
+            ####### animação #######
+            if self.index_lista > 28:   
+                self.index_lista = 19
+            self.index_lista += 0.5
+            self.image = self.imagens_ninja[int(self.index_lista)]
+            
+            # vira a imagem se o personagem estiver olhando para o outro lado
+            if self.direita == False:
+                self.image = pygame.transform.flip(self.image, True, False)
+            self.correr = False
+            ########## 
+
             # Atualiza o estado para caindo
             if self.speedy < 0:
                 self.state = 2
-            
            
             if self.state == 1: 
                 self.rect.y -= self.speedy
@@ -109,7 +128,7 @@ class Personagem(pygame.sprite.Sprite):
                 self.pular = False
                 self.state = 0
         else: 
-            if self.index_lista > 8:
+            if self.index_lista > 9:
                 self.index_lista = 0
             self.index_lista += 0.5
             self.image = self.imagens_ninja[int(self.index_lista)]
