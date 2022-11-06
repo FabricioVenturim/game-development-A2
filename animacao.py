@@ -14,7 +14,7 @@ game = True
 ### TESTE ###
 
 todas_as_sprites = pygame.sprite.Group()
-girl = personagem.Personagem(500, 200)
+girl = personagem.Personagem(500, 500)
 todas_as_sprites.add(girl)
 
 ########################
@@ -33,6 +33,9 @@ while game:
 
     if pygame.key.get_pressed()[K_a]:
         girl.correr_esquerda() 
+
+    if pygame.key.get_pressed()[K_w]:
+        girl.fun_pular()
 
     for event in pygame.event.get():
         if event.type == QUIT:
