@@ -10,8 +10,8 @@ w = 1152
 h = 648
 screen = pygame.display.set_mode((w, h))
 game = True
-
-dict_animacoes_boy = {"parado": [0, 232, 455], "correndo": [5940, 363, 455], "pulando": [2325, 362, 483]}
+                            # 0 - 9 parado        # 10 - 19 correr                # 20 - 29 pular                # 30 - 39 atacar           # 40 - 49 voar      
+dict_animacoes_boy = {"parado": [0, 232, 455], "correndo": [5940, 363, 455], "pulando": [2325, 362, 483], "batendo": [19400, 536, 495], "voando": [24787,443, 454]}
 sprites_boy = pygame.sprite.Group()
 boy = personagem.BoyNinja(500, 500, "img/spritesheet_boy.png", dict_animacoes_boy)
 sprites_boy.add(boy)
@@ -43,21 +43,27 @@ while game:
     if pygame.key.get_pressed()[K_LEFT]:
         girl.correr_esquerda()
 
+    
+    
     #Evetos sem segurar a tecla
     for event in pygame.event.get():
         if event.type == QUIT:
             game = False
         if event.type == pygame.KEYDOWN:
-            if event.key == K_w and boy.pular == False:
+            if event.key == K_w and boy.state == 0:
                 boy.fun_pular()
-        if event.type == pygame.KEYDOWN:
+            elif pygame.key.get_pressed()[K_w] and boy.state != 0:
+                boy.fun_planar()
+
             if event.key == K_UP and girl.pular == False:
                 girl.fun_pular()
 
-        if event.type == pygame.KEYDOWN:
             if event.key == K_f:
                 boy.fun_bater()
-    
+
+        if event.type == pygame.KEYUP:
+             if event.key == K_w and boy.pular == False and boy.state != 0:
+                boy.fun_cair()
 
     sprites_boy.draw(screen)
     sprites_boy.update()
