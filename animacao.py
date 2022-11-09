@@ -15,8 +15,8 @@ dict_animacoes_boy = {"parado": [0, 232, 455], "correndo": [5940, 363, 455], "pu
 sprites_boy = pygame.sprite.Group()
 boy = personagem.BoyNinja(500, 500, "img/spritesheet_boy.png", dict_animacoes_boy)
 sprites_boy.add(boy)
-
-dict_animacoes_girl = {"parado": [0, 290, 500], "correndo": [6906, 372, 500], "pulando": [2910, 399, 500]}
+                                # 0 - 9 parado        # 10 - 19 correr                # 20 - 29 pular                # 30 - 39 deslizar
+dict_animacoes_girl = {"parado": [0, 290, 500], "correndo": [6906, 372, 500], "pulando": [2910, 399, 500], "deslizando": [16425, 397, 401], "ataque": [20400, 383, 514]}
 sprites_girl = pygame.sprite.Group()
 girl = personagem.GirlNinja(100, 500, "img/spritesheet_girl.png", dict_animacoes_girl)
 sprites_girl.add(girl)
@@ -34,17 +34,20 @@ while game:
     if pygame.key.get_pressed()[K_d]:
         boy.correr_direita()
 
-    if pygame.key.get_pressed()[K_RIGHT]:
+    elif pygame.key.get_pressed()[K_a]:
+        boy.correr_esquerda()     
+
+    if pygame.key.get_pressed()[K_DOWN]:
+        girl.fun_deslizar()
+
+    elif pygame.key.get_pressed()[K_RIGHT] and girl.deslizar == False:
         girl.correr_direita()
 
-    if pygame.key.get_pressed()[K_a]:
-        boy.correr_esquerda() 
-
-    if pygame.key.get_pressed()[K_LEFT]:
+    elif pygame.key.get_pressed()[K_LEFT] and girl.deslizar == False:
         girl.correr_esquerda()
 
     
-    
+
     #Evetos sem segurar a tecla
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -61,8 +64,11 @@ while game:
             if event.key == K_f:
                 boy.fun_bater()
 
+            if event.key == K_RSHIFT:
+                girl.fun_atirar()
+
         if event.type == pygame.KEYUP:
-             if event.key == K_w and boy.pular == False and boy.state != 0:
+            if event.key == K_w and boy.pular == False and boy.state != 0:
                 boy.fun_cair()
 
     sprites_boy.draw(screen)

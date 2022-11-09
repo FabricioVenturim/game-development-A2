@@ -66,7 +66,7 @@ class Personagem(pygame.sprite.Sprite):
         self.correr = True
         if self.index_lista < 10:
             self.index_lista = 10
-        if self.pular or self.planar:
+        if (self.pular or self.planar):
             self.rect.x += 12.5
         else:
             self.rect.x += 10
@@ -191,7 +191,6 @@ class BoyNinja(Personagem):
 
         # Se bater no chão, para de cair
         if self.rect.y >= self.chao:
-            print("bateu")
             self.rect.y = self.chao
             # Para de cair
             self.aceleracao = self.aceleracao_pulo_inicial
@@ -200,8 +199,7 @@ class BoyNinja(Personagem):
             self.state = 0
 
     def update(self):
-        print(self.aceleracao)
-        # # controle de animação do personagem para cair
+        # controle de animação do personagem para cair
         if self.chao != self.rect.y and self.pular == False and self.planar == False:
             self.cair()
             self.planar = False
@@ -225,7 +223,51 @@ class BoyNinja(Personagem):
 class GirlNinja(Personagem):
     def __init__(self, x, y, img, dict_animacoes):
         super().__init__(x, y, img, dict_animacoes)
-    
+        self.deslizar = False
+        self.atirar = False
+
+    def fun_deslizar(self):
+        self.deslizar = True
+        self.correr = False
+        self.rect.y =  self.chao + 37 #gabiarra para deslizar na altura correta
+        if self.index_lista < 30:
+            self.index_lista = 30
+        if self.direita == False:
+            self.rect.x -= 15
+        else:
+            self.rect.x += 15
+
+    def deslizar_animacao(self):
+        if self.index_lista > 39:   
+            self.index_lista = 30
+            self.deslizar = False
+        self.index_lista += 0.5
+        self.image = self.imagens_ninja[int(self.index_lista)]
+        
+        # vira a imagem se o personagem estiver olhando para o outro lado
+        if self.direita == False:
+            self.image = pygame.transform.flip(self.image, True, False)
+        self.deslizar = False
+        self.rect.y =  self.chao #gabiarra para deslizar na altura correta
+
+    def fun_atirar(self):
+        self.atirar = True
+        self.correr = False
+        if self.index_lista < 40:
+            self.index_lista = 40
+
+    def atirar_animacao(self):
+        if self.index_lista > 49:   
+            self.index_lista = 40
+            self.atirar = False
+        self.index_lista += 0.5
+        self.image = self.imagens_ninja[int(self.index_lista)]
+
+        # vira a imagem se o personagem estiver olhando para o outro lado
+        if self.direita == False:
+            self.image = pygame.transform.flip(self.image, True, False)
+
+
     def update(self):
         # Controle de animação do personagem para correr
         if self.correr and self.pular == False:
@@ -233,6 +275,10 @@ class GirlNinja(Personagem):
         # Controle de animação do personagem para pular
         elif self.pular:
             self.pular_animacao()
+        elif self.deslizar:
+            self.deslizar_animacao()
         # Controle de animação do personagem para parado
+        elif self.atirar:
+            self.atirar_animacao()
         else: 
             self.parado_animacao()
