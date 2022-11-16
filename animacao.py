@@ -2,8 +2,6 @@
 import pygame
 from pygame.locals import *
 import personagem
-import os
-import sys
 
 pygame.init()
 w = 1152
@@ -14,16 +12,21 @@ game = True
 #############
 #Personagens#
 #############
-                            # 0 - 9 parado        # 10 - 19 correr                # 20 - 29 pular                # 30 - 39 atacar           # 40 - 49 voar      
-dict_animacoes_boy = {"parado": [0, 232, 455], "correndo": [5940, 363, 455], "pulando": [2325, 362, 483], "batendo": [19400, 536, 495], "voando": [24787,443, 454]}
+                                  
+dict_animacoes_boy = {"parado": [0, 232, 455, 10], "correndo": [5940, 363, 455, 10], "pulando": [2325, 362, 483, 10], "batendo": [19410, 536, 495, 10], "voando": [24787,443, 454, 10]}
 sprites_boy = pygame.sprite.Group()
 boy = personagem.BoyNinja(500, 500, "img/spritesheet_boy.png", dict_animacoes_boy)
 sprites_boy.add(boy)
-                                # 0 - 9 parado        # 10 - 19 correr                # 20 - 29 pular                # 30 - 39 deslizar
-dict_animacoes_girl = {"parado": [0, 290, 500], "correndo": [6906, 372, 500], "pulando": [2910, 399, 500], "deslizando": [16425, 397, 401], "ataque": [20400, 383, 514]}
+                                
+dict_animacoes_girl = {"parado": [0, 290, 500, 10], "correndo": [6906, 372, 500, 10], "pulando": [2910, 399, 500, 10], "deslizando": [16425, 397, 401, 10], "ataque": [20400, 383, 514, 10]}
 sprites_girl = pygame.sprite.Group()
 girl = personagem.GirlNinja(100, 500, "img/spritesheet_girl.png", dict_animacoes_girl, screen)
 sprites_girl.add(girl)
+
+dict_animacoes_robo= {"parado": [0, 567, 555, 10], "correndo": [5670, 567, 550, 8], "morrendo": [10190 , 562, 519, 10]}
+sprites_robo = pygame.sprite.Group()
+robo = personagem.Robo(100, 600, 500, "img/spritesheet_robo.png", dict_animacoes_robo)
+sprites_robo.add(robo)
 
 
 relogio = pygame.time.Clock()
@@ -34,40 +37,41 @@ while game:
 
     
     #Eventos de segurar a tecla
-    if pygame.key.get_pressed()[K_d]:
+    if pygame.key.get_pressed()[K_d] and boy.bater == False:
         boy.correr_direita()
 
-    elif pygame.key.get_pressed()[K_a]:
+    elif pygame.key.get_pressed()[K_a] and boy.bater == False:
         boy.correr_esquerda()     
 
-    if pygame.key.get_pressed()[K_DOWN]:
+    if pygame.key.get_pressed()[K_DOWN] and girl.pular == False:
         girl.fun_deslizar()
 
-    elif pygame.key.get_pressed()[K_RIGHT] and girl.deslizar == False:
+    elif pygame.key.get_pressed()[K_RIGHT] and girl.atirar == False:
         girl.correr_direita()
 
-    elif pygame.key.get_pressed()[K_LEFT] and girl.deslizar == False:
+    elif pygame.key.get_pressed()[K_LEFT] and girl.atirar == False:
         girl.correr_esquerda()
     
     #Evetos sem segurar a tecla
     for event in pygame.event.get():
         if event.type == QUIT:
             game = False
+            
         if event.type == pygame.KEYDOWN:
-            if event.key == K_w and boy.state == 0:
+            
+            if event.key == K_w and boy.state == 0 and boy.bater == False:
                 boy.fun_pular()
             elif pygame.key.get_pressed()[K_w] and boy.state != 0:
                 boy.fun_planar()
 
-            if event.key == K_UP and girl.pular == False:
-                girl.fun_pular()
-
-            if event.key == K_f:
+            if event.key == K_f and boy.state == 0:         #criar get para state
                 boy.fun_bater()
-
-            if event.key == K_RSHIFT:
+            
+            if event.key == K_RSHIFT and girl.state == 0:
                 girl.fun_atirar()
-                
+            
+            if event.key == K_UP and girl.pular == False and girl.atirar == False:
+                girl.fun_pular()
 
         if event.type == pygame.KEYUP:
             if event.key == K_w and boy.pular == False and boy.state != 0:
@@ -77,5 +81,8 @@ while game:
     sprites_boy.update()
     sprites_girl.draw(screen)
     sprites_girl.update()
+
+    sprites_robo.draw(screen)
+    sprites_robo.update()
 
     pygame.display.flip()
