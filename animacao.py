@@ -3,6 +3,10 @@ import pygame
 from pygame.locals import *
 import personagem
 
+##
+## Aqui eu só fiz o básico para testar as classes de personagem, quando tiver um arquivo main eu arrumo
+##
+
 pygame.init()
 w = 1152
 h = 648
@@ -13,19 +17,19 @@ game = True
 #Personagens#
 #############
                                   
-dict_animacoes_boy = {"parado": [0, 232, 455, 10], "correndo": [5940, 363, 455, 10], "pulando": [2325, 362, 483, 10], "batendo": [19410, 536, 495, 10], "voando": [24787,443, 454, 10]}
+dict_animacoes_boy = {"parado": [0, 232, 455, 10, 2.65], "correndo": [5940, 363, 455, 10, 2.65], "pulando": [2325, 362, 483, 10, 2.65], "batendo": [19410, 536, 495, 10, 2.65], "voando": [24787,443, 454, 10, 2.65]}
 sprites_boy = pygame.sprite.Group()
 boy = personagem.BoyNinja(500, 500, "img/spritesheet_boy.png", dict_animacoes_boy)
 sprites_boy.add(boy)
                                 
-dict_animacoes_girl = {"parado": [0, 290, 500, 10], "correndo": [6906, 372, 500, 10], "pulando": [2910, 399, 500, 10], "deslizando": [16425, 397, 401, 10], "ataque": [20400, 383, 514, 10]}
+dict_animacoes_girl = {"parado": [0, 290, 500, 10, 3], "correndo": [6906, 372, 500, 10, 3], "pulando": [2910, 399, 500, 10, 3], "deslizando": [16425, 397, 401, 10, 3], "ataque": [20400, 383, 514, 10, 3]}
 sprites_girl = pygame.sprite.Group()
 girl = personagem.GirlNinja(100, 500, "img/spritesheet_girl.png", dict_animacoes_girl, screen)
 sprites_girl.add(girl)
 
-dict_animacoes_robo= {"parado": [0, 567, 555, 10], "correndo": [5670, 567, 550, 8], "morrendo": [10190 , 562, 519, 10]}
+dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3], "correndo": [5670, 567, 550, 8, 3], "morrendo": [10190 , 562, 519, 10, 3]}
 sprites_robo = pygame.sprite.Group()
-robo = personagem.Robo(100, 600, 500, "img/spritesheet_robo.png", dict_animacoes_robo)
+robo = personagem.Robo(100, 600, 200, "img/spritesheet_robo.png", dict_animacoes_robo)
 sprites_robo.add(robo)
 
 
@@ -72,6 +76,10 @@ while game:
             
             if event.key == K_UP and girl.pular == False and girl.atirar == False:
                 girl.fun_pular()
+            
+            #teste 
+            if event.key == K_g:
+                robo.test_morte()
 
         if event.type == pygame.KEYUP:
             if event.key == K_w and boy.pular == False and boy.state != 0:
