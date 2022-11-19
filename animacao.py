@@ -47,19 +47,19 @@ while game:
     
     #Eventos de segurar a tecla
     if pygame.key.get_pressed()[K_d] and boy.bater == False:
-        boy.correr_direita()
+        boy.fun_correr_direita()
 
     elif pygame.key.get_pressed()[K_a] and boy.bater == False:
-        boy.correr_esquerda()     
+        boy.fun_correr_esquerda()     
 
-    if pygame.key.get_pressed()[K_DOWN] and girl.pular == False:
+    if pygame.key.get_pressed()[K_DOWN] and girl.state == 0:
         girl.fun_deslizar()
 
     elif pygame.key.get_pressed()[K_RIGHT] and girl.atirar == False:
-        girl.correr_direita()
+        girl.fun_correr_direita()
 
     elif pygame.key.get_pressed()[K_LEFT] and girl.atirar == False:
-        girl.correr_esquerda()
+        girl.fun_correr_esquerda()
     
     #Evetos sem segurar a tecla
     for event in pygame.event.get():
@@ -79,7 +79,7 @@ while game:
             if event.key == K_RSHIFT and girl.state == 0:
                 girl.fun_atirar()
             
-            if event.key == K_UP and girl.pular == False and girl.atirar == False:
+            if event.key == K_UP and girl.state == 0 and girl.atirar == False:
                 girl.fun_pular()
             
             #teste 
@@ -87,15 +87,16 @@ while game:
                 robo.fun_morrer()
 
         if event.type == pygame.KEYUP:
-            if event.key == K_w and boy.pular == False and boy.state != 0:
+            if event.key == K_w and boy.state != 1 and boy.state != 0:
                 boy.fun_cair()
 
     ###### TUDO TESTE PARA COLISÃO, QUEM FICOU COM O CENÁRIO VER COMO ISSO FUNCIONA CERTINHO######
+    ###### COMO AINDA NÃO SEI COMO VAI FUNCIONAR O CENÁRIO, NÃO SEI COMO FAZER A COLISÃO ######
 
     # Colisão entre personagens são aqui ou no arquivo de personagem?
     col1= boy.rect.colliderect(robo.rect) 
     col2= girl.kunai.rect.colliderect(robo.rect)
-    if (col1 and boy.bater == True) or col2:
+    if ((col1 and boy.bater == True) or col2) and robo.vivo == True:
         robo.fun_morrer()
 
 
@@ -108,7 +109,7 @@ while game:
         if col_boy and boy.state != 1:
             boy.state = 0
             break
-        elif boy.pular == False:
+        elif boy.state != 1:
             boy.state = 2
     #girl
     for chao in list_chao:
@@ -116,7 +117,7 @@ while game:
         if col_girl and girl.state != 1:
             girl.state = 0
             break
-        elif girl.pular == False:
+        elif girl.state != 1:
             girl.state = 2
     #robo
     for chao in list_chao:
@@ -124,7 +125,7 @@ while game:
         if col_robo and robo.state != 1:
             robo.state = 0
             break
-        elif robo.pular == False:
+        elif robo.state != 1:
             robo.state = 2
 
     #kunai
@@ -133,6 +134,7 @@ while game:
         if col_kunai:
            girl.kunai.atirar = False
            break
+
 
     # Parte importante: atualiza os sprites
     sprites_boy.draw(screen)
