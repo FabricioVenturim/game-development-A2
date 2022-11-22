@@ -1,13 +1,13 @@
-from calendar import c
 import pygame
 from pygame.locals import *
 
 
 class Personagem(pygame.sprite.Sprite):
     # Define estados possíveis do jogador
-    parado = 0 
-    pulando = 1
-    caindo = 2
+    # parado = 0 
+    # pulando = 1
+    # caindo = 2
+
     # Define a aceleração da gravidade
     gravidade = 2
     # Define a velocidade inicial no pulo
@@ -22,12 +22,7 @@ class Personagem(pygame.sprite.Sprite):
         self.imagens_ninja = []
         
         for posicao in dict_animacoes.values():
-            inicial = posicao[0]
-            largura = posicao[1]
-            altura = posicao[2]
-            quantidade = posicao[3]
-            redirecionamento = posicao[4]
-            self.corta_sprite(sprite_sheet, inicial, largura, altura, quantidade, redirecionamento) 
+            self.corta_sprite(sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], posicao[4]) 
 
         self.__index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
