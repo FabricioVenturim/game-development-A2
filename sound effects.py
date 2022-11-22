@@ -26,44 +26,12 @@ def texto(texto, fonte, cor, superficie, x, y):
     textoret = textobj.get_rect()
     superficie.blit(textobj, textoret)
 
-def menu():
-    while True:
-        tela.fill((0,0,0))
-        texto("Menu", fonte, (255,255,255), tela, 20, 20)
 
-        mx, my = pygame.mouse.get_pos()
-
-        botao1 = pygame.Rect(50, 100, 200, 50)
-        botao2 = pygame.Rect(50, 200, 200, 50)
-        if botao1.collidepoint((mx, my)):
-            if click:
-                jogo()
-        if botao2.collidepoint((mx, my)):
-            if click:
-                opcoes()
-
-        pygame.draw.rect(tela, (255,0,0), botao1)
-        pygame.draw.rect(tela, (255,0,0), botao2)
-
-        for evento in pygame.event.get():
-            if evento.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if evento.type == KEYDOWN:
-                if evento.key == K_ESCAPE:
-                    pygame.quit()
-                    sys.exit
-            if evento.type == MOUSEBUTTONDOWN:
-                if evento.button == 1:
-                    click = True
-        
-        pygame.display.update()
-        pygame.time.Clock().tick(60)
 
 def jogo():
     rodar = True
     while rodar:
-        texto("Jogar", fonte, (255,255,255), tela, 20, 20)
+        texto("Jogar", fonte, (255,255,255), tela, 50, 50)
         for evento in pygame.event.get():
             if evento.type == QUIT:
                 pygame.quit()
@@ -78,7 +46,7 @@ def jogo():
 def opcoes():
     rodar = True
     while rodar:
-        texto("Opções", fonte, (255,255,255), tela, 20, 20)
+        texto("Opções", fonte, (255,255,255), tela, 50, 50)
         for evento in pygame.event.get():
             if evento.type == QUIT:
                 pygame.quit()
@@ -86,6 +54,40 @@ def opcoes():
             if evento.type == KEYDOWN:
                 if evento.key == K_ESCAPE:
                     rodar = False
+        pygame.display.update()
+        pygame.time.Clock().tick(60)
+        
+def menu():
+    while True:
+        tela.fill((0,0,0))
+        texto("Menu", fonte, (255,255,255), tela, 50, 50)
+
+        mx, my = pygame.mouse.get_pos()
+
+        botao1 = pygame.Rect(1500, 350, 200, 100)
+        botao2 = pygame.Rect(280, 350, 200, 100)
+        if botao1.collidepoint((mx, my)):
+            if click:
+                jogo()
+        if botao2.collidepoint((mx, my)):
+            if click:
+                opcoes()
+
+        pygame.draw.rect(tela, (51,25,0), botao1)
+        pygame.draw.rect(tela, (51,25,0), botao2)
+
+        for evento in pygame.event.get():
+            if evento.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if evento.type == KEYDOWN:
+                if evento.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit
+            if evento.type == MOUSEBUTTONDOWN:
+                if evento.button == 1:
+                    click = True
+        
         pygame.display.update()
         pygame.time.Clock().tick(60)
 
