@@ -43,18 +43,27 @@ class DuoNinja:
         #Eventos de segurar a tecla
         if pygame.key.get_pressed()[K_d] and self.boy.bater == False:
             self.boy.fun_correr_direita()
+            pygame.mixer.music.load("corrida.mp3")
+            pygame.mixer.music.play(-3)
 
         elif pygame.key.get_pressed()[K_a] and self.boy.bater == False:
             self.boy.fun_correr_esquerda()     
+            pygame.mixer.music.load("corrida.mp3")
+            pygame.mixer.music.play(-3)
 
         if pygame.key.get_pressed()[K_DOWN] and self.girl.state == 0:
             self.girl.fun_deslizar()
-
+        
         elif pygame.key.get_pressed()[K_RIGHT] and self.girl.atirar == False:
             self.girl.fun_correr_direita()
+            pygame.mixer.music.load("corrida.mp3")
+            pygame.mixer.music.play(-3)
 
         elif pygame.key.get_pressed()[K_LEFT] and self.girl.atirar == False:
             self.girl.fun_correr_esquerda()
+            pygame.mixer.music.load("corrida.mp3")
+            pygame.mixer.music.play(-3)
+
         
         #Evetos sem segurar a tecla
         for event in pygame.event.get():
@@ -65,18 +74,25 @@ class DuoNinja:
                 
                 if event.key == K_w and self.boy.state == 0 and self.boy.bater == False:
                     self.boy.fun_pular()
+                    pygame.mixer.music.load("boy jump.mp3")
+                    pygame.mixer.music.play()
+                    
                 elif pygame.key.get_pressed()[K_w] and self.boy.state != 0:
                     self.boy.fun_planar()
 
                 if event.key == K_f and self.boy.state == 0:        
                     self.boy.fun_bater()
+                    pygame.mixer.music.load("facada no ar.mp3")
+                    pygame.mixer.music.play()
                 
                 if event.key == K_RSHIFT and self.girl.state == 0:
                     self.girl.fun_atirar()
                 
                 if event.key == K_UP and self.girl.state == 0 and self.girl.atirar == False:
                     self.girl.fun_pular()
-                
+                    pygame.mixer.music.load("girl jump.mp3")
+                    pygame.mixer.music.play()
+
                 #teste 
                 if event.key == K_g:
                     self.robo.fun_morrer()
