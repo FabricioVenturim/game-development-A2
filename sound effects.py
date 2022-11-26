@@ -87,9 +87,16 @@ def menu():
             if evento.type == MOUSEBUTTONDOWN:
                 if evento.button == 1:
                     click = True
+        Background.__init__("fundo2.png", [0,0])
         
         pygame.display.update()
         pygame.time.Clock().tick(60)
+    
+class Background(pygame.sprite.Sprite):
+    def __init__(self, imagem, coordenadas):
+        pygame.sprite.Sprite.__init__(self)
+        self.imagem = pygame.image.load(imagem)
+        self.rect = self.image.get_rect()
+        self.rect.left, self.rect.top = coordenadas
 
 menu()
-
