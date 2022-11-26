@@ -1,6 +1,7 @@
 import pygame
 from tile import Tile
 import personagem
+import objetos
 
 
 class Level:
@@ -16,6 +17,7 @@ class Level:
         self.tiles = pygame.sprite.Group()
         self.personagens = pygame.sprite.Group()
         self.robos = pygame.sprite.Group()
+        self.alavancas = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
@@ -45,6 +47,9 @@ class Level:
                         self.robo = personagem.Robo(
                             x, y, 200, 280, "img/spritesheet_robo.png", dict_animacoes_robo)
                         self.robos.add(self.robo)
+                    case 'A':
+                        self.alavanca = objetos.Alavanca(x, y)
+                        self.alavancas.add(self.alavanca)
 
     def horizontal_movement_collision(self, pers):
         for sprite in self.tiles.sprites():
@@ -69,6 +74,7 @@ class Level:
         self.tiles.draw(self.screen)
         self.personagens.draw(self.screen)
         self.robos.draw(self.screen)
+        self.alavancas.draw(self.screen)
 
     def input(self):
         # TODO: passar inputs para as classes de personagem
@@ -115,11 +121,24 @@ class Level:
         for sprite in group.sprites():
             self.vertical_movement_collision(sprite)
 
+    def ativar_alavanca(self, pers):
+        for alavanca in self.alavancas.sprites():
+            if alavanca.rect.colliderect(pers.rect):
+                self.alavanca.on = True
+                self.alavanca.image = self.alavanca.alavanca_on
+    
+    def colisao_alavanca(self, group):
+        for sprite in group.sprites():
+            self.ativar_alavanca(sprite)
+
+
     def update(self):
         self.input()
         self.sprites_collisions_horizontal(self.personagens)
         self.personagens.update()
         self.robos.update()
+        self.alavancas.update()
         self.sprites_collisions_horizontal(self.robos)
         self.sprites_collisions_vertical(self.robos)
         self.sprites_collisions_vertical(self.personagens)
+        self.colisao_alavanca(self.personagens)
