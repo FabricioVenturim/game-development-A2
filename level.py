@@ -36,6 +36,9 @@ class Level:
                     case 'R':
                         self.robo = personagem.Robo(x, 120, y, 20, self.tiles)
                         self.robos.add(self.robo)
+                    case 'A':
+                        self.alavanca = objetos.Alavanca(x, y, self.personagens)
+                        self.alavancas.add(self.alavanca)
 
     def draw(self):
         self.tiles.draw(self.screen)
@@ -46,3 +49,4 @@ class Level:
     def update(self):
         self.personagens.update()
         self.robos.update()
+        self.alavancas.update()
