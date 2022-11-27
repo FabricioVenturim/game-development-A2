@@ -13,10 +13,11 @@ class Personagem(pygame.sprite.Sprite):
     # Define a velocidade inicial no pulo
     aceleracao_pulo_inicial = 30
 
-    def __init__(self, x, y, img, dict_animacoes):
+    def __init__(self, x, y, img, dict_animacoes, collision_sprites):
         pygame.sprite.Sprite.__init__(self)
         self.aceleracao = self.aceleracao_pulo_inicial
         self.__state = 2
+        self.collision_sprites = collision_sprites
 
         sprite_sheet = pygame.image.load(img).convert_alpha()
         self.imagens_ninja = []
@@ -137,12 +138,15 @@ class Personagem(pygame.sprite.Sprite):
         self.state = 2
 
     def cair(self):
-        self.rect.y += self.aceleracao
-        self.aceleracao += self.gravidade
+        self.apply_gravity()
         self.index_lista = 24
         self.image = self.imagens_ninja[int(self.index_lista)]
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
+    
+    def apply_gravity(self):
+        self.aceleracao += self.gravidade
+        self.rect.y += self.aceleracao
 
         # Aceleração máxima
         if self.aceleracao > 18:
@@ -151,6 +155,7 @@ class Personagem(pygame.sprite.Sprite):
     def fun_pular(self):
         self.correr = False
         self.state = 1
+        self.aceleracao = self.aceleracao_pulo_inicial
         if self.index_lista < 20:
             self.index_lista = 20
 
@@ -178,9 +183,28 @@ class Personagem(pygame.sprite.Sprite):
             self.rect.y += self.aceleracao
             self.aceleracao += self.gravidade
 
+    def check_horizontal_collisions(self):
+        for sprite in self.collision_sprites.sprites():
+            if self.rect.colliderect(sprite.rect):
+                if self.direita:
+                    self.rect.right = sprite.rect.left
+                else:
+                    self.rect.left = sprite.rect.right
+
+    def check_vertical_collisions(self):
+        for sprite in self.collision_sprites.sprites():
+            if self.rect.colliderect(sprite.rect):
+                if self.state == 1:
+                    self.rect.top = sprite.rect.bottom + 1
+                    self.aceleracao = -1
+                else:
+                    self.rect.bottom = sprite.rect.top
+                    self.aceleracao = 0
+                    self.state = 0
+
 
 class BoyNinja(Personagem):
-    def __init__(self, x, y):
+    def __init__(self, x, y, collision_sprites):
         dict_animacoes_boy = {
             "parado": [0, 232, 455, 10, 3.1],
             "correndo": [5940, 363, 455, 10, 3.1],
@@ -189,7 +213,7 @@ class BoyNinja(Personagem):
             "voando": [24787, 443, 454, 10, 3.1]
         }
         img = "img/spritesheet_boy.png"
-        super().__init__(x, y, img, dict_animacoes_boy)
+        super().__init__(x, y, img, dict_animacoes_boy, collision_sprites)
         self.__bater = False
 
     @property
@@ -252,8 +276,10 @@ class BoyNinja(Personagem):
 
     def update(self):
         if self.state == 0:
-            self.aceleracao = self.aceleracao_pulo_inicial
             self.planar = False
+
+        self.read_input()
+        self.check_horizontal_collisions()
 
         if self.state == 2 and self.planar == False:
             self.cair()
@@ -272,6 +298,11 @@ class BoyNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
+            
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
+        self.check_vertical_collisions()
 
     def read_input(self):
         keys = pygame.key.get_pressed()
@@ -295,7 +326,7 @@ class BoyNinja(Personagem):
 
 
 class GirlNinja(Personagem):
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, screen, collision_sprites):
         dict_animacoes_girl = {
             "parado": [0, 290, 500, 10, 3.5],
             "correndo": [6906, 372, 500, 10, 3.5],
@@ -304,7 +335,7 @@ class GirlNinja(Personagem):
             "ataque": [20400, 383, 514, 10, 3.5]
         }
         img = "img/spritesheet_girl.png"
-        super().__init__(x, y, img, dict_animacoes_girl)
+        super().__init__(x, y, img, dict_animacoes_girl, collision_sprites)
         self.screen = screen
         self.__deslizar = False
         self.__atirar = False
@@ -378,9 +409,11 @@ class GirlNinja(Personagem):
 
         # Atualiza o estado quando caindo
         if self.state == 0:
-            self.aceleracao = self.aceleracao_pulo_inicial
             # TODO: Ela precisa desse atributo?
             self.planar = False
+
+        self.read_input()
+        self.check_horizontal_collisions()
 
         # controle de animação do personagem para cair
         if self.state == 2:
@@ -400,6 +433,11 @@ class GirlNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
+        
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
+        self.check_vertical_collisions()
 
     def read_input(self):
         keys = pygame.key.get_pressed()
@@ -422,35 +460,70 @@ class GirlNinja(Personagem):
 
 
 class Robo(Personagem):
-    def __init__(self, x_inicial, y, temporizador_parado, temporizador_correndo):
+    temporizador = 0
+
+    def __init__(self, x, x_distancia, y, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
+        """_summary_: Classe que representa o Robo 
+
+        :param x: posição x do robo
+        :type x: int
+        :param x_distancia: distancia que o robo irá se mover
+        :type x_distancia: int   
+        :param y: posição y do robo
+        :type y: int
+        :param campo_de_visao: distancia que o robo irá ver o personagem
+        :type campo_de_visao: int
+        :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True
+        :type movimentacao: bool, optional
+        :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True
+        :type direita_movimentacao: bool, optional
+        """
         dict_animacoes_robo = {
             "parado": [0, 567, 555, 10, 3.5],
             "correndo": [5670, 567, 550, 8, 3.5],
             "morrendo": [10190, 562, 519, 10, 3.5]
         }
         img = "img/spritesheet_robo.png"
-        super().__init__(x_inicial, y, img, dict_animacoes_robo)
-        self.__temporizador_parado = temporizador_parado
-        self.__temporizador_correndo = temporizador_correndo
-
+        super().__init__(x, y, img, dict_animacoes_robo, collision_sprites)
+        self.__x = x
+        self.__campo_de_visao = campo_de_visao
+        self.__x_distancia = x_distancia
+        if direita_movimentacao:
+            self.direita = False
         self.__vivo = True
-        self.__temporizador = 0
+        self.__movimentacao = movimentacao
 
     @property
-    def temporizador_parado(self):
-        return self.__temporizador_parado
+    def campo_de_visao(self):
+        return self.__campo_de_visao
 
-    @temporizador_parado.setter
-    def temporizador_parado(self, value):
-        self.__temporizador_parado = value
+    @campo_de_visao.setter
+    def campo_de_visao(self, value):
+        self.__campo_de_visao = value
 
     @property
-    def temporizador_correndo(self):
-        return self.__temporizador_correndo
+    def x(self):
+        return self.__x
 
-    @temporizador_correndo.setter
-    def temporizador_correndo(self, value):
-        self.__temporizador_correndo = value
+    @x.setter
+    def x(self, value):
+        self.__x = value
+
+    @property
+    def x_distancia(self):
+        return self.__x_distancia
+
+    @x_distancia.setter
+    def x_distancia(self, value):
+        self.__x_distancia = value
+
+    @property
+    def movimentacao(self):
+        return self.__movimentacao
+
+    @movimentacao.setter
+    def movimentacao(self, value):
+        self.__movimentacao = value
 
     @property
     def vivo(self):
@@ -459,14 +532,6 @@ class Robo(Personagem):
     @vivo.setter
     def vivo(self, value):
         self.__vivo = value
-
-    @property
-    def temporizador(self):
-        return self.__temporizador
-
-    @temporizador.setter
-    def temporizador(self, value):
-        self.__temporizador = value
 
     def fun_morrer(self):
         self.vivo = False
@@ -484,6 +549,17 @@ class Robo(Personagem):
             self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
 
+    def verifica_player(self, player):
+        if self.direita:     # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
+            if self.rect.x < player.rect.x < self.rect.x + self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+                self.correr = False
+                print("DIREITAA campo de visão")
+
+        else:  # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
+            if self.rect.x > player.rect.x > self.rect.x - self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+                self.correr = False
+                print("ESQUERDA campo de visão")
+
     def animacao_morrer(self):
         if self.index_lista == 24:  # quando a colisão tiver certa, aí isso vai sair
             self.rect.y += 10
@@ -498,27 +574,43 @@ class Robo(Personagem):
         self.correr = False
 
     def update(self):
+        if self.state == 2:
+            self.cair()
+            
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
+        self.check_vertical_collisions()
+
         if self.vivo == False:
             self.animacao_morrer()
 
         # Controle de animação do personagem para correr
-        elif self.temporizador >= self.temporizador_parado and self.temporizador <= self.temporizador_correndo:
-            self.correr_animacao()
-            if self.direita:
-                self.fun_correr_direita()
+        elif self.movimentacao:
+            if self.temporizador == 300:
+                self.direita = not self.direita
+            elif self.temporizador > 300:
+                self.correr_animacao()
+                if self.direita:
+                    self.fun_correr_direita()
+                    if self.rect.x >= self.x + self.x_distancia:
+                        self.rect.x = self.x + self.x_distancia
+                        self.x = self.x + self.x_distancia
+                        self.temporizador = 0
+                else:
+                    self.fun_correr_esquerda()
+                    if self.rect.x <= self.x - self.x_distancia:
+                        self.rect.x = self.x - self.x_distancia
+                        self.x = self.x - self.x_distancia
+                        self.temporizador = 0
             else:
-                self.fun_correr_esquerda()
-        # Controle de animação do personagem para parado após correr
-        elif self.temporizador > self.temporizador_correndo + self.temporizador_parado:
-            self.temporizador = self.temporizador_parado
-            self.direita = not self.direita
+                self.parado_animacao()
+            self.temporizador += 1
         else:
             self.parado_animacao()
         self.temporizador += 1
 
-    def update_vertical_pos(self):
-        if self.state == 2:
-            self.cair()
+        self.check_horizontal_collisions()
 
 
 class Kunai(pygame.sprite.Sprite):
