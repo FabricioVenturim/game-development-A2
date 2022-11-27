@@ -264,6 +264,27 @@ class BoyNinja(Personagem):
         # Controle de animação do personagem para parado
         else: 
             self.parado_animacao()
+    
+
+    def read_input(self):
+        keys = pygame.key.get_pressed()
+
+        if not self.bater:
+            if keys[pygame.K_d]:
+                self.fun_correr_direita()
+            elif keys[pygame.K_a]:
+                self.fun_correr_esquerda()
+
+            if keys[pygame.K_w]:
+                if self.state == 0:
+                    self.fun_pular()
+                elif self.state == 2:
+                    self.fun_planar()
+            elif self.planar:
+                self.fun_cair()
+
+            if keys[pygame.K_f] and self.state == 0:
+                self.fun_bater()
             
 class GirlNinja(Personagem):
     def __init__(self, x, y, img, dict_animacoes, screen):
@@ -362,6 +383,25 @@ class GirlNinja(Personagem):
         # Controle de animação do personagem para parado
         else: 
             self.parado_animacao()
+    
+    def read_input(self):
+        keys = pygame.key.get_pressed()
+
+        if not self.atirar:
+            if self.state == 0:
+                if keys[pygame.K_UP]:
+                    self.fun_pular()
+                elif keys[pygame.K_DOWN]:
+                    # TODO: consertar deslizar
+                    self.fun_deslizar()
+                elif keys[pygame.K_RSHIFT]:
+                    # TODO: consertar kunai
+                    self.fun_atirar()
+
+            if keys[pygame.K_RIGHT]:
+                self.fun_correr_direita()
+            elif keys[pygame.K_LEFT]:
+                self.fun_correr_esquerda()
 
 
 class Robo(Personagem):

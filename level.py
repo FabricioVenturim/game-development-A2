@@ -70,42 +70,9 @@ class Level:
         self.personagens.draw(self.screen)
         self.robos.draw(self.screen)
 
-    def input(self):
-        # TODO: passar inputs para as classes de personagem
-        keys = pygame.key.get_pressed()
-
-        if not self.boy.bater:
-            if keys[pygame.K_d]:
-                self.boy.fun_correr_direita()
-            elif keys[pygame.K_a]:
-                self.boy.fun_correr_esquerda()
-
-            if keys[pygame.K_w]:
-                if self.boy.state == 0:
-                    self.boy.fun_pular()
-                elif self.boy.state == 2:
-                    self.boy.fun_planar()
-            elif self.boy.planar:
-                self.boy.fun_cair()
-
-            if keys[pygame.K_f] and self.boy.state == 0:
-                self.boy.fun_bater()
-
-        if not self.girl.atirar:
-            if self.girl.state == 0:
-                if keys[pygame.K_UP]:
-                    self.girl.fun_pular()
-                elif keys[pygame.K_DOWN]:
-                    # TODO: consertar deslizar
-                    self.girl.fun_deslizar()
-                elif keys[pygame.K_RSHIFT]:
-                    # TODO: consertar kunai
-                    self.girl.fun_atirar()
-
-            if keys[pygame.K_RIGHT]:
-                self.girl.fun_correr_direita()
-            elif keys[pygame.K_LEFT]:
-                self.girl.fun_correr_esquerda()
+    def read_input(self):
+        self.boy.read_input()
+        self.girl.read_input()
 
     def sprites_collisions_horizontal(self, group):
         for sprite in group.sprites():
@@ -116,7 +83,7 @@ class Level:
             self.vertical_movement_collision(sprite)
 
     def update(self):
-        self.input()
+        self.read_input()
         self.sprites_collisions_horizontal(self.personagens)
         self.personagens.update()
         self.robos.update()
