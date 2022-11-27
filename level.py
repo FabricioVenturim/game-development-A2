@@ -25,25 +25,14 @@ class Level:
                     case 'X':
                         self.tiles.add(Tile((x, y), self.tile_size))
                     case 'B':
-                        # TODO: colocar inicializações dentro das classes de personagem
-                        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [
-                            2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787, 443, 454, 10, 3.1]}
-                        self.boy = personagem.BoyNinja(
-                            x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
+                        self.boy = personagem.BoyNinja(x, y)
                         self.personagens.add(self.boy)
                     case 'G':
-                        dict_animacoes_girl = {"parado": [0, 290, 500, 10, 3.5], "correndo": [6906, 372, 500, 10, 3.5], "pulando": [
-                            2910, 399, 500, 10, 3.5], "deslizando": [16425, 397, 401, 10, 3.5], "ataque": [20400, 383, 514, 10, 3.5]}
                         # TODO: implementar escalabilidade de tamanho dos personagens
-                        self.girl = personagem.GirlNinja(
-                            x, y, "img/spritesheet_girl.png", dict_animacoes_girl, self.screen)
+                        self.girl = personagem.GirlNinja(x, y, self.screen)
                         self.personagens.add(self.girl)
                     case 'R':
-                        # TODO: separar movimento vertical e horizontal o robo
-                        dict_animacoes_robo = {"parado": [0, 567, 555, 10, 3.5], "correndo": [
-                            5670, 567, 550, 8, 3.5], "morrendo": [10190, 562, 519, 10, 3.5]}
-                        self.robo = personagem.Robo(
-                            x, y, 200, 280, "img/spritesheet_robo.png", dict_animacoes_robo)
+                        self.robo = personagem.Robo(x, y, 200, 280)
                         self.robos.add(self.robo)
 
     def horizontal_movement_collision(self, pers):
