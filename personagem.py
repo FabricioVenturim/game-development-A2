@@ -4,7 +4,7 @@ from pygame.locals import *
 
 class Personagem(pygame.sprite.Sprite):
     # Define estados possíveis do jogador
-    # parado = 0 
+    # parado = 0
     # pulando = 1
     # caindo = 2
 
@@ -17,19 +17,21 @@ class Personagem(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.aceleracao = self.aceleracao_pulo_inicial
         self.__state = 2
-        
+
         sprite_sheet = pygame.image.load(img).convert_alpha()
         self.imagens_ninja = []
-        
+
         for posicao in dict_animacoes.values():
-            self.corta_sprite(sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], posicao[4]) 
+            self.corta_sprite(
+                sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], posicao[4])
 
         self.__index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
-        self.__rect = self.image.get_rect(midbottom = (x,y))
+        self.__rect = self.image.get_rect(midbottom=(x, y))
 
         self.__direita = True
         self.__correr = False
+        # TODO: planar não deveria estar só na classe BoyNinja?
         self.__planar = False
 
     @property
@@ -51,7 +53,7 @@ class Personagem(pygame.sprite.Sprite):
     @property
     def state(self):
         return self.__state
-    
+
     @state.setter
     def state(self, state):
         self.__state = state
@@ -80,24 +82,25 @@ class Personagem(pygame.sprite.Sprite):
     def planar(self, value):
         self.__planar = value
 
-    def corta_sprite(self,sprite_sheet, posicao_inicial, largura, altura, quantidade, redirecionamento):        
+    def corta_sprite(self, sprite_sheet, posicao_inicial, largura, altura, quantidade, redirecionamento):
         for i in range(0, quantidade):
             largura_inicial = posicao_inicial
-            img = sprite_sheet.subsurface((largura_inicial + i*largura,0), (largura,altura))
-            img = pygame.transform.scale(img, (largura/redirecionamento, altura/redirecionamento))
+            img = sprite_sheet.subsurface(
+                (largura_inicial + i*largura, 0), (largura, altura))
+            img = pygame.transform.scale(
+                img, (largura/redirecionamento, altura/redirecionamento))
             self.imagens_ninja.append(img)
-    
+
     def parado_animacao(self):
         if self.index_lista > 9:
             self.index_lista = 0
         self.index_lista += 0.25
-        self.image= self.imagens_ninja[int(self.index_lista)]
+        self.image = self.imagens_ninja[int(self.index_lista)]
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
 
-
-    def fun_correr_direita(self): 
+    def fun_correr_direita(self):
         self.direita = True
         self.correr = True
         if self.index_lista < 10:
@@ -106,7 +109,7 @@ class Personagem(pygame.sprite.Sprite):
             self.rect.x += 9
         else:
             self.rect.x += 6
-    
+
     def fun_correr_esquerda(self):
         self.direita = False
         self.correr = True
@@ -118,16 +121,16 @@ class Personagem(pygame.sprite.Sprite):
             self.rect.x -= 6
 
     def correr_animacao(self):
-        if self.index_lista > 19:   
+        if self.index_lista > 19:
             self.index_lista = 10
         self.index_lista += 0.25
-        self.image= self.imagens_ninja[int(self.index_lista)]
-        
+        self.image = self.imagens_ninja[int(self.index_lista)]
+
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
-        
+
     def fun_cair(self):
         self.correr = False
         self.planar = False
@@ -139,7 +142,7 @@ class Personagem(pygame.sprite.Sprite):
         self.index_lista = 24
         self.image = self.imagens_ninja[int(self.index_lista)]
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
 
         # Aceleração máxima
         if self.aceleracao > 18:
@@ -153,11 +156,11 @@ class Personagem(pygame.sprite.Sprite):
 
     def pular_animacao(self):
         ####### animação #######
-        if self.index_lista > 29:   
+        if self.index_lista > 29:
             self.index_lista = 20
         self.index_lista += 0.25
         self.image = self.imagens_ninja[int(self.index_lista)]
-        
+
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
@@ -166,15 +169,15 @@ class Personagem(pygame.sprite.Sprite):
         # Atualiza o estado para caindo
         if self.aceleracao < 0:
             self.state = 2
-        
-        if self.state == 1: 
+
+        if self.state == 1:
             self.rect.y -= self.aceleracao
             self.aceleracao -= self.gravidade
-        
-        if self.state == 2: 
+
+        if self.state == 2:
             self.rect.y += self.aceleracao
             self.aceleracao += self.gravidade
-            
+
 
 class BoyNinja(Personagem):
     def __init__(self, x, y, img, dict_animacoes):
@@ -196,14 +199,14 @@ class BoyNinja(Personagem):
             self.index_lista = 30
 
     def bater_animacao(self):
-        #Deixar a animação mais suave
+        # Deixar a animação mais suave
         if self.index_lista == 30:
             if self.direita:
-                self.rect.x -= 15 
+                self.rect.x -= 15
             else:
-                self.rect.x -= 80 
+                self.rect.x -= 80
 
-        if self.index_lista > 39: 
+        if self.index_lista > 39:
             self.index_lista = 0
             self.bater = False
             # Voltar para o local inicial
@@ -217,7 +220,6 @@ class BoyNinja(Personagem):
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
-       
 
     def fun_planar(self):
         self.correr = False
@@ -225,10 +227,9 @@ class BoyNinja(Personagem):
         self.state = 2
         if self.index_lista < 40:
             self.index_lista = 40
- 
 
     def planar_animacao(self):
-        if self.index_lista > 49:   
+        if self.index_lista > 49:
             self.index_lista = 40
         self.index_lista += 0.5
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -240,13 +241,12 @@ class BoyNinja(Personagem):
 
         self.aceleracao = 3
         self.rect.y += self.aceleracao
-    
 
     def update(self):
         if self.state == 0:
             self.aceleracao = self.aceleracao_pulo_inicial
             self.planar = False
-        
+
         if self.state == 2 and self.planar == False:
             self.cair()
         # Controle de animação do personagem para correr
@@ -262,9 +262,8 @@ class BoyNinja(Personagem):
         elif self.planar:
             self.planar_animacao()
         # Controle de animação do personagem para parado
-        else: 
+        else:
             self.parado_animacao()
-    
 
     def read_input(self):
         keys = pygame.key.get_pressed()
@@ -285,7 +284,8 @@ class BoyNinja(Personagem):
 
             if keys[pygame.K_f] and self.state == 0:
                 self.fun_bater()
-            
+
+
 class GirlNinja(Personagem):
     def __init__(self, x, y, img, dict_animacoes, screen):
         super().__init__(x, y, img, dict_animacoes)
@@ -293,19 +293,19 @@ class GirlNinja(Personagem):
         self.__deslizar = False
         self.__atirar = False
         self.kunai = Kunai(self.screen)
-    
+
     @property
     def deslizar(self):
         return self.__deslizar
-    
+
     @deslizar.setter
     def deslizar(self, value):
         self.__deslizar = value
-    
+
     @property
     def atirar(self):
         return self.__atirar
-    
+
     @atirar.setter
     def atirar(self, value):
         self.__atirar = value
@@ -323,7 +323,7 @@ class GirlNinja(Personagem):
             self.rect.x += 7.5
 
     def deslizar_animacao(self):
-        if self.index_lista > 39:   
+        if self.index_lista > 39:
             self.index_lista = 30
         self.index_lista += 0.25
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -340,14 +340,14 @@ class GirlNinja(Personagem):
 
         if self.index_lista < 40:
             self.index_lista = 40
-            
+
     def atirar_animacao(self):
-        if self.index_lista > 49:   
+        if self.index_lista > 49:
             self.index_lista = 40
             self.atirar = False
 
         if self.index_lista == 43:
-            self.kunai.fun_atirar(self.rect.x, self.rect.y, self.direita) 
+            self.kunai.fun_atirar(self.rect.x, self.rect.y, self.direita)
 
         self.index_lista += 0.25
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -360,11 +360,11 @@ class GirlNinja(Personagem):
         # Atualiza a posição do kunai
         self.kunai.update()
 
-        # Atualiza o estado quando caindo 
+        # Atualiza o estado quando caindo
         if self.state == 0:
             self.aceleracao = self.aceleracao_pulo_inicial
             self.planar = False
-        
+
         # controle de animação do personagem para cair
         if self.state == 2:
             self.cair()
@@ -381,9 +381,9 @@ class GirlNinja(Personagem):
         elif self.atirar:
             self.atirar_animacao()
         # Controle de animação do personagem para parado
-        else: 
+        else:
             self.parado_animacao()
-    
+
     def read_input(self):
         keys = pygame.key.get_pressed()
 
@@ -416,31 +416,31 @@ class Robo(Personagem):
     @property
     def temporizador_parado(self):
         return self.__temporizador_parado
-    
+
     @temporizador_parado.setter
     def temporizador_parado(self, value):
         self.__temporizador_parado = value
-    
+
     @property
     def temporizador_correndo(self):
         return self.__temporizador_correndo
-    
+
     @temporizador_correndo.setter
     def temporizador_correndo(self, value):
         self.__temporizador_correndo = value
-    
+
     @property
     def vivo(self):
         return self.__vivo
-    
+
     @vivo.setter
     def vivo(self, value):
         self.__vivo = value
-    
+
     @property
     def temporizador(self):
         return self.__temporizador
-    
+
     @temporizador.setter
     def temporizador(self, value):
         self.__temporizador = value
@@ -449,30 +449,29 @@ class Robo(Personagem):
         self.vivo = False
         if self.index_lista < 18:
             self.index_lista = 18
-        
 
     def correr_animacao(self):
-        if self.index_lista > 17:   
+        if self.index_lista > 17:
             self.index_lista = 10
         self.index_lista += 0.25
-        self.image= self.imagens_ninja[int(self.index_lista)]
-        
+        self.image = self.imagens_ninja[int(self.index_lista)]
+
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
 
     def animacao_morrer(self):
-        if self.index_lista == 24: # quando a colisão tiver certa, aí isso vai sair
+        if self.index_lista == 24:  # quando a colisão tiver certa, aí isso vai sair
             self.rect.y += 10
-        if self.index_lista > 27:   
+        if self.index_lista > 27:
             self.index_lista = 27
         self.index_lista += 0.25
-        self.image= self.imagens_ninja[int(self.index_lista)]
-        
+        self.image = self.imagens_ninja[int(self.index_lista)]
+
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
 
     def update(self):
@@ -481,7 +480,7 @@ class Robo(Personagem):
 
         if self.vivo == False:
             self.animacao_morrer()
-            
+
         # Controle de animação do personagem para correr
         elif self.temporizador >= self.temporizador_parado and self.temporizador <= self.temporizador_correndo:
             self.correr_animacao()
@@ -493,21 +492,22 @@ class Robo(Personagem):
         elif self.temporizador > self.temporizador_correndo + self.temporizador_parado:
             self.temporizador = self.temporizador_parado
             self.direita = not self.direita
-        else: 
+        else:
             self.parado_animacao()
         self.temporizador += 1
-        
+
 
 class Kunai(pygame.sprite.Sprite):
     gravidade = 1.5
     aceleracao_inicial = 25
 
-    def __init__(self, screen):       
+    def __init__(self, screen):
         pygame.sprite.Sprite.__init__(self)
 
         self.screen = screen
         image = pygame.image.load("img/Kunai.png").convert_alpha()
-        self.__image = pygame.transform.scale(image, (160/2.4, 32/2.4)) #redimensiona a imagem para o tamanho desejado
+        # redimensiona a imagem para o tamanho desejado
+        self.__image = pygame.transform.scale(image, (160/2.4, 32/2.4))
         self.__rect = self.image.get_rect()
         self.__aceleracao = self.aceleracao_inicial
         self.__direita = True
@@ -516,39 +516,39 @@ class Kunai(pygame.sprite.Sprite):
     @property
     def image(self):
         return self.__image
-    
+
     @image.setter
     def image(self, value):
         self.__image = value
-    
+
     @property
     def rect(self):
         return self.__rect
-    
+
     @rect.setter
     def rect(self, value):
         self.__rect = value
-    
+
     @property
     def aceleracao(self):
         return self.__aceleracao
-    
+
     @aceleracao.setter
     def aceleracao(self, value):
         self.__aceleracao = value
-    
+
     @property
     def direita(self):
         return self.__direita
-    
+
     @direita.setter
     def direita(self, value):
         self.__direita = value
-    
+
     @property
     def atirar(self):
         return self.__atirar
-    
+
     @atirar.setter
     def atirar(self, value):
         self.__atirar = value
@@ -557,7 +557,8 @@ class Kunai(pygame.sprite.Sprite):
         self.atirar = True
         self.direita = bool_direita
         if self.direita:
-            self.rect.midbottom = (x + 100, y) #posiciona o kunai na frente do personagem
+            # posiciona o kunai na frente do personagem
+            self.rect.midbottom = (x + 100, y)
         else:
             self.rect.midbottom = (x, y)
 
@@ -573,7 +574,8 @@ class Kunai(pygame.sprite.Sprite):
         if self.direita:
             self.screen.blit(self.image, self.rect)
         else:
-            self.screen.blit(pygame.transform.flip(self.image, True, False), self.rect)
+            self.screen.blit(pygame.transform.flip(
+                self.image, True, False), self.rect)
 
     def update(self):
         if self.atirar:

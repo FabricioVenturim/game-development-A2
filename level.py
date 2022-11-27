@@ -58,12 +58,12 @@ class Level:
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(pers.rect):
                 if pers.state == 1:
-                    # TODO: alterar pulo de personagem
                     pers.rect.top = sprite.rect.bottom + 1
                     pers.aceleracao = -1
                 else:
                     pers.rect.bottom = sprite.rect.top
                     pers.state = 0
+                    pers.aceleracao = pers.aceleracao_pulo_inicial
 
     def draw(self):
         self.tiles.draw(self.screen)
