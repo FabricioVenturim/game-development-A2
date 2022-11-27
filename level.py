@@ -64,6 +64,7 @@ class Level:
                     pers.rect.bottom = sprite.rect.top
                     pers.state = 0
                     pers.aceleracao = pers.aceleracao_pulo_inicial
+                    pers.planar = False
 
     def draw(self):
         self.tiles.draw(self.screen)
@@ -88,5 +89,7 @@ class Level:
         self.personagens.update()
         self.robos.update()
         self.sprites_collisions_horizontal(self.robos)
+        for robo in self.robos.sprites():
+            robo.update_vertical_pos()
         self.sprites_collisions_vertical(self.robos)
         self.sprites_collisions_vertical(self.personagens)

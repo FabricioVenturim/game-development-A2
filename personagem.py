@@ -363,6 +363,7 @@ class GirlNinja(Personagem):
         # Atualiza o estado quando caindo
         if self.state == 0:
             self.aceleracao = self.aceleracao_pulo_inicial
+            # TODO: Ela precisa desse atributo?
             self.planar = False
 
         # controle de animação do personagem para cair
@@ -475,9 +476,6 @@ class Robo(Personagem):
         self.correr = False
 
     def update(self):
-        if self.state == 2:
-            self.cair()
-
         if self.vivo == False:
             self.animacao_morrer()
 
@@ -495,6 +493,10 @@ class Robo(Personagem):
         else:
             self.parado_animacao()
         self.temporizador += 1
+
+    def update_vertical_pos(self):
+        if self.state == 2:
+            self.cair()
 
 
 class Kunai(pygame.sprite.Sprite):
