@@ -40,11 +40,26 @@ class Alavanca(pygame.sprite.Sprite):
 
 
 
-class Chave():
-    pass
+class Chave(pygame.sprite.Sprite):
+    def __init__(self, x, y, grupo_colisao):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.image = pygame.transform.scale(pygame.image.load("chave.png"), (30,50)) 
+        self.rect = self.image.get_rect(center = (x,y))
+        self.grupo_colisao = grupo_colisao
+        self.active = True
 
+    def pegar_chave(self, grupo_colisao):
+        for personagem in grupo_colisao.sprites():
+            if personagem.rect.colliderect(self.rect):
+                self.active = False
+                self.kill()
+            print(self.active)
+
+    def update(self):
+        self.pegar_chave(self.grupo_colisao)
     
-
 class Plataforma():
     pass
 

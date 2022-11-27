@@ -5,7 +5,7 @@ import sys
 
 if __name__ == "__main__":
     pygame.init()
-    screen = pygame.display.set_mode((500,500))
+    screen = pygame.display.set_mode((800,800))
     clock = pygame.time.Clock()
     level = Level(config.level_map, screen)
 
