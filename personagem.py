@@ -369,14 +369,42 @@ class GirlNinja(Personagem):
 class Robo(Personagem):
     temporizador = 0
 
-    def __init__(self, x, x_distancia, y, img, dict_animacoes, movimentacao = True, direita_movimentacao = True):
+    def __init__(self, x, x_distancia, y, campo_de_visao, img, dict_animacoes, movimentacao = True, direita_movimentacao = True):
+        """_summary_: Classe que representa o Robo 
+
+        :param x: posição x do robo
+        :type x: int
+        :param x_distancia: distancia que o robo irá se mover
+        :type x_distancia: int   
+        :param y: posição y do robo
+        :type y: int
+        :param campo_de_visao: distancia que o robo irá ver o personagem
+        :type campo_de_visao: int
+        :param img: imagem do robo
+        :type img: str
+        :param dict_animacoes: dicionario com as animações do robo
+        :type dict_animacoes: dict
+        :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True
+        :type movimentacao: bool, optional
+        :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True
+        :type direita_movimentacao: bool, optional
+        """        
         super().__init__(x, y, img, dict_animacoes)
         self.__x = x
+        self.__campo_de_visao = campo_de_visao
         self.__x_distancia = x_distancia
         if direita_movimentacao:
             self.direita = False
         self.__vivo = True
         self.__movimentacao = movimentacao
+
+    @property
+    def campo_de_visao(self):
+        return self.__campo_de_visao
+    
+    @campo_de_visao.setter
+    def campo_de_visao(self, value):
+        self.__campo_de_visao = value
 
     @property
     def x(self):
@@ -425,6 +453,17 @@ class Robo(Personagem):
         if self.direita == False:
             self.image= pygame.transform.flip(self.image, True, False)
         self.correr = False
+    
+    def verifica_player(self, player):
+        if self.direita:     # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
+            if self.rect.x < player.rect.x < self.rect.x + self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+                self.correr = False
+                print("DIREITAA campo de visão")
+
+        else: # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
+            if self.rect.x > player.rect.x > self.rect.x - self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+                self.correr = False
+                print("ESQUERDA campo de visão") 
 
     def animacao_morrer(self):
         if self.index_lista == 24: # quando a colisão tiver certa, aí isso vai sair
@@ -469,6 +508,8 @@ class Robo(Personagem):
             self.temporizador += 1
         else:
             self.parado_animacao()
+
+        
 
 class Kunai(pygame.sprite.Sprite):
     gravidade = 1.5
