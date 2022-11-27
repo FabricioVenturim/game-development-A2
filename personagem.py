@@ -138,12 +138,15 @@ class Personagem(pygame.sprite.Sprite):
         self.state = 2
 
     def cair(self):
-        self.aceleracao += self.gravidade
-        self.rect.y += self.aceleracao
+        self.apply_gravity()
         self.index_lista = 24
         self.image = self.imagens_ninja[int(self.index_lista)]
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
+    
+    def apply_gravity(self):
+        self.aceleracao += self.gravidade
+        self.rect.y += self.aceleracao
 
         # Aceleração máxima
         if self.aceleracao > 18:
@@ -296,6 +299,9 @@ class BoyNinja(Personagem):
         else:
             self.parado_animacao()
             
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
         self.check_vertical_collisions()
 
     def read_input(self):
@@ -354,6 +360,7 @@ class GirlNinja(Personagem):
     def fun_deslizar(self):
         self.deslizar = True
         self.correr = False
+        self.rect.y += 37
 
         if self.index_lista < 30:
             self.index_lista = 30
@@ -426,7 +433,10 @@ class GirlNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
-            
+        
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
         self.check_vertical_collisions()
 
     def read_input(self):
@@ -566,7 +576,11 @@ class Robo(Personagem):
     def update(self):
         if self.state == 2:
             self.cair()
-            self.check_vertical_collisions()
+            
+        if self.state == 0:
+            self.apply_gravity()
+            self.state = 2
+        self.check_vertical_collisions()
 
         if self.vivo == False:
             self.animacao_morrer()
@@ -595,6 +609,7 @@ class Robo(Personagem):
         else:
             self.parado_animacao()
         self.temporizador += 1
+
         self.check_horizontal_collisions()
 
 

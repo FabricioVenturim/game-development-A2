@@ -32,7 +32,7 @@ class Level:
                         self.girl = personagem.GirlNinja(x, y, self.screen, self.tiles)
                         self.personagens.add(self.girl)
                     case 'R':
-                        self.robo = personagem.Robo(x, 100, y, 20, self.tiles)
+                        self.robo = personagem.Robo(x, 120, y, 20, self.tiles)
                         self.robos.add(self.robo)
 
     def draw(self):
