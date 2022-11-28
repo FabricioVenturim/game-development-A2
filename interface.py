@@ -78,9 +78,14 @@ class Interface:
                 self.tela_controles()
                 #INTERFACE DA TELA DE OPÇÕES
                 # BLA BLA BLA                
+            try:
+                self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1.05/4, self.tela.get_height()*3.45/5)
+                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
 
-            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1.05/4, self.tela.get_height()*3.45/5)
-            self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
+            except:
+                print("o usuário saiu pelo X da tela de controles")
+                sys.exit
+                break
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
@@ -88,7 +93,7 @@ class Interface:
                     pygame.quit()
                     sys.exit
                     return
-                    
+
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     self.rodar = False
                     pygame.quit()
@@ -104,7 +109,7 @@ class Interface:
                 pygame.display.update()
             except:
                 print("Saiu do Jogo")
-                pass
+                break
 
     #criando uma função para a tela de controles
     def tela_controles(self):
@@ -112,24 +117,26 @@ class Interface:
         while rodar:
             transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
             transicao.fill((0,0,0))
-            for evento in pygame.event.get():
-                controles = pygame.image.load("img/Controles.png")
-                controles = pygame.transform.scale(controles, (1920,1080))
-                Botao("VOLTAR",200,100,(4,4), 3, self.fonte).desenhar(self.tela)
-                self.tela.blit(controles, (0,0))
-                print("CONTROLESESESESESES")
-                pygame.display.update()
-
-                if evento.type == pygame.QUIT:
-                    self.jogando = False
-                    self.rodando = False
-                    pygame.quit()
-                    sys.exit
-
+            try:
                 for evento in pygame.event.get():
+                    controles = pygame.image.load("img/Controles.png")
+                    controles = pygame.transform.scale(controles, (1920,1080))
+                    Botao("VOLTAR",200,100,(4,4), 3, self.fonte).desenhar(self.tela)
+                    self.tela.blit(controles, (0,0))
+                    print("CONTROLESESESESESES")
+                    pygame.display.update()
+
+                    if evento.type == pygame.QUIT:
+                        self.jogando = False
+                        self.rodando = False
+                        pygame.quit()
+                        sys.exit
+
                     if evento.type == KEYUP and evento.key == K_ESCAPE:
                         rodar = False            
-
+            except Exception as erro:
+                print("o usuário saiu da tela de controles pelo X", erro)
+                break
 
 
 
