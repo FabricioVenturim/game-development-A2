@@ -49,7 +49,7 @@ class Level:
                         self.portao = objetos.Portao(x, y, self.personagens, self.chaves, self.portoes)
                         self.portoes.add(self.portao)
                     case 'L':
-                        self.plataforma = objetos.Plataforma(x, y, self.personagens)
+                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(300, 500))
                         self.plataformas.add(self.plataforma)
                         
 
@@ -72,4 +72,4 @@ class Level:
         self.alavancas.update()
         self.chaves.update()
         self.portoes.update()
-        #self.plataformas.update()
+        self.plataformas.update()

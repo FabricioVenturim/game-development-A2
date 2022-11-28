@@ -82,13 +82,34 @@ class Botao():
     pass
 
 class Plataforma(pygame.sprite.Sprite):
-    def __init__(self, x, y, grupo_colisao):
+    # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
+    # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
+    def __init__(self, x, y, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao = None, horizontal = True):
         super().__init__()
         self.x = x
         self.y = y
         self.image = pygame.image.load("plataforma.png")
         self.rect = self.image.get_rect(center = (x,y))
         self.grupo_colisao = grupo_colisao
-
-    def update():
-        pass
+        self.platform_vel = platform_vel
+        self.variacao_x = variacao_x
+        self.variacao_y = variacao_y
+        self.horizontal = horizontal
+        
+    
+    def movimentar_plataforma(self, horizontal):
+        self.horizontal = horizontal
+        if self.horizontal == True:
+            x_min, x_max = self.variacao_x 
+            if self.rect.left >=x_max or self.rect.left <= x_min:
+                self.platform_vel*= -1
+            self.rect.left += self.platform_vel
+        else:
+            y_min, y_max = self.variacao_y
+            if self.rect.top >=y_max or self.rect.top <= y_min:
+                self.platform_vel*= -1
+            self.rect.bottom += self.platform_vel
+    
+        
+    def update(self):
+        self.movimentar_plataforma(self.horizontal)
