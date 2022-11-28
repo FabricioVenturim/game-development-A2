@@ -23,7 +23,7 @@ header{
 }				
 
 .logo_menu{
-    width: 120px; /*largura da imagem*/
+    width: 200px; /*largura da imagem*/
 }
 
 nav li{
@@ -35,7 +35,7 @@ nav li{
     text-decoration: none; /*Tirar a decoração de link*/
     font-size: 18px; /*Tamanho da fonte*/
     font-weight: bold; /*Deixar a fonte em negrito*/
-    color:#00bfff /*Cor da fonte*/
+    color:#ff0000 /*Cor da fonte*/
 }
 .item_menu:hover{
     color:#ffffff /*Ao passar o mouse em um item do menu, ele ficará branco*/
@@ -109,4 +109,8 @@ nav li{
 
 .conteudo-gdd .div_conteudo{
     margin: 0px 0px 0px;;
+}
+
+p{
+    margin: 25px 200px;
 }
