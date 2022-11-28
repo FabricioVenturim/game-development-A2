@@ -10,7 +10,7 @@ class Interface:
         pygame.display.set_caption("Double Ninjas: Uma Missão Quase Possível")
         icon = pygame.image.load("img/ying yang.png")
         pygame.display.set_icon(icon)
-        self.tela = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
+        self.tela = pygame.display.set_mode((0,0), pygame.RESIZABLE)
         self.fonte = pygame.font.SysFont("Arial", 36)
         self.tempo = pygame.time.Clock()
         self.rodando = True
@@ -60,6 +60,7 @@ class Interface:
         while esperando:
             #criando um botão de pausa
             self.tempo.tick(60)
+            
             botao_pausa = Botao("||", 75, 75, (1, 1), 5)
             botao_pausa.desenhar()
 
@@ -93,6 +94,7 @@ class Botao:
         self.elevacao = elevacao
         self.elevacao_dinamica = elevacao
         self.original_posicao_y = posicao[1]
+        self.clicado = False
 
         #retangulo de cima do botao
         self.topo_ret = pygame.Rect(posicao, (x, y))
@@ -107,6 +109,14 @@ class Botao:
         self.texto_ret = self.texto_sup.get_rect(center = self.topo_ret.center)
         
     def desenhar(self):
+        pos = pygame.mouse.get_pos()
+        if self.topo_ret.collidepoint(pos):
+            self.topo_cor = (227, 53, 41)
+            if pygame.mouse.get_pressed()[0] and not self.clicado:
+                self.clicado = True
+            if not pygame.mouse.get_pressed()[0]:
+                self.clicado = False
+
         #aplicando a elevacao no botao
         self.topo_ret.y = self.original_posicao_y - self.elevacao_dinamica
         self.texto_ret.center = self.topo_ret.center
@@ -130,19 +140,3 @@ jogo.tela_start()
 while jogo.rodar():
     jogo.novo_jogo()
     jogo.tela_quit()
-
-#pygame.init()
-#tela = pygame.display.set_mode((500,500))
-#
-#botao1 = Botao("Clique aqui", 200, 40, (200,250), 5)
-#
-#while True:
-#    for event in pygame.event.get():
-#        if event.type == pygame.QUIT:
-#            pygame.quit()
-#            sys.exit 
-#
-#    tela.fill("#ffffff")
-#    botao1.desenhar()
-#    pygame.display.update()
-#    pygame.time.Clock().tick(60)
