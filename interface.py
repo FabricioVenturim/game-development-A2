@@ -72,7 +72,7 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0)
+            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()
@@ -87,13 +87,12 @@ class Interface:
                     self.rodar = False
                     pygame.quit()
                     sys.exit
-                    pygame.quit()
                     return
+                    
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     self.rodar = False
                     pygame.quit()
-                    sys.exit
-                    pygame.quit()            
+       
                   
                 if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
@@ -109,22 +108,33 @@ class Interface:
 
     #criando uma função para a tela de controles
     def tela_controles(self):
+        rodar = True
+        while rodar:
+            transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
+            transicao.fill((0,0,0))
+            for evento in pygame.event.get():
+                controles = pygame.image.load("img/Controles.png")
+                controles = pygame.transform.scale(controles, (1920,1080))
+                Botao("VOLTAR",200,100,(4,4), 3, self.fonte).desenhar(self.tela)
+                self.tela.blit(controles, (0,0))
+                print("CONTROLESESESESESES")
+                pygame.display.update()
 
-        transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
-        transicao.fill((0,0,0))
-        for i in range (0, 300):
-            transicao.set_alpha(i)
-            controles = pygame.image.load("img/Controles.png")
-            controles = pygame.transform.scale(controles, (1920,1080))
-            Botao("VOLTAR",200,100,(4,4), 3).desenhar(self.tela)
-            self.tela.blit(controles, (0,0))
-            pygame.time.delay(500)
-            print("CONTROLESESESESESES")
-            pygame.display.update()
+                if evento.type == pygame.QUIT:
+                    self.jogando = False
+                    self.rodando = False
+                    pygame.quit()
+                    sys.exit
+
+                for evento in pygame.event.get():
+                    if evento.type == KEYUP and evento.key == K_ESCAPE:
+                        rodar = False            
+
+
 
 
 class Botao:
-    def __init__ (self, texto, x, y, posicao, elevacao):
+    def __init__ (self, texto, x, y, posicao, elevacao, fonte):
         #determinando as propriedades do botao como posicao e cor
         self.pressionado = False
         self.elevacao = elevacao
@@ -141,7 +151,7 @@ class Botao:
         self.baixo_cor = (56, 43, 16)
 
         #o texto do botao
-        self.texto_sup = Interface().fonte.render(texto, True, (255,255,255))
+        self.texto_sup = fonte.render(texto, True, (255,255,255))
         self.texto_ret = self.texto_sup.get_rect(center = self.topo_ret.center)
         
     def desenhar(self, tela):
