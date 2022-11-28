@@ -20,6 +20,7 @@ class Level:
         self.alavancas = pygame.sprite.Group()
         self.chaves = pygame.sprite.Group()
         self.portoes = pygame.sprite.Group()
+        self.plataformas = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
@@ -45,8 +46,11 @@ class Level:
                         self.chave = objetos.Chave(x, y, self.personagens)
                         self.chaves.add(self.chave)
                     case 'P':
-                        self.portao = objetos.Portao(x, y, self.personagens)
+                        self.portao = objetos.Portao(x, y, self.personagens, self.chaves, self.portoes)
                         self.portoes.add(self.portao)
+                    case 'L':
+                        self.plataforma = objetos.Plataforma(x, y, self.personagens)
+                        self.plataformas.add(self.plataforma)
                         
 
     def draw(self):
@@ -56,10 +60,9 @@ class Level:
         self.alavancas.draw(self.screen)
         self.chaves.draw(self.screen)
         self.portoes.draw(self.screen)
+        self.plataformas.draw(self.screen)
 
-    def liberar_portao(self):
-        if len(self.chaves.sprites()) == 0:
-            self.portoes.sprites()[0].abrir_portao()
+
 
 
 
@@ -69,4 +72,4 @@ class Level:
         self.alavancas.update()
         self.chaves.update()
         self.portoes.update()
-        self.liberar_portao()
+        #self.plataformas.update()

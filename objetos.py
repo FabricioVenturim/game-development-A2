@@ -52,7 +52,7 @@ class Chave(pygame.sprite.Sprite):
     
 
 class Portao(pygame.sprite.Sprite):
-    def __init__(self, x, y, grupo_colisao):
+    def __init__(self, x, y, grupo_colisao, chaves=None, portoes=None):
         super().__init__()
         self.x = x
         self.y = y
@@ -61,17 +61,34 @@ class Portao(pygame.sprite.Sprite):
         self.image = self.img_fechado
         self.rect = self.image.get_rect(center = (x,y))
         self.open = False
+        self.grupo_colisao = grupo_colisao
+        self.chaves = chaves
+        self.portoes = portoes
 
     def abrir_portao(self):
         self.open = True
         self.image = self.img_aberto
         
+    
+    def liberar_portao(self):
+        if self.chaves != None and self.portoes != None:
+            if len(self.chaves.sprites()) == 0:
+                self.portoes.sprites()[0].abrir_portao()
 
 
     def update(self):
-        pass
+        self.liberar_portao()
 class Botao():
     pass
 
-class Plataforma():
-    pass
+class Plataforma(pygame.sprite.Sprite):
+    def __init__(self, x, y, grupo_colisao):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load("plataforma.png")
+        self.rect = self.image.get_rect(center = (x,y))
+        self.grupo_colisao = grupo_colisao
+
+    def update():
+        pass
