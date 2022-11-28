@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>personagem &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Buscar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../personagem.html">personagem module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">personagem</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte para personagem</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">from</span> <span class="nn">pygame.locals</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Personagem"><a class="viewcode-back" href="../personagem.html#personagem.Personagem">[documentos]</a><span class="k">class</span> <span class="nc">Personagem</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Objeto com funções básicas de todos os personagens</span>
+
+<span class="sd">    :param x: Posição x do personagem</span>
+<span class="sd">    :type x: int or float</span>
+<span class="sd">    :param y: Posição y do personagem</span>
+<span class="sd">    :type y: int or float</span>
+<span class="sd">    :param img: Caminho da imagem do personagem</span>
+<span class="sd">    :type img: str</span>
+<span class="sd">    :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">    :type dict_animacoes: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+
+    <span class="c1"># Define estados possíveis do jogador</span>
+    <span class="c1"># parado = 0 </span>
+    <span class="c1"># pulando = 1</span>
+    <span class="c1"># caindo = 2</span>
+
+    <span class="c1"># Define a aceleração da gravidade</span>
+    <span class="n">gravidade</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c1"># Define a velocidade inicial no pulo</span>
+    <span class="n">aceleracao_pulo_inicial</span> <span class="o">=</span> <span class="mi">30</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Funções construtoras do objeto</span>
+
+<span class="sd">        :param x: Posição x do personagem</span>
+<span class="sd">        :type x: int or float</span>
+<span class="sd">        :param y: Posição y do personagem</span>
+<span class="sd">        :type y: int or float</span>
+<span class="sd">        :param img: Caminho da imagem do personagem</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao_pulo_inicial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="mi">2</span>
+        
+        <span class="n">sprite_sheet</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">posicao</span> <span class="ow">in</span> <span class="n">dict_animacoes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">corta_sprite</span><span class="p">(</span><span class="n">sprite_sheet</span><span class="p">,</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index_lista</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__planar</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">index_lista</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index_lista</span>
+
+    <span class="nd">@index_lista</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">index_lista</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index_lista</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span>
+
+    <span class="nd">@rect</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__state</span>
+    
+    <span class="nd">@state</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__state</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">direita</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span>
+
+    <span class="nd">@direita</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">direita</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">correr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__correr</span>
+
+    <span class="nd">@correr</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">correr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__correr</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">planar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__planar</span>
+
+    <span class="nd">@planar</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">planar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__planar</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Personagem.corta_sprite"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.corta_sprite">[documentos]</a>    <span class="k">def</span> <span class="nf">corta_sprite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">sprite_sheet</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">posicao_inicial</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">largura</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">altura</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">quantidade</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">redirecionamento</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função que corta a sprite sheet e adiciona as imagens em uma lista</span>
+
+<span class="sd">        :param sprite_sheet: Caminho da imagem do personagem</span>
+<span class="sd">        :type sprite_sheet: str</span>
+<span class="sd">        :param posicao_inicial: Posição inicial da sprite sheet</span>
+<span class="sd">        :type posicao_inicial: float</span>
+<span class="sd">        :param largura: Largura da imagem</span>
+<span class="sd">        :type largura: float</span>
+<span class="sd">        :param altura: Altura da imagem</span>
+<span class="sd">        :type altura: float</span>
+<span class="sd">        :param quantidade: Quantidade de imagens</span>
+<span class="sd">        :type quantidade: int</span>
+<span class="sd">        :param redirecionamento: Redirecionamento da imagem</span>
+<span class="sd">        :type redirecionamento: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>                
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">quantidade</span><span class="p">):</span>
+            <span class="n">largura_inicial</span> <span class="o">=</span> <span class="n">posicao_inicial</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">sprite_sheet</span><span class="o">.</span><span class="n">subsurface</span><span class="p">((</span><span class="n">largura_inicial</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">largura</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">largura</span><span class="p">,</span><span class="n">altura</span><span class="p">))</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">largura</span><span class="o">/</span><span class="n">redirecionamento</span><span class="p">,</span> <span class="n">altura</span><span class="o">/</span><span class="n">redirecionamento</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Personagem.parado_animacao"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.parado_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">parado_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando parado</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Personagem.fun_correr_direita"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.fun_correr_direita">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_correr_direita</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que muda a posição do personagem correndo para a direita</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">9</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">6</span></div>
+    
+<div class="viewcode-block" id="Personagem.fun_correr_esquerda"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.fun_correr_esquerda">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_correr_esquerda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que muda a posição do personagem correndo para a esquerda</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">9</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">6</span></div>
+
+<div class="viewcode-block" id="Personagem.correr_animacao"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.correr_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">correr_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando correndo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">19</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span></div>
+        
+<div class="viewcode-block" id="Personagem.fun_cair"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.fun_cair">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_cair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que muda a posição do personagem caindo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+<div class="viewcode-block" id="Personagem.cair"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.cair">[documentos]</a>    <span class="k">def</span> <span class="nf">cair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando caindo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravidade</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">24</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Aceleração máxima</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="mi">18</span></div>
+
+<div class="viewcode-block" id="Personagem.fun_pular"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.fun_pular">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_pular</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que muda a posição do personagem pulando</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">20</span></div>
+
+<div class="viewcode-block" id="Personagem.pular_animacao"><a class="viewcode-back" href="../personagem.html#personagem.Personagem.pular_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">pular_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando pulando</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1">####### animação #######</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">29</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Atualiza o estado para caindo</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">2</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravidade</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravidade</span></div></div>
+            
+
+<div class="viewcode-block" id="BoyNinja"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja">[documentos]</a><span class="k">class</span> <span class="nc">BoyNinja</span><span class="p">(</span><span class="n">Personagem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;_summary_: Classe que define o personagem ninja menino</span>
+
+<span class="sd">    :param x: Posição x do personagem</span>
+<span class="sd">    :type x: int or float</span>
+<span class="sd">    :param y: Posição y do personagem</span>
+<span class="sd">    :type y: int or float</span>
+<span class="sd">    :param img: Caminho da imagem do personagem</span>
+<span class="sd">    :type img: str</span>
+<span class="sd">    :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">    :type dict_animacoes: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Construtor da classe</span>
+
+<span class="sd">        :param x: Posição x do personagem</span>
+<span class="sd">        :type x: int or float</span>
+<span class="sd">        :param y: Posição y do personagem</span>
+<span class="sd">        :type y: int or float</span>
+<span class="sd">        :param img: Caminho da imagem do personagem</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bater</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bater</span>
+
+    <span class="nd">@bater</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">bater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bater</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="BoyNinja.fun_bater"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja.fun_bater">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_bater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que ativa o personagem batendo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">bater</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">30</span></div>
+
+<div class="viewcode-block" id="BoyNinja.bater_animacao"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja.bater_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">bater_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando bate</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1">#Deixar a animação mais suave</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">==</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">15</span> 
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">80</span> 
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">39</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bater</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Voltar para o local inicial</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">15</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">80</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+       
+
+<div class="viewcode-block" id="BoyNinja.fun_planar"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja.fun_planar">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_planar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que ativa a planagem do personagem</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">40</span></div>
+ 
+
+<div class="viewcode-block" id="BoyNinja.planar_animacao"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja.planar_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">planar_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando plana</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">49</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">40</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Atualiza o estado para caindo</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span></div>
+    
+
+<div class="viewcode-block" id="BoyNinja.update"><a class="viewcode-back" href="../personagem.html#personagem.BoyNinja.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que atualiza a posição do personagem</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao_pulo_inicial</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cair</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para correr</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">correr_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para pular</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pular_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para bater</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">bater</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bater_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para planar</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">planar_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para parado</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">parado_animacao</span><span class="p">()</span></div></div>
+            
+<div class="viewcode-block" id="GirlNinja"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja">[documentos]</a><span class="k">class</span> <span class="nc">GirlNinja</span><span class="p">(</span><span class="n">Personagem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;_summary_: Classe que define o personagem ninja menina</span>
+
+<span class="sd">        :param x: Posição x do personagem</span>
+<span class="sd">        :type x: int or float</span>
+<span class="sd">        :param y: Posição y do personagem</span>
+<span class="sd">        :type y: int or float</span>
+<span class="sd">        :param img: Caminho da imagem do personagem</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Construtor da classe</span>
+
+<span class="sd">        :param x: Posição x do personagem</span>
+<span class="sd">        :type x: int or float</span>
+<span class="sd">        :param y: Posição y do personagem</span>
+<span class="sd">        :type y: int or float</span>
+<span class="sd">        :param img: Caminho da imagem do personagem</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: Dicionário com as posições de cada animação</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">screen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__deslizar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kunai</span> <span class="o">=</span> <span class="n">Kunai</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">deslizar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__deslizar</span>
+    
+    <span class="nd">@deslizar</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">deslizar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__deslizar</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span>
+    
+    <span class="nd">@atirar</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="GirlNinja.fun_deslizar"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja.fun_deslizar">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_deslizar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que ativa o personagem deslizando</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">deslizar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">37</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">30</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mf">7.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mf">7.5</span></div>
+
+<div class="viewcode-block" id="GirlNinja.deslizar_animacao"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja.deslizar_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">deslizar_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando desliza</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">39</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">30</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+
+        <span class="c1"># vira a imagem se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deslizar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="mi">37</span></div>
+
+<div class="viewcode-block" id="GirlNinja.fun_atirar"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja.fun_atirar">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que ativa o personagem atirando</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">atirar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">40</span></div>
+            
+<div class="viewcode-block" id="GirlNinja.atirar_animacao"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja.atirar_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">atirar_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que define a animação do personagem quando atira</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">49</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atirar</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">==</span> <span class="mi">43</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kunai</span><span class="o">.</span><span class="n">fun_atirar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">)</span> 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GirlNinja.update"><a class="viewcode-back" href="../personagem.html#personagem.GirlNinja.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que atualiza a posição do personagem</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1"># Atualiza a posição do kunai</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kunai</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># Atualiza o estado quando caindo </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao_pulo_inicial</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">planar</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="c1"># controle de animação do personagem para cair</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cair</span><span class="p">()</span>
+        <span class="c1"># controle de animação do personagem para deslizar</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">deslizar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deslizar_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para correr</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">correr_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para pular</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pular_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para atirar</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">atirar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atirar_animacao</span><span class="p">()</span>
+        <span class="c1"># Controle de animação do personagem para parado</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">parado_animacao</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Robo"><a class="viewcode-back" href="../personagem.html#personagem.Robo">[documentos]</a><span class="k">class</span> <span class="nc">Robo</span><span class="p">(</span><span class="n">Personagem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;_summary_: Classe que representa o Robo </span>
+
+<span class="sd">        :param x: posição x do robo</span>
+<span class="sd">        :type x: int</span>
+<span class="sd">        :param x_distancia: distancia que o robo irá se mover</span>
+<span class="sd">        :type x_distancia: int   </span>
+<span class="sd">        :param y: posição y do robo</span>
+<span class="sd">        :type y: int</span>
+<span class="sd">        :param campo_de_visao: distancia que o robo irá ver o personagem</span>
+<span class="sd">        :type campo_de_visao: int</span>
+<span class="sd">        :param img: imagem do robo</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: dicionario com as animações do robo</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True</span>
+<span class="sd">        :type movimentacao: bool, optional</span>
+<span class="sd">        :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True</span>
+<span class="sd">        :type direita_movimentacao: bool, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+    <span class="n">temporizador</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">x_distancia</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">campo_de_visao</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">movimentacao</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">direita_movimentacao</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Construtor da classe Robo</span>
+
+<span class="sd">        :param x: posição x do robo</span>
+<span class="sd">        :type x: int</span>
+<span class="sd">        :param x_distancia: distancia que o robo irá se mover</span>
+<span class="sd">        :type x_distancia: int   </span>
+<span class="sd">        :param y: posição y do robo</span>
+<span class="sd">        :type y: int</span>
+<span class="sd">        :param campo_de_visao: distancia que o robo irá ver o personagem</span>
+<span class="sd">        :type campo_de_visao: int</span>
+<span class="sd">        :param img: imagem do robo</span>
+<span class="sd">        :type img: str</span>
+<span class="sd">        :param dict_animacoes: dicionario com as animações do robo</span>
+<span class="sd">        :type dict_animacoes: dict</span>
+<span class="sd">        :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True</span>
+<span class="sd">        :type movimentacao: bool, optional</span>
+<span class="sd">        :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True</span>
+<span class="sd">        :type direita_movimentacao: bool, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">dict_animacoes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__campo_de_visao</span> <span class="o">=</span> <span class="n">campo_de_visao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_distancia</span> <span class="o">=</span> <span class="n">x_distancia</span>
+        <span class="k">if</span> <span class="n">direita_movimentacao</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vivo</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__movimentacao</span> <span class="o">=</span> <span class="n">movimentacao</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">campo_de_visao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__campo_de_visao</span>
+    
+    <span class="nd">@campo_de_visao</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">campo_de_visao</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__campo_de_visao</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span>
+    
+    <span class="nd">@x</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x_distancia</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_distancia</span>
+
+    <span class="nd">@x_distancia</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">x_distancia</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_distancia</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">movimentacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__movimentacao</span>
+
+    <span class="nd">@movimentacao</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">movimentacao</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__movimentacao</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vivo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vivo</span>
+    
+    <span class="nd">@vivo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vivo</span> <span class="o">=</span> <span class="n">value</span>
+    
+<div class="viewcode-block" id="Robo.fun_morrer"><a class="viewcode-back" href="../personagem.html#personagem.Robo.fun_morrer">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_morrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que faz a animação do robo morrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">vivo</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">18</span></div>
+
+<div class="viewcode-block" id="Robo.correr_animacao"><a class="viewcode-back" href="../personagem.html#personagem.Robo.correr_animacao">[documentos]</a>    <span class="k">def</span> <span class="nf">correr_animacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que faz a animação do robo correr</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">17</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span></div>
+    
+<div class="viewcode-block" id="Robo.verifica_player"><a class="viewcode-back" href="../personagem.html#personagem.Robo.verifica_player">[documentos]</a>    <span class="k">def</span> <span class="nf">verifica_player</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que verifica se o player está dentro do campo de visão do robo</span>
+
+<span class="sd">        :param player: Objeto do tipo Personagem</span>
+<span class="sd">        :type player: object</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>     <span class="c1"># verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">campo_de_visao</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">50</span> <span class="o">&lt;=</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DIREITAA campo de visão&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">campo_de_visao</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">50</span> <span class="o">&lt;=</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESQUERDA campo de visão&quot;</span><span class="p">)</span> </div>
+
+<div class="viewcode-block" id="Robo.animacao_morrer"><a class="viewcode-back" href="../personagem.html#personagem.Robo.animacao_morrer">[documentos]</a>    <span class="k">def</span> <span class="nf">animacao_morrer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que faz a animação do robo morrer</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">==</span> <span class="mi">24</span><span class="p">:</span> <span class="c1"># quando a colisão tiver certa, aí isso vai sair</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">&gt;</span> <span class="mi">27</span><span class="p">:</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">=</span> <span class="mi">27</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span> <span class="o">+=</span> <span class="mf">0.25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagens_ninja</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_lista</span><span class="p">)]</span>
+        
+        <span class="c1"># vira a image se o personagem estiver olhando para o outro lado</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correr</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Robo.update"><a class="viewcode-back" href="../personagem.html#personagem.Robo.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que atualiza a posição do robo</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cair</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vivo</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">animacao_morrer</span><span class="p">()</span>
+        
+        <span class="c1"># Controle de animação do personagem para correr</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">movimentacao</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporizador</span> <span class="o">==</span> <span class="mi">300</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporizador</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">correr_animacao</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fun_correr_direita</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">temporizador</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fun_correr_esquerda</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_distancia</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">temporizador</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">parado_animacao</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temporizador</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parado_animacao</span><span class="p">()</span></div></div>
+
+        
+
+<div class="viewcode-block" id="Kunai"><a class="viewcode-back" href="../personagem.html#personagem.Kunai">[documentos]</a><span class="k">class</span> <span class="nc">Kunai</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;_summary_ : Classe que cria os objetos Kunai</span>
+
+<span class="sd">    :param screen: tela do jogo que será exibido os objetos</span>
+<span class="sd">    :type screen: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">gravidade</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="n">aceleracao_inicial</span> <span class="o">=</span> <span class="mi">25</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>  
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que inicializa os objetos Kunai</span>
+
+<span class="sd">        :param screen: tela do jogo que será exibido os objetos</span>
+<span class="sd">        :type screen: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>             
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">screen</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/Kunai.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">160</span><span class="o">/</span><span class="mf">2.4</span><span class="p">,</span> <span class="mi">32</span><span class="o">/</span><span class="mf">2.4</span><span class="p">))</span> <span class="c1">#redimensiona a imagem para o tamanho desejado</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__aceleracao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao_inicial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__image</span>
+    
+    <span class="nd">@image</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__image</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span>
+    
+    <span class="nd">@rect</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rect</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">aceleracao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__aceleracao</span>
+    
+    <span class="nd">@aceleracao</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">aceleracao</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__aceleracao</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">direita</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span>
+    
+    <span class="nd">@direita</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">direita</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__direita</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span>
+    
+    <span class="nd">@atirar</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atirar</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Kunai.fun_atirar"><a class="viewcode-back" href="../personagem.html#personagem.Kunai.fun_atirar">[documentos]</a>    <span class="k">def</span> <span class="nf">fun_atirar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">bool_direita</span><span class="p">:</span><span class="nb">bool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que faz o objeto Kunai atirar</span>
+
+<span class="sd">        :param x: posição x do objeto</span>
+<span class="sd">        :type x: int</span>
+<span class="sd">        :param y: posição y do objeto</span>
+<span class="sd">        :type y: int</span>
+<span class="sd">        :param bool_direita: variável que verifica se o objeto está olhando para a direita</span>
+<span class="sd">        :type bool_direita: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">atirar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="n">bool_direita</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">midbottom</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">100</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1">#posiciona o kunai na frente do personagem</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">midbottom</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kunai.trajetoria"><a class="viewcode-back" href="../personagem.html#personagem.Kunai.trajetoria">[documentos]</a>    <span class="k">def</span> <span class="nf">trajetoria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que faz o objeto Kunai seguir uma trajetória</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">15</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">15</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravidade</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direita</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Kunai.update"><a class="viewcode-back" href="../personagem.html#personagem.Kunai.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_: Função que atualiza a posição do objeto Kunai</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atirar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajetoria</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aceleracao_inicial</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
