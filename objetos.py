@@ -12,14 +12,7 @@ class Alavanca(pygame.sprite.Sprite):
         self.grupo_colisao = grupo_colisao
         self.iscolliding = False
 
-    def ativar(self, personagem):
-        if personagem.image.get_rect().colliderect(self.image.get_rect()) and self.on == False:
-            self.on = True
 
-    def desativar(self, personagem):
-        if personagem.image.get_rect().colliderect(self.image.get_rect()) and self.on == True:
-            self.on = False
-    
 
     def mudar_direcao(self):
         if self.on == False:
@@ -33,7 +26,7 @@ class Alavanca(pygame.sprite.Sprite):
             self.on = not self.on
             self.mudar_direcao()
 
-            self.iscolliding = collision
+        self.iscolliding = collision
 
 
             
@@ -57,8 +50,6 @@ class Chave(pygame.sprite.Sprite):
     def update(self):
         self.pegar_chave(self.grupo_colisao)
     
-class Plataforma():
-    pass
 
 class Portao(pygame.sprite.Sprite):
     def __init__(self, x, y, grupo_colisao):
@@ -80,4 +71,7 @@ class Portao(pygame.sprite.Sprite):
     def update(self):
         pass
 class Botao():
+    pass
+
+class Plataforma():
     pass

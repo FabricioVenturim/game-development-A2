@@ -60,7 +60,6 @@ class Level:
     def liberar_portao(self):
         if len(self.chaves.sprites()) == 0:
             self.portoes.sprites()[0].abrir_portao()
-        print(self.portoes.sprites()[0].open)
 
 
 
