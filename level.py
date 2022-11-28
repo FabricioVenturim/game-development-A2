@@ -2,7 +2,7 @@ import pygame
 from tile import Tile
 import personagem
 
-ALTURA_EM_BLOCOS = 2
+PERSONAGEM_ALTURA_EM_BLOCOS = 2
 
 
 class Level:
@@ -27,17 +27,17 @@ class Level:
                     case 'X':
                         self.tiles.add(Tile((x, y), self.tile_size))
                     case 'B':
-                        altura = ALTURA_EM_BLOCOS * self.tile_size
+                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
                         self.boy = personagem.BoyNinja(
                             x, y, altura, self.tiles)
                         self.personagens.add(self.boy)
                     case 'G':
-                        altura = ALTURA_EM_BLOCOS * self.tile_size
+                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
                         self.girl = personagem.GirlNinja(
                             x, y, altura, self.screen, self.tiles)
                         self.personagens.add(self.girl)
                     case 'R':
-                        altura = ALTURA_EM_BLOCOS * self.tile_size
+                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
                         self.robo = personagem.Robo(
                             x, 120, y, altura, 20, self.tiles)
                         self.robos.add(self.robo)

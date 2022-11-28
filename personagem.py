@@ -1,5 +1,11 @@
 import pygame
 from pygame.locals import *
+import math
+
+RAZAO_PULO_ALTURA = 1.6
+RAZAO_GRAVIDADE_ALTURA = 0.01
+RAZAO_VELOCIDADE_PULO_ALTURA = RAZAO_GRAVIDADE_ALTURA * \
+    (math.sqrt(1 + 8 * RAZAO_PULO_ALTURA / RAZAO_GRAVIDADE_ALTURA) - 1) / 2
 
 
 class Personagem(pygame.sprite.Sprite):
@@ -9,20 +15,20 @@ class Personagem(pygame.sprite.Sprite):
     # caindo = 2
 
     # Define a aceleração da gravidade
-    gravidade = 2
-
-    # Define a velocidade inicial no pulo
-    aceleracao_pulo_inicial = 30
+    #gravidade = 2
 
     def __init__(self, x, y, altura, img, dict_animacoes, collision_sprites):
         pygame.sprite.Sprite.__init__(self)
-        self.aceleracao = self.aceleracao_pulo_inicial
         self.__state = 2
         self.collision_sprites = collision_sprites
 
         sprite_sheet = pygame.image.load(img).convert_alpha()
         self.imagens_ninja = []
         fator = altura / sprite_sheet.get_height()
+        self.gravidade = altura * RAZAO_GRAVIDADE_ALTURA
+        # Define a velocidade inicial no pulo
+        self.aceleracao_pulo_inicial = altura * RAZAO_VELOCIDADE_PULO_ALTURA
+        self.aceleracao = self.aceleracao_pulo_inicial
 
         for posicao in dict_animacoes.values():
             self.corta_sprite(
