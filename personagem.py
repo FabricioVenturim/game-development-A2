@@ -368,7 +368,6 @@ class GirlNinja(Personagem):
     def fun_deslizar(self):
         self.deslizar = True
         self.correr = False
-        self.rect.y += 37
 
         if self.index_lista < 30:
             self.index_lista = 30
@@ -387,7 +386,6 @@ class GirlNinja(Personagem):
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
         self.deslizar = False
-        self.rect.y -= 37
 
     def fun_atirar(self):
         self.atirar = True
@@ -455,16 +453,16 @@ class GirlNinja(Personagem):
                 if keys[pygame.K_UP]:
                     self.fun_pular()
                 elif keys[pygame.K_DOWN]:
-                    # TODO: consertar deslizar
                     self.fun_deslizar()
                 elif keys[pygame.K_RSHIFT]:
                     # TODO: consertar kunai
                     self.fun_atirar()
 
-            if keys[pygame.K_RIGHT]:
-                self.fun_correr_direita()
-            elif keys[pygame.K_LEFT]:
-                self.fun_correr_esquerda()
+            if not self.deslizar:
+                if keys[pygame.K_RIGHT]:
+                    self.fun_correr_direita()
+                elif keys[pygame.K_LEFT]:
+                    self.fun_correr_esquerda()
 
 
 class Robo(Personagem):
