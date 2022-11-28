@@ -48,10 +48,12 @@ class Level:
                     case 'P':
                         self.portao = objetos.Portao(x, y, self.personagens, self.chaves, self.portoes)
                         self.portoes.add(self.portao)
-                    case 'L':
-                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(300, 500))
+                    case 'H':
+                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(x-100, x+100))
                         self.plataformas.add(self.plataforma)
-                        
+                    case 'V':
+                        self.plataforma = objetos.Plataforma(x, y,variacao_y=(y-100, y+100), horizontal=False)
+                        self.plataformas.add(self.plataforma)
 
     def draw(self):
         self.tiles.draw(self.screen)
