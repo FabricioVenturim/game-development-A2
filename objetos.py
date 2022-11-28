@@ -12,6 +12,16 @@ class Alavanca(pygame.sprite.Sprite):
         self.grupo_colisao = grupo_colisao
         self.iscolliding = False
 
+    def colisao(self):
+        for personagem in self.grupo_colisao:
+            if personagem.rect.colliderect(self.rect):
+                if personagem.direita == True:
+                    personagem.rect.right = self.rect.left
+                    #persongagem.rect.left = self.rect.right
+                    
+                else:
+                    personagem.rect.left = self.rect.right
+
 
 
     def mudar_direcao(self):
@@ -20,6 +30,8 @@ class Alavanca(pygame.sprite.Sprite):
         else:
             self.image = self.alavanca_on
 
+    
+
     def update(self):
         collision = bool(pygame.sprite.spritecollideany(self, self.grupo_colisao))
         if collision and not self.iscolliding:
@@ -27,6 +39,8 @@ class Alavanca(pygame.sprite.Sprite):
             self.mudar_direcao()
 
         self.iscolliding = collision
+        self.colisao()
+        
 
 
             
@@ -78,8 +92,6 @@ class Portao(pygame.sprite.Sprite):
 
     def update(self):
         self.liberar_portao()
-class Botao():
-    pass
 
 class Plataforma(pygame.sprite.Sprite):
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
@@ -104,12 +116,83 @@ class Plataforma(pygame.sprite.Sprite):
             if self.rect.left >=x_max or self.rect.left <= x_min:
                 self.platform_vel*= -1
             self.rect.left += self.platform_vel
+            rect_over = self.rect.copy()
+            rect_over.y -= 1
+            for personagens in self.grupo_colisao.sprites():
+                if personagens.rect.colliderect(rect_over) and not personagens.rect.colliderect(self.rect):
+                    personagens.rect.x += self.platform_vel
+                    direita = personagens.direita
+                    personagens.direita = self.platform_vel > 0
+                    personagens.check_horizontal_collisions()
+                    personagens.direita = direita
         else:
             y_min, y_max = self.variacao_y
             if self.rect.top >=y_max or self.rect.top <= y_min:
                 self.platform_vel*= -1
             self.rect.bottom += self.platform_vel
+            if self.platform_vel > 0:
+                rect_over = self.rect.copy()
+                rect_over.y -= 1 + 2*self.platform_vel
+                for personagens in self.grupo_colisao.sprites():
+                    if personagens.rect.colliderect(rect_over) and not personagens.rect.colliderect(self.rect):
+                        personagens.rect.bottom = self.rect.top
+                        personagens.check_vertical_collisions()
+
+   
+            
+    
+    def colisao(self):
+        for personagem in self.grupo_colisao.sprites():
+            if personagem.rect.left < self.rect.right and  personagem.rect.right > self.rect.left and personagem.rect.bottom > self.rect.top and personagem.rect.bottom < self.rect.bottom:
+                if personagem.state != 1:
+                    personagem.state = 0
+                    print(self.rect.top)
+                    print("COLIDIU")
+                    personagem.rect.bottom = self.rect.top
     
         
     def update(self):
+        #self.colisao()
         self.movimentar_plataforma(self.horizontal)
+
+        
+        
+class Botao(pygame.sprite.Sprite):
+    def __init__(self, x, y, botoes, grupo_colisao):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load("botao.png")
+        self.rect = self.image.get_rect(midbottom = (x,y))
+        self.ativo = False
+        self.botoes = botoes
+        self.grupo_colisao = grupo_colisao
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect_collision = self.rect
+
+
+    
+    def abaixar_botao(self):
+        self.image = pygame.image.load("botao_apertado.png")
+        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+        
+        
+
+    def apertar_botao(self, botao):
+        self.ativo = False
+        for personagens in self.grupo_colisao.sprites():
+            if personagens.rect.colliderect(self.rect_collision):
+                self.abaixar_botao()
+                self.ativo = True
+        if not self.ativo:
+            self.image = pygame.image.load("botao.png") 
+            self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+        #print(self.ativo)
+    
+    def update(self):
+        self.apertar_botao(self)
+        #self.abaixar_botao()
+
+
+    
+

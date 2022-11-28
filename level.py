@@ -20,6 +20,7 @@ class Level:
         self.alavancas = pygame.sprite.Group()
         self.chaves = pygame.sprite.Group()
         self.portoes = pygame.sprite.Group()
+        self.botoes = pygame.sprite.GroupSingle()
         self.plataformas = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
@@ -49,11 +50,14 @@ class Level:
                         self.portao = objetos.Portao(x, y, self.personagens, self.chaves, self.portoes)
                         self.portoes.add(self.portao)
                     case 'H':
-                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(x-100, x+100))
+                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(x-100, x+100), grupo_colisao = self.personagens)
                         self.plataformas.add(self.plataforma)
                     case 'V':
-                        self.plataforma = objetos.Plataforma(x, y,variacao_y=(y-100, y+100), horizontal=False)
+                        self.plataforma = objetos.Plataforma(x, y,variacao_y=(y-100, y+100), grupo_colisao = self.personagens, horizontal=False)
                         self.plataformas.add(self.plataforma)
+                    case 'T':
+                        self.botao = objetos.Botao(x+20,y+50, self.botoes, self.personagens)
+                        self.botoes.add(self.botao)
 
     def draw(self):
         self.tiles.draw(self.screen)
@@ -62,6 +66,7 @@ class Level:
         self.alavancas.draw(self.screen)
         self.chaves.draw(self.screen)
         self.portoes.draw(self.screen)
+        self.botoes.draw(self.screen)
         self.plataformas.draw(self.screen)
 
 
@@ -75,3 +80,4 @@ class Level:
         self.chaves.update()
         self.portoes.update()
         self.plataformas.update()
+        self.botoes.update()
