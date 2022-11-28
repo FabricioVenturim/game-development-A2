@@ -60,33 +60,62 @@ class Interface:
         while esperando:
             #criando um botão de pausa
             self.tempo.tick(60)
-            
-            botao_pausa = Botao("||", 75, 75, (1, 1), 5)
-            botao_pausa.desenhar()
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("Pressione uma tecla para jogar", 500, 120, ( self.tela.get_width()*1.2/3, self.tela.get_height()*3.5/5), 0)
+            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2/5), 0)
             botao_jogar.desenhar()
+            if botao_jogar.clicado == True:
+                self.tela_controles()
+                #INTERFACE DA TELA DE OPÇÕES
+                # BLA BLA BLA                
+
+            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*2.9/5)
             self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit 
-                    esperando = False
+                    return
+                if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
+                    self.tela_quit()
                     self.rodar = False
-                if evento.type == pygame.KEYUP:
+                    pygame.quit()
+                    sys.exit
+                    return
+                if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
                     pygame.mixer.music.stop()
                     pygame.mixer.Sound("audio/trilha sonora.mp3").play()
                     self.rodar()
             pygame.display.update()
+    
+    #criando uma função para a tela de controles
+    def tela_controles(self):
+
+        transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
+        transicao.fill((0,0,0))
+        for i in range (0, 300):
+            transicao.set_alpha(i)
+            self.tela.fill((105, 81, 31))
+            #comando de opcoes bla bla bla
+            #aparece a interface com os controles
+            self.tela.blit(transicao, (0,0))
+            botao_w = Botao("W", 75,75, (200,200), 5)
+            botao_w.desenhar()
+            botao_a = Botao("A", 75,75, (250,100), 5)
+            botao_a.desenhar()
+            botao_s = Botao("D", 75,75, (300,200), 5)
+            botao_s.desenhar()
+            pygame.display.update()
+            #comando de tempo com a interface aberta
+            pygame.time.delay(10000)
+            boy_ninja = pygame.image.load("img/player_1/Idle_000.png")
+            girl_ninja = pygame.image.load("img/player_2/Idle_000.png")
             
-
     def tela_quit(self):
-        pygame.quit()
-        pass
-
+        for evento in pygame.event.get():
+            if evento == pygame.K_ESCAPE:
+                pygame.quit()
+        
 class Botao:
     def __init__ (self, texto, x, y, posicao, elevacao):
         #determinando as propriedades do botao como posicao e cor
