@@ -2,18 +2,27 @@ import pygame
 from pygame.locals import *
 import sys
 
+#criando a classe interface
 class Interface:
     def __init__(self):
+
+        #definindo as propriedades iniciais, além de iniciar algumas ações
         pygame.init()
         pygame.mixer.init()
         pygame.font.init()
+
+        #definindo nome e icon
         pygame.display.set_caption("Double Ninjas: Uma Missão Quase Possível")
         icon = pygame.image.load("img/ying yang.png")
         pygame.display.set_icon(icon)
+
+        #definindo as propriedades da tela
         self.tela = pygame.display.set_mode((0,0), pygame.RESIZABLE)
         self.fonte = pygame.font.SysFont("Arial", 36)
         self.tempo = pygame.time.Clock()
         self.rodando = True
+
+        #aplicando o fundo
         fundo = pygame.image.load("img/fundo2.jpg")
         fundo = pygame.transform.scale(fundo,(2112,1188))
         self.tela.blit(fundo,(0,0))
@@ -76,18 +85,22 @@ class Interface:
                 if evento.type == pygame.QUIT:
                     return
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
-                    self.tela_quit()
                     self.rodar = False
                     pygame.quit()
                     sys.exit
-                    return
+                    pygame.quit()            
+                  
                 if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
                     pygame.mixer.music.stop()
                     pygame.mixer.Sound("audio/trilha sonora.mp3").play()
                     self.rodar()
-            pygame.display.update()
-    
+            try:
+                pygame.display.update()
+            except:
+                print("Saiu do Jogo")
+                pass
+
     #criando uma função para a tela de controles
     def tela_controles(self):
 
@@ -96,8 +109,10 @@ class Interface:
         for i in range (0, 300):
             transicao.set_alpha(i)
             self.tela.fill((105, 81, 31))
+
             #comando de opcoes bla bla bla
             #aparece a interface com os controles
+
             self.tela.blit(transicao, (0,0))
             botao_w = Botao("W", 75,75, (200,200), 5)
             botao_w.desenhar()
@@ -105,17 +120,16 @@ class Interface:
             botao_a.desenhar()
             botao_s = Botao("D", 75,75, (300,200), 5)
             botao_s.desenhar()
-            pygame.display.update()
+
             #comando de tempo com a interface aberta
             pygame.time.delay(10000)
-            boy_ninja = pygame.image.load("img/player_1/Idle_000.png")
-            girl_ninja = pygame.image.load("img/player_2/Idle_000.png")
-            
-    def tela_quit(self):
-        for evento in pygame.event.get():
-            if evento == pygame.K_ESCAPE:
-                pygame.quit()
-        
+            boy_ninja = pygame.image.load("img/player_1/Idle__000.png")
+            girl_ninja = pygame.image.load("img/player_2/Idle__000.png")
+            self.tela.blit(boy_ninja, (self.tela.get_width()*2/5,self.tela.get_height()*5/6))
+            self.tela.blit(girl_ninja,(self.tela.get_width()*4/5,self.tela.get_height()*5/6))
+            pygame.display.update()
+
+
 class Botao:
     def __init__ (self, texto, x, y, posicao, elevacao):
         #determinando as propriedades do botao como posicao e cor
@@ -168,4 +182,3 @@ jogo.tela_start()
 
 while jogo.rodar():
     jogo.novo_jogo()
-    jogo.tela_quit()
