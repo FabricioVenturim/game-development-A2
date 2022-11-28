@@ -30,6 +30,7 @@ class Interface:
     def novo_jogo(self):
         self.todas_sprites = pygame.sprite.Group()
         self.rodar()
+        print("novovovovovovovo")
         pygame.display.update()
         pygame.time.Clock().tick(60)
 
@@ -72,7 +73,7 @@ class Interface:
 
             #aparecendo o texto de teclar para começar
             botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0)
-            botao_jogar.desenhar()
+            botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()
                 #INTERFACE DA TELA DE OPÇÕES
@@ -83,6 +84,10 @@ class Interface:
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
+                    self.rodar = False
+                    pygame.quit()
+                    sys.exit
+                    pygame.quit()
                     return
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     self.rodar = False
@@ -96,6 +101,7 @@ class Interface:
                     pygame.mixer.Sound("audio/trilha sonora.mp3").play()
                     self.rodar()
             try:
+                print("tentnadooooooo")
                 pygame.display.update()
             except:
                 print("Saiu do Jogo")
@@ -110,9 +116,10 @@ class Interface:
             transicao.set_alpha(i)
             controles = pygame.image.load("img/Controles.png")
             controles = pygame.transform.scale(controles, (1920,1080))
+            Botao("VOLTAR",200,100,(4,4), 3).desenhar(self.tela)
             self.tela.blit(controles, (0,0))
-            Botao("VOLTAR",200,100,(4,4), 3).desenhar()
             pygame.time.delay(500)
+            print("CONTROLESESESESESES")
             pygame.display.update()
 
 
@@ -137,7 +144,7 @@ class Botao:
         self.texto_sup = Interface().fonte.render(texto, True, (255,255,255))
         self.texto_ret = self.texto_sup.get_rect(center = self.topo_ret.center)
         
-    def desenhar(self):
+    def desenhar(self, tela):
         pos = pygame.mouse.get_pos()
         if self.topo_ret.collidepoint(pos):
             self.topo_cor = (227, 53, 41)
@@ -152,9 +159,6 @@ class Botao:
         self.baixo_ret.midtop = self.topo_ret.midtop
         self.baixo_ret.height = self.topo_ret.height + self.elevacao_dinamica
         
-        #definido a tela da interface
-        tela = Interface().tela
-        
         #aplicando as características do botão
         pygame.draw.rect(tela, self.baixo_cor, self.baixo_ret, border_radius=15)
         pygame.draw.rect(tela, self.topo_cor, self.topo_ret, border_radius=15)
@@ -164,6 +168,9 @@ class Botao:
 
 jogo = Interface()
 jogo.tela_start()
-
-while jogo.rodar():
-    jogo.novo_jogo()
+try:
+    while jogo.rodar():
+        jogo.novo_jogo()
+except:
+    print("Saiu do Jogo pelo X")
+    pass
