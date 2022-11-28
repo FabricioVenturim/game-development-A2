@@ -23,7 +23,7 @@ class Interface:
         self.rodando = True
 
         #aplicando o fundo
-        fundo = pygame.image.load("img/fundo2.jpg")
+        fundo = pygame.image.load("img/fundo2.png")
         fundo = pygame.transform.scale(fundo,(2112,1188))
         self.tela.blit(fundo,(0,0))
 
@@ -71,14 +71,14 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2/5), 0)
+            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0)
             botao_jogar.desenhar()
             if botao_jogar.clicado == True:
                 self.tela_controles()
                 #INTERFACE DA TELA DE OPÇÕES
                 # BLA BLA BLA                
 
-            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*2.9/5)
+            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.4/5)
             self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
 
             for evento in pygame.event.get():
@@ -108,25 +108,16 @@ class Interface:
         transicao.fill((0,0,0))
         for i in range (0, 300):
             transicao.set_alpha(i)
-            self.tela.fill((105, 81, 31))
-
-            #comando de opcoes bla bla bla
-            #aparece a interface com os controles
-
-            self.tela.blit(transicao, (0,0))
-            botao_w = Botao("W", 75,75, (200,200), 5)
-            botao_w.desenhar()
-            botao_a = Botao("A", 75,75, (250,100), 5)
-            botao_a.desenhar()
-            botao_s = Botao("D", 75,75, (300,200), 5)
-            botao_s.desenhar()
-
-            #comando de tempo com a interface aberta
-            pygame.time.delay(10000)
-            boy_ninja = pygame.image.load("img/player_1/Idle__000.png")
-            girl_ninja = pygame.image.load("img/player_2/Idle__000.png")
-            self.tela.blit(boy_ninja, (self.tela.get_width()*2/5,self.tela.get_height()*5/6))
-            self.tela.blit(girl_ninja,(self.tela.get_width()*4/5,self.tela.get_height()*5/6))
+            controles = pygame.image.load("img/Controles.png")
+            controles = pygame.transform.scale(controles, (1920,1080))
+            fundo = pygame.image.load("img/fundo2.png")
+            fundo = pygame.transform.scale(fundo,(2112,1188))
+            self.tela.blit(controles, (0,0))
+            pygame.time.delay(500)
+            pygame.display.update()
+        for evento in pygame.event.get():
+            if evento.type == KEYUP and evento.key == K_ESCAPE:
+                pygame.time.delay(0)
             pygame.display.update()
 
 
