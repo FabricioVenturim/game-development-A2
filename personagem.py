@@ -6,6 +6,11 @@ RAZAO_PULO_ALTURA = 1.6
 RAZAO_GRAVIDADE_ALTURA = 0.01
 RAZAO_VELOCIDADE_PULO_ALTURA = RAZAO_GRAVIDADE_ALTURA * \
     (math.sqrt(1 + 8 * RAZAO_PULO_ALTURA / RAZAO_GRAVIDADE_ALTURA) - 1) / 2
+# Correr pra esquerda pode ser mais rápido devido a problemas de arredondamento
+# Possível solução: manusear coordenadas próprias e depois atribuí-las ao rect
+RAZAO_VELOCIDADE_ALTURA = 0.05
+MOD_VELOCIDADE_CAINDO = 1.5
+MOD_VELOCIDADE_DESLIZANDO = 1.25
 
 
 class Personagem(pygame.sprite.Sprite):
@@ -29,6 +34,9 @@ class Personagem(pygame.sprite.Sprite):
         # Define a velocidade inicial no pulo
         self.aceleracao_pulo_inicial = altura * RAZAO_VELOCIDADE_PULO_ALTURA
         self.aceleracao = self.aceleracao_pulo_inicial
+
+        self.velocidade = altura * RAZAO_VELOCIDADE_ALTURA
+        self.velocidade_caindo = self.velocidade * MOD_VELOCIDADE_CAINDO
 
         for posicao in dict_animacoes.values():
             self.corta_sprite(
@@ -115,9 +123,9 @@ class Personagem(pygame.sprite.Sprite):
         if self.index_lista < 10:
             self.index_lista = 10
         if self.state == 1 or self.planar:
-            self.rect.x += 9
+            self.rect.x += self.velocidade_caindo
         else:
-            self.rect.x += 6
+            self.rect.x += self.velocidade
 
     def fun_correr_esquerda(self):
         self.direita = False
@@ -125,9 +133,9 @@ class Personagem(pygame.sprite.Sprite):
         if self.index_lista < 10:
             self.index_lista = 10
         if self.state == 1 or self.planar:
-            self.rect.x -= 9
+            self.rect.x -= self.velocidade_caindo
         else:
-            self.rect.x -= 6
+            self.rect.x -= self.velocidade
 
     def correr_animacao(self):
         if self.index_lista > 19:
@@ -348,6 +356,7 @@ class GirlNinja(Personagem):
         self.__deslizar = False
         self.__atirar = False
         self.kunai = Kunai(self.screen)
+        self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
 
     @property
     def deslizar(self):
@@ -372,9 +381,9 @@ class GirlNinja(Personagem):
         if self.index_lista < 30:
             self.index_lista = 30
         if self.direita == False:
-            self.rect.x -= 7.5
+            self.rect.x -= self.velocidade_deslizando
         else:
-            self.rect.x += 7.5
+            self.rect.x += self.velocidade_deslizando
 
     def deslizar_animacao(self):
         if self.index_lista > 39:
