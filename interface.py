@@ -78,7 +78,7 @@ class Interface:
                 #INTERFACE DA TELA DE OPÇÕES
                 # BLA BLA BLA                
 
-            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.4/5)
+            self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1.05/4, self.tela.get_height()*3.45/5)
             self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
 
             for evento in pygame.event.get():
@@ -110,14 +110,9 @@ class Interface:
             transicao.set_alpha(i)
             controles = pygame.image.load("img/Controles.png")
             controles = pygame.transform.scale(controles, (1920,1080))
-            fundo = pygame.image.load("img/fundo2.png")
-            fundo = pygame.transform.scale(fundo,(2112,1188))
             self.tela.blit(controles, (0,0))
+            Botao("VOLTAR",200,100,(4,4), 3).desenhar()
             pygame.time.delay(500)
-            pygame.display.update()
-        for evento in pygame.event.get():
-            if evento.type == KEYUP and evento.key == K_ESCAPE:
-                pygame.time.delay(0)
             pygame.display.update()
 
 
@@ -166,7 +161,6 @@ class Botao:
         
         #para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
-
 
 jogo = Interface()
 jogo.tela_start()
