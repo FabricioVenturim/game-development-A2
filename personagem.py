@@ -10,10 +10,11 @@ class Personagem(pygame.sprite.Sprite):
 
     # Define a aceleração da gravidade
     gravidade = 2
+
     # Define a velocidade inicial no pulo
     aceleracao_pulo_inicial = 30
 
-    def __init__(self, x, y, img, dict_animacoes, collision_sprites):
+    def __init__(self, x, y, altura, img, dict_animacoes, collision_sprites):
         pygame.sprite.Sprite.__init__(self)
         self.aceleracao = self.aceleracao_pulo_inicial
         self.__state = 2
@@ -21,10 +22,11 @@ class Personagem(pygame.sprite.Sprite):
 
         sprite_sheet = pygame.image.load(img).convert_alpha()
         self.imagens_ninja = []
+        fator = altura / sprite_sheet.get_height()
 
         for posicao in dict_animacoes.values():
             self.corta_sprite(
-                sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], posicao[4])
+                sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], fator)
 
         self.__index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
@@ -89,7 +91,7 @@ class Personagem(pygame.sprite.Sprite):
             img = sprite_sheet.subsurface(
                 (largura_inicial + i*largura, 0), (largura, altura))
             img = pygame.transform.scale(
-                img, (largura/redirecionamento, altura/redirecionamento))
+                img, (largura * redirecionamento, altura * redirecionamento))
             self.imagens_ninja.append(img)
 
     def parado_animacao(self):
@@ -143,7 +145,7 @@ class Personagem(pygame.sprite.Sprite):
         self.image = self.imagens_ninja[int(self.index_lista)]
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
-    
+
     def apply_gravity(self):
         self.aceleracao += self.gravidade
         self.rect.y += self.aceleracao
@@ -204,16 +206,16 @@ class Personagem(pygame.sprite.Sprite):
 
 
 class BoyNinja(Personagem):
-    def __init__(self, x, y, collision_sprites):
+    def __init__(self, x, y, altura, collision_sprites):
         dict_animacoes_boy = {
-            "parado": [0, 232, 455, 10, 3.1],
-            "correndo": [5940, 363, 455, 10, 3.1],
-            "pulando": [2325, 362, 483, 10, 3.1],
-            "batendo": [19410, 536, 495, 10, 3.1],
-            "voando": [24787, 443, 454, 10, 3.1]
+            "parado": [0, 232, 455, 10],
+            "correndo": [5940, 363, 455, 10],
+            "pulando": [2325, 362, 483, 10],
+            "batendo": [19410, 536, 495, 10],
+            "voando": [24787, 443, 454, 10]
         }
         img = "img/spritesheet_boy.png"
-        super().__init__(x, y, img, dict_animacoes_boy, collision_sprites)
+        super().__init__(x, y, altura, img, dict_animacoes_boy, collision_sprites)
         self.__bater = False
 
     @property
@@ -298,7 +300,7 @@ class BoyNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
-            
+
         if self.state == 0:
             self.apply_gravity()
             self.state = 2
@@ -326,16 +328,16 @@ class BoyNinja(Personagem):
 
 
 class GirlNinja(Personagem):
-    def __init__(self, x, y, screen, collision_sprites):
+    def __init__(self, x, y, altura, screen, collision_sprites):
         dict_animacoes_girl = {
-            "parado": [0, 290, 500, 10, 3.5],
-            "correndo": [6906, 372, 500, 10, 3.5],
-            "pulando": [2910, 399, 500, 10, 3.5],
-            "deslizando": [16425, 397, 401, 10, 3.5],
-            "ataque": [20400, 383, 514, 10, 3.5]
+            "parado": [0, 290, 500, 10],
+            "correndo": [6906, 372, 500, 10],
+            "pulando": [2910, 399, 500, 10],
+            "deslizando": [16425, 397, 401, 10],
+            "ataque": [20400, 383, 514, 10]
         }
         img = "img/spritesheet_girl.png"
-        super().__init__(x, y, img, dict_animacoes_girl, collision_sprites)
+        super().__init__(x, y, altura, img, dict_animacoes_girl, collision_sprites)
         self.screen = screen
         self.__deslizar = False
         self.__atirar = False
@@ -433,7 +435,7 @@ class GirlNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
-        
+
         if self.state == 0:
             self.apply_gravity()
             self.state = 2
@@ -462,7 +464,7 @@ class GirlNinja(Personagem):
 class Robo(Personagem):
     temporizador = 0
 
-    def __init__(self, x, x_distancia, y, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
+    def __init__(self, x, x_distancia, y, altura, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
         """_summary_: Classe que representa o Robo 
 
         :param x: posição x do robo
@@ -479,12 +481,12 @@ class Robo(Personagem):
         :type direita_movimentacao: bool, optional
         """
         dict_animacoes_robo = {
-            "parado": [0, 567, 555, 10, 3.5],
-            "correndo": [5670, 567, 550, 8, 3.5],
-            "morrendo": [10190, 562, 519, 10, 3.5]
+            "parado": [0, 567, 555, 10],
+            "correndo": [5670, 567, 550, 8],
+            "morrendo": [10190, 562, 519, 10]
         }
         img = "img/spritesheet_robo.png"
-        super().__init__(x, y, img, dict_animacoes_robo, collision_sprites)
+        super().__init__(x, y, altura, img, dict_animacoes_robo, collision_sprites)
         self.__x = x
         self.__campo_de_visao = campo_de_visao
         self.__x_distancia = x_distancia
@@ -576,7 +578,7 @@ class Robo(Personagem):
     def update(self):
         if self.state == 2:
             self.cair()
-            
+
         if self.state == 0:
             self.apply_gravity()
             self.state = 2
