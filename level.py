@@ -19,6 +19,7 @@ class Level:
         self.robos = pygame.sprite.Group()
         self.alavancas = pygame.sprite.Group()
         self.chaves = pygame.sprite.Group()
+        self.portoes = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
@@ -43,6 +44,9 @@ class Level:
                     case 'C':
                         self.chave = objetos.Chave(x, y, self.personagens)
                         self.chaves.add(self.chave)
+                    case 'P':
+                        self.portao = objetos.Portao(x, y, self.personagens)
+                        self.portoes.add(self.portao)
                         
 
     def draw(self):
@@ -51,9 +55,19 @@ class Level:
         self.robos.draw(self.screen)
         self.alavancas.draw(self.screen)
         self.chaves.draw(self.screen)
+        self.portoes.draw(self.screen)
+
+    def liberar_portao(self):
+        if len(self.chaves.sprites()) == 0:
+            self.portoes.sprites()[0].abrir_portao()
+        print(self.portoes.sprites()[0].open)
+
+
 
     def update(self):
         self.personagens.update()
         self.robos.update()
         self.alavancas.update()
         self.chaves.update()
+        self.portoes.update()
+        self.liberar_portao()
