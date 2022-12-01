@@ -22,6 +22,7 @@ class Level:
         self.portoes = pygame.sprite.Group()
         self.botoes = pygame.sprite.GroupSingle()
         self.plataformas = pygame.sprite.Group()
+        self.plataformas_condicionais = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
@@ -40,9 +41,6 @@ class Level:
                     case 'R':
                         self.robo = personagem.Robo(x, 120, y, 20, self.tiles)
                         self.robos.add(self.robo)
-                    case 'A':
-                        self.alavanca = objetos.Alavanca(x, y, self.personagens)
-                        self.alavancas.add(self.alavanca)
                     case 'C':
                         self.chave = objetos.Chave(x, y, self.personagens)
                         self.chaves.add(self.chave)
@@ -55,9 +53,17 @@ class Level:
                     case 'V':
                         self.plataforma = objetos.Plataforma(x, y,variacao_y=(y-100, y+100), grupo_colisao = self.personagens, horizontal=False)
                         self.plataformas.add(self.plataforma)
+                    case 'A':
+                        self.alavanca = objetos.Alavanca(x, y, self.personagens)
+                        self.alavancas.add(self.alavanca)
                     case 'T':
                         self.botao = objetos.Botao(x+20,y+50, self.botoes, self.personagens)
                         self.botoes.add(self.botao)
+                    case 'M':
+                        alavancas = self.alavancas.sprites()
+                        
+                        self.plataforma_condicional = objetos.Plataforma_com_alavanca(x, y, alavanca=alavancas[0],variacao_x=(x-100, x+100), grupo_colisao = self.personagens)
+                        self.plataformas_condicionais.add(self.plataforma_condicional)
 
     def draw(self):
         self.tiles.draw(self.screen)
@@ -68,6 +74,7 @@ class Level:
         self.portoes.draw(self.screen)
         self.botoes.draw(self.screen)
         self.plataformas.draw(self.screen)
+        self.plataformas_condicionais.draw(self.screen)
 
 
 
@@ -81,3 +88,4 @@ class Level:
         self.portoes.update()
         self.plataformas.update()
         self.botoes.update()
+        self.plataformas_condicionais.update()

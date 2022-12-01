@@ -23,7 +23,6 @@ class Alavanca(pygame.sprite.Sprite):
                     personagem.rect.left = self.rect.right
 
 
-
     def mudar_direcao(self):
         if self.on == False:
             self.image = self.alavanca_off
@@ -137,9 +136,6 @@ class Plataforma(pygame.sprite.Sprite):
                     if personagens.rect.colliderect(rect_over) and not personagens.rect.colliderect(self.rect):
                         personagens.rect.bottom = self.rect.top
                         personagens.check_vertical_collisions()
-
-   
-            
     
     def colisao(self):
         for personagem in self.grupo_colisao.sprites():
@@ -152,11 +148,24 @@ class Plataforma(pygame.sprite.Sprite):
     
         
     def update(self):
-        #self.colisao()
+        self.colisao()
         self.movimentar_plataforma(self.horizontal)
 
         
-        
+
+class Plataforma_com_alavanca(Plataforma):
+    def __init__(self, x, y, alavanca, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
+        super().__init__(x, y, variacao_x, variacao_y, platform_vel, grupo_colisao, horizontal)
+        self.alavanca = alavanca
+
+    def movimentar_condicional(self):
+        if self.alavanca.on == True:
+            self.movimentar_plataforma(True)
+    
+    def update(self):
+        self.colisao()
+        self.movimentar_condicional()
+
 class Botao(pygame.sprite.Sprite):
     def __init__(self, x, y, botoes, grupo_colisao):
         super().__init__()

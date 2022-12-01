@@ -11,10 +11,10 @@ level_map = [
     'X       V     X',
     'X      T      X',
     'X      XXX    X',
-    'X  P          X',
+    'X  P  A       X',
     'X   XX     R  X',
-    'X       A     X',
+    'X        M    X',
     'X       XX    X',
-    'X B    C    G X',
+    'X B    C   G  X',
     'XXXXXXXXXXXXXXX'
 ]
