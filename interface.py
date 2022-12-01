@@ -27,13 +27,6 @@ class Interface:
         fundo = pygame.transform.scale(fundo,(2112,1188))
         self.tela.blit(fundo,(0,0))
 
-    def novo_jogo(self):
-        self.todas_sprites = pygame.sprite.Group()
-        self.rodar()
-        print("novovovovovovovo")
-        pygame.display.update()
-        pygame.time.Clock().tick(60)
-
 #função da interface da fase
     def rodar(self):
         self.jogando = True
@@ -41,6 +34,7 @@ class Interface:
             self.tempo.tick(60)
             self.eventos()
 
+    #possibilitando que as pessoas fechem o jogo 
     def eventos(self):
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -48,7 +42,7 @@ class Interface:
                     self.jogando = False
                 self.rodando = False
 
-
+    #criando uma função para o texto
     def mostrar_texto(self, texto, tamanho, cor, x, y):
         fonte = pygame.font.SysFont("Arial", tamanho)
         texto = fonte.render(texto, True, cor)
@@ -103,7 +97,6 @@ class Interface:
                     pygame.mixer.Sound("audio/trilha sonora.mp3").play()
                     self.rodar()
             try:
-                print("tentnadooooooo")
                 pygame.display.update()
             except:
                 print("Saiu do Jogo")
@@ -121,37 +114,42 @@ class Interface:
 
             try:
                 for evento in pygame.event.get():
+                    #criando o botão para voltar da interface de controles
                     voltar = Botao("VOLTAR",200,100,(15,15), 3, self.fonte)
                     voltar.desenhar(self.tela)
-                    print("CONTROLESESESESESES")
                     pygame.display.update()
 
+                    #garantindo que quando clicado a imagem suma
                     if voltar.clicado == True:
-                        controles.fill(0,0,0,0)
+                        controles.fill(0,0,0)
                         pygame.display.update()
                         break
 
+                    #possibilitando o fechamento do jogo
                     if evento.type == pygame.QUIT:
                         self.jogando = False
                         self.rodando = False
                         pygame.quit()
                         sys.exit()
 
+                    #definindo ESC para sair do jogos
                     if evento.type == KEYUP and evento.key == K_ESCAPE:
                         rodar = False
                         pygame.quit()
                         sys.exit()
-                    
-            except Exception as erro:
-                print("o usuário saiu da tela de controles pelo X", erro)
+                
+            #tratando a exceção de quando alguém sair na tela de controles
+            except Exception:
+                print("o usuário saiu da tela de controles")
                 break
 
+        #colocando de volta a imagem certa
         rodar = False
         fundo = pygame.image.load("img/fundo2.png")
         controles = pygame.transform.scale(fundo,(2112,1188))
         self.tela.blit(controles, (0,0))
 
-
+#criando uma classe para botão
 class Botao:
     def __init__ (self, texto, x, y, posicao, elevacao, fonte):
         #determinando as propriedades do botao como posicao e cor
@@ -173,6 +171,7 @@ class Botao:
         self.texto_sup = fonte.render(texto, True, (255,255,255))
         self.texto_ret = self.texto_sup.get_rect(center = self.topo_ret.center)
         
+    #função para gerar o botão
     def desenhar(self, tela):
         pos = pygame.mouse.get_pos()
         if self.topo_ret.collidepoint(pos):
@@ -195,11 +194,6 @@ class Botao:
         #para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
 
+#rodando o jogo
 jogo = Interface()
 jogo.tela_start()
-try:
-    while jogo.rodar():
-        jogo.novo_jogo()
-except:
-    print("Saiu do Jogo pelo X")
-    pass
