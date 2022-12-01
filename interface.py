@@ -72,7 +72,7 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, ( self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0, self.fonte)
+            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()
@@ -84,15 +84,13 @@ class Interface:
 
             except:
                 print("o usuário saiu pelo X da tela de controles")
-                sys.exit
-                break
+                sys.exit()
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     self.rodar = False
                     pygame.quit()
-                    sys.exit
-                    return
+                    sys.exit()
 
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     self.rodar = False
@@ -117,27 +115,41 @@ class Interface:
         while rodar:
             transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
             transicao.fill((0,0,0))
+            controles = pygame.image.load("img/Controles.png")
+            controles = pygame.transform.scale(controles, (1920,1080))
+            self.tela.blit(controles, (0,0))
+
             try:
                 for evento in pygame.event.get():
-                    controles = pygame.image.load("img/Controles.png")
-                    controles = pygame.transform.scale(controles, (1920,1080))
-                    Botao("VOLTAR",200,100,(4,4), 3, self.fonte).desenhar(self.tela)
-                    self.tela.blit(controles, (0,0))
+                    voltar = Botao("VOLTAR",200,100,(15,15), 3, self.fonte)
+                    voltar.desenhar(self.tela)
                     print("CONTROLESESESESESES")
                     pygame.display.update()
+
+                    if voltar.clicado == True:
+                        controles.fill(0,0,0,0)
+                        pygame.display.update()
+                        break
 
                     if evento.type == pygame.QUIT:
                         self.jogando = False
                         self.rodando = False
                         pygame.quit()
-                        sys.exit
+                        sys.exit()
 
                     if evento.type == KEYUP and evento.key == K_ESCAPE:
-                        rodar = False            
+                        rodar = False
+                        pygame.quit()
+                        sys.exit()
+                    
             except Exception as erro:
                 print("o usuário saiu da tela de controles pelo X", erro)
                 break
 
+        rodar = False
+        fundo = pygame.image.load("img/fundo2.png")
+        controles = pygame.transform.scale(fundo,(2112,1188))
+        self.tela.blit(controles, (0,0))
 
 
 class Botao:
