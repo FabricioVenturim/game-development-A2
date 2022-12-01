@@ -24,7 +24,7 @@ class Interface:
 
         #aplicando o fundo
         fundo = pygame.image.load("img/fundo2.png")
-        fundo = pygame.transform.scale(fundo,(2112,1188))
+        fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
         self.tela.blit(fundo,(0,0))
 
 #função da interface da fase
@@ -66,15 +66,15 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.2/12, self.tela.get_height()*2.7/5), 0, self.fonte)
+            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*2.4/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()
                 #INTERFACE DA TELA DE OPÇÕES
                 # BLA BLA BLA                
             try:
-                self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1.05/4, self.tela.get_height()*3.45/5)
-                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 18, (255, 255, 255), self.tela.get_width()/5.5, self.tela.get_height()*9.7/10)
+                self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.15/5)
+                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/5.2, self.tela.get_height()*9.3/10)
 
             except:
                 print("o usuário saiu pelo X da tela de controles")
@@ -193,6 +193,21 @@ class Botao:
         
         #para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
+    
+    def pausa(self):
+        pausado = True
+        while pausado:
+            for evento in pygame.event.get():
+                if evento.type == pygame.KEYUP and evento.key == K_SPACE:
+                    pausado = False
+                
+                elif evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
+                    pygame.quit()
+                    quit() 
+        return
+
+    def saida(self):
+        return
 
 #rodando o jogo
 jogo = Interface()
