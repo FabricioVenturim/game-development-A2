@@ -15,16 +15,6 @@ class Alavanca(pygame.sprite.Sprite):
         self.grupo_colisao = grupo_colisao
         self.iscolliding = False
 
-    def colisao(self):
-        for personagem in self.grupo_colisao:
-            if personagem.rect.colliderect(self.rect):
-                if personagem.direita == True:
-                    personagem.rect.right = self.rect.left
-                    #persongagem.rect.left = self.rect.right
-
-                else:
-                    personagem.rect.left = self.rect.right
-
     def mudar_direcao(self):
         if self.on == False:
             self.image = self.alavanca_off
@@ -39,7 +29,6 @@ class Alavanca(pygame.sprite.Sprite):
             self.mudar_direcao()
 
         self.iscolliding = collision
-        self.colisao()
         
 
 
