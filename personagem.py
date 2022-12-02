@@ -605,11 +605,16 @@ class Robo(Personagem):
             if self.rect.x < player.rect.x < self.rect.x + self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
                 self.correr = False
                 print("DIREITAA campo de visão")
-
+                return True #Para fazer o test do player
+            else:
+                return False
         else: # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
             if self.rect.x > player.rect.x > self.rect.x - self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
                 self.correr = False
                 print("ESQUERDA campo de visão") 
+                return True #Para fazer o test do player
+            else:
+                return False
 
     def animacao_morrer(self):
         """_summary_: Função que faz a animação do robo morrer
