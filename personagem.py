@@ -50,6 +50,7 @@ class Personagem(pygame.sprite.Sprite):
         self.__correr = False
         # TODO: planar não deveria estar só na classe BoyNinja?
         self.__planar = False
+        self.mask = pygame.mask.from_surface(self.image)
 
     @property
     def index_lista(self):
