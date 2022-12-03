@@ -7,7 +7,8 @@ class Alavanca(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.on = False
-        self.alavanca_off = pygame.image.load("img/alavanca1.png").convert_alpha()
+        self.alavanca_off = pygame.image.load(
+            "img/alavanca1.png").convert_alpha()
         self.alavanca_off = pygame.transform.smoothscale(
             self.alavanca_off, (tile_size, tile_size))
         self.alavanca_on = pygame.transform.flip(
@@ -192,14 +193,20 @@ class Plataforma(pygame.sprite.Sprite):
 
 
 class Plataforma_com_alavanca(Plataforma):
-    def __init__(self, x, y, tile_size, alavanca, variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, ativadores=[], variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
         super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
-        self.alavanca = alavanca
+        self.ativadores = ativadores
 
     def movimentar_condicional(self):
-        if self.alavanca.on == True:
-            self.movimentar_plataforma(True)
+        movimentar = False
+        for ativador in self.ativadores:
+            if ativador.on:
+                movimentar = True
+                break
+        
+        if movimentar:
+            self.movimentar_plataforma(self.horizontal)
 
     def update(self):
         self.colisao()
@@ -231,7 +238,7 @@ class Botao(pygame.sprite.Sprite):
         self.midbottom = (x + tile_size / 2, y + tile_size)
         self.rect = self.image.get_rect(
             midbottom=self.midbottom)
-        self.ativo = False
+        self.on = False
         self.botoes = botoes
         self.grupo_colisao = grupo_colisao
         self.mask = pygame.mask.from_surface(self.image)
@@ -242,15 +249,15 @@ class Botao(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom=self.midbottom)
 
     def apertar_botao(self):
-        self.ativo = False
+        self.on = False
         for personagens in self.grupo_colisao.sprites():
             if personagens.rect.colliderect(self.rect_collision):
                 self.abaixar_botao()
-                self.ativo = True
-        if not self.ativo:
+                self.on = True
+        if not self.on:
             self.image = self.img_solto
             self.rect = self.image.get_rect(midbottom=self.midbottom)
-        # print(self.ativo)
+        # print(self.on)
 
     def update(self):
         self.apertar_botao()

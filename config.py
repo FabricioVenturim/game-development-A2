@@ -39,5 +39,10 @@ level_data = [
                     'horizontal': True
                 }
             ]
-        }
+        }, 'connections': [
+            {
+                'A': [0],
+                'T': [0]
+            }
+        ]
     }]

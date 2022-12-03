@@ -112,14 +112,30 @@ class Level:
                     case 'M':
                         settings = sprite_settings[col][counter[col]]
                         counter[col] += 1
-                        alavancas = self.alavancas.sprites()
 
                         plataforma_condicional = objetos.Plataforma_com_alavanca(
-                            x, y, self.tile_size, alavanca=alavancas[0], grupo_colisao=self.personagens_e_robos, **settings)
+                            x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, **settings)
                         self.plataformas_condicionais.add(
                             plataforma_condicional)
                         self.visible_sprites.add(plataforma_condicional)
                         self.active_sprites.add(plataforma_condicional)
+
+        connections = level_data['connections']
+        for plataforma_index, connection in enumerate(connections):
+            alavancas_index = connection['A']
+            botoes_index = connection['T']
+            alavancas = []
+            botoes = []
+
+            for index in alavancas_index:
+                alavancas.append(self.alavancas.sprites()[index])
+
+            for index in botoes_index:
+                botoes.append(self.botoes.sprites()[index])
+            
+            self.plataformas_condicionais.sprites()[plataforma_index].ativadores = alavancas + botoes
+            
+
 
     def draw(self):
         self.visible_sprites.draw(self.screen)
