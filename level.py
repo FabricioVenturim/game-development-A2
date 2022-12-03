@@ -3,8 +3,6 @@ from tile import Tile
 import personagem
 import objetos
 
-PERSONAGEM_ALTURA_EM_BLOCOS = 2
-
 
 class Level:
     def __init__(self, level_data, surface):
@@ -40,7 +38,7 @@ class Level:
                         self.tiles.add(tile)
                         self.visible_sprites.add(tile)
                     case 'B':
-                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
+                        altura = self.tile_size
                         self.boy = personagem.BoyNinja(
                             x, y, altura, self.tiles)
                         self.personagens.add(self.boy)
@@ -48,7 +46,7 @@ class Level:
                         self.visible_sprites.add(self.boy)
                         self.active_sprites.add(self.boy)
                     case 'G':
-                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
+                        altura = self.tile_size
                         self.girl = personagem.GirlNinja(
                             x, y, altura, self.screen, self.tiles)
                         self.personagens.add(self.girl)
@@ -56,7 +54,7 @@ class Level:
                         self.visible_sprites.add(self.girl)
                         self.active_sprites.add(self.girl)
                     case 'R':
-                        altura = PERSONAGEM_ALTURA_EM_BLOCOS * self.tile_size
+                        altura = self.tile_size
                         robo = personagem.Robo(
                             x, 120, y, altura, 20, self.tiles)
                         self.robos.add(robo)
@@ -64,7 +62,8 @@ class Level:
                         self.visible_sprites.add(robo)
                         self.active_sprites.add(robo)
                     case 'C':
-                        chave = objetos.Chave(x, y, self.personagens)
+                        chave = objetos.Chave(
+                            x, y, self.tile_size, self.personagens)
                         self.chaves.add(chave)
                         self.visible_sprites.add(chave)
                         self.active_sprites.add(chave)

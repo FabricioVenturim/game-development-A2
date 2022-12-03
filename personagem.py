@@ -2,13 +2,14 @@ import pygame
 from pygame.locals import *
 import math
 
-RAZAO_PULO_ALTURA = 1.6
-RAZAO_GRAVIDADE_ALTURA = 0.01
-RAZAO_VELOCIDADE_PULO_ALTURA = RAZAO_GRAVIDADE_ALTURA * \
-    (math.sqrt(1 + 8 * RAZAO_PULO_ALTURA / RAZAO_GRAVIDADE_ALTURA) - 1) / 2
+ALTURA_BLC = 2
+ALTURA_PULO_BLC = 3.2
+GRAVIDADE_BLC = 0.02
+VELOCIDADE_PULO_BLC = GRAVIDADE_BLC * \
+    (math.sqrt(1 + 8 * ALTURA_PULO_BLC / GRAVIDADE_BLC) - 1) / 2
 # Correr pra esquerda pode ser mais rápido devido a problemas de arredondamento
 # Possível solução: manusear coordenadas próprias e depois atribuí-las ao rect
-RAZAO_VELOCIDADE_ALTURA = 0.05
+VELOCIDADE_BLC = 0.1
 MOD_VELOCIDADE_CAINDO = 1.5
 MOD_VELOCIDADE_DESLIZANDO = 1.25
 
@@ -22,20 +23,20 @@ class Personagem(pygame.sprite.Sprite):
     # Define a aceleração da gravidade
     #gravidade = 2
 
-    def __init__(self, x, y, altura, img, dict_animacoes, collision_sprites):
+    def __init__(self, x, y, tile_size, img, dict_animacoes, collision_sprites):
         pygame.sprite.Sprite.__init__(self)
         self.__state = 2
         self.collision_sprites = collision_sprites
 
         sprite_sheet = pygame.image.load(img).convert_alpha()
         self.imagens_ninja = []
-        fator = altura / sprite_sheet.get_height()
-        self.gravidade = altura * RAZAO_GRAVIDADE_ALTURA
+        fator = tile_size * ALTURA_BLC / sprite_sheet.get_height()
+        self.gravidade = tile_size * GRAVIDADE_BLC
         # Define a velocidade inicial no pulo
-        self.aceleracao_pulo_inicial = altura * RAZAO_VELOCIDADE_PULO_ALTURA
+        self.aceleracao_pulo_inicial = tile_size * VELOCIDADE_PULO_BLC
         self.aceleracao = self.aceleracao_pulo_inicial
 
-        self.velocidade = altura * RAZAO_VELOCIDADE_ALTURA
+        self.velocidade = tile_size * VELOCIDADE_BLC
         self.velocidade_caindo = self.velocidade * MOD_VELOCIDADE_CAINDO
 
         for posicao in dict_animacoes.values():
@@ -44,7 +45,7 @@ class Personagem(pygame.sprite.Sprite):
 
         self.__index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
-        self.__rect = self.image.get_rect(midbottom=(x, y))
+        self.__rect = self.image.get_rect(midbottom=(x + tile_size / 2, y + tile_size))
 
         self.__direita = True
         self.__correr = False
@@ -197,7 +198,7 @@ class Personagem(pygame.sprite.Sprite):
             self.aceleracao -= self.gravidade
 
         if self.state == 2:
-            self.rect.y += self.aceleracao
+            self.rect.y -= self.aceleracao
             self.aceleracao += self.gravidade
 
     def check_horizontal_collisions(self):
