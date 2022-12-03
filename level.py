@@ -93,7 +93,7 @@ class Level:
                         self.active_sprites.add(alavanca)
                     case 'T':
                         botao = objetos.Botao(
-                            x+20, y+50, self.botoes, self.personagens)
+                            x, y, self.tile_size, self.botoes, self.personagens)
                         self.botoes.add(botao)
                         self.visible_sprites.add(botao)
                         self.active_sprites.add(botao)

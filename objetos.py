@@ -180,7 +180,7 @@ class Plataforma(pygame.sprite.Sprite):
                     if sprite.rect.colliderect(self.rect_test):
                         posicao_valida = False
                         break
-                
+
                 if posicao_valida:
                     personagem.state = 0
                     personagem.aceleracao = 0
@@ -207,12 +207,30 @@ class Plataforma_com_alavanca(Plataforma):
 
 
 class Botao(pygame.sprite.Sprite):
-    def __init__(self, x, y, botoes, grupo_colisao):
+    def __init__(self, x, y, tile_size, botoes, grupo_colisao):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("botao.png")
-        self.rect = self.image.get_rect(midbottom=(x, y))
+
+        self.img_solto = pygame.image.load("botao.png").convert_alpha()
+        largura = self.img_solto.get_width()
+
+        self.img_solto = pygame.transform.smoothscale(
+            self.img_solto, (tile_size, tile_size * 0.6))
+        largura_scaled, altura_scaled = self.img_solto.get_size()
+
+        self.img_apertado = pygame.image.load(
+            "botao_apertado.png").convert_alpha()
+        largura_apertado = self.img_apertado.get_width()
+        fator = largura_apertado / largura
+
+        self.img_apertado = pygame.transform.smoothscale(
+            self.img_apertado, (largura_scaled * fator, altura_scaled * fator))
+
+        self.image = self.img_solto
+        self.midbottom = (x + tile_size / 2, y + tile_size)
+        self.rect = self.image.get_rect(
+            midbottom=self.midbottom)
         self.ativo = False
         self.botoes = botoes
         self.grupo_colisao = grupo_colisao
@@ -220,8 +238,8 @@ class Botao(pygame.sprite.Sprite):
         self.rect_collision = self.rect
 
     def abaixar_botao(self):
-        self.image = pygame.image.load("botao_apertado.png")
-        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+        self.image = self.img_apertado
+        self.rect = self.image.get_rect(midbottom=self.midbottom)
 
     def apertar_botao(self):
         self.ativo = False
@@ -230,8 +248,8 @@ class Botao(pygame.sprite.Sprite):
                 self.abaixar_botao()
                 self.ativo = True
         if not self.ativo:
-            self.image = pygame.image.load("botao.png")
-            self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+            self.image = self.img_solto
+            self.rect = self.image.get_rect(midbottom=self.midbottom)
         # print(self.ativo)
 
     def update(self):
