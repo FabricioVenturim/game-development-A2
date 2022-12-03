@@ -150,7 +150,10 @@ class Interface:
         rodar = False
         fundo = pygame.image.load("img/fundo2.jpg")
         controles = pygame.transform.scale(fundo,(2112,1188))
-        self.tela.blit(controles, (0,0))
+        logo = pygame.image.load("img/logo.png")
+        logo = pygame.transform.scale(logo,(960,600))
+        self.tela.blits([(controles, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+        
 
 #criando uma classe para botão
 class Botao:
