@@ -20,6 +20,7 @@ class Level:
         self.active_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.personagens = pygame.sprite.Group()
+        self.personagens_e_robos = pygame.sprite.Group()
         # TODO: Remover grupos desncecessários
         self.robos = pygame.sprite.Group()
         self.alavancas = pygame.sprite.Group()
@@ -43,6 +44,7 @@ class Level:
                         self.boy = personagem.BoyNinja(
                             x, y, altura, self.tiles)
                         self.personagens.add(self.boy)
+                        self.personagens_e_robos.add(self.boy)
                         self.visible_sprites.add(self.boy)
                         self.active_sprites.add(self.boy)
                     case 'G':
@@ -50,6 +52,7 @@ class Level:
                         self.girl = personagem.GirlNinja(
                             x, y, altura, self.screen, self.tiles)
                         self.personagens.add(self.girl)
+                        self.personagens_e_robos.add(self.girl)
                         self.visible_sprites.add(self.girl)
                         self.active_sprites.add(self.girl)
                     case 'R':
@@ -57,6 +60,7 @@ class Level:
                         robo = personagem.Robo(
                             x, 120, y, altura, 20, self.tiles)
                         self.robos.add(robo)
+                        self.personagens_e_robos.add(robo)
                         self.visible_sprites.add(robo)
                         self.active_sprites.add(robo)
                     case 'C':
@@ -72,19 +76,19 @@ class Level:
                         self.active_sprites.add(portao)
                     case 'H':
                         plataforma = objetos.Plataforma(x, y, variacao_x=(
-                            x-100, x+100), grupo_colisao=self.personagens)
+                            x-100, x+100), grupo_colisao=self.personagens_e_robos)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
                         self.active_sprites.add(plataforma)
                     case 'V':
                         plataforma = objetos.Plataforma(x, y, variacao_y=(
-                            y-100, y+100), grupo_colisao=self.personagens, horizontal=False)
+                            y-100, y+100), grupo_colisao=self.personagens_e_robos, horizontal=False)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
                         self.active_sprites.add(plataforma)
                     case 'A':
                         alavanca = objetos.Alavanca(
-                            x, y, self.personagens)
+                            x, y, self.tile_size, self.personagens)
                         self.alavancas.add(alavanca)
                         self.visible_sprites.add(alavanca)
                         self.active_sprites.add(alavanca)
@@ -98,7 +102,7 @@ class Level:
                         alavancas = self.alavancas.sprites()
 
                         plataforma_condicional = objetos.Plataforma_com_alavanca(
-                            x, y, alavanca=alavancas[0], variacao_x=(x-100, x+100), grupo_colisao=self.personagens)
+                            x, y, alavanca=alavancas[0], variacao_x=(x-100, x+100), grupo_colisao=self.personagens_e_robos)
                         self.plataformas_condicionais.add(
                             plataforma_condicional)
                         self.visible_sprites.add(plataforma_condicional)

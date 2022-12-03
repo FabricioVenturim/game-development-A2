@@ -2,16 +2,18 @@ import pygame
 
 
 class Alavanca(pygame.sprite.Sprite):
-    def __init__(self, x, y, grupo_colisao):
+    def __init__(self, x, y, tile_size, grupo_colisao):
         super().__init__()
         self.x = x
         self.y = y
         self.on = False
-        self.alavanca_off = pygame.image.load("alavanca1.png")
+        self.alavanca_off = pygame.image.load("alavanca1.png").convert_alpha()
+        self.alavanca_off = pygame.transform.smoothscale(self.alavanca_off, (tile_size, tile_size))
         self.alavanca_on = pygame.transform.flip(
             self.alavanca_off, True, False)
         self.image = self.alavanca_off
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.rect = self.image.get_rect(
+            midbottom=(x + tile_size / 2, y + tile_size * 1.20))
         self.grupo_colisao = grupo_colisao
         self.iscolliding = False
 
@@ -29,8 +31,6 @@ class Alavanca(pygame.sprite.Sprite):
             self.mudar_direcao()
 
         self.iscolliding = collision
-        
-
 
 
 class Chave(pygame.sprite.Sprite):
@@ -130,19 +130,19 @@ class Plataforma(pygame.sprite.Sprite):
     def colisao(self):
         for personagem in self.grupo_colisao.sprites():
             aceleracao = -personagem.aceleracao
-            
+
             if not self.horizontal:
                 aceleracao_relativa = aceleracao - self.platform_vel
             else:
                 aceleracao_relativa = aceleracao
-            
+
             if (
                 personagem.rect.left < self.rect.right and
                 personagem.rect.right > self.rect.left and
                 personagem.rect.bottom > self.rect.top and
                 personagem.rect.bottom < self.rect.bottom and
                 (aceleracao_relativa >= 0 or personagem.state == 2)
-               ):
+            ):
                 self.rect_test.update(personagem.rect)
                 self.rect_test.bottom = self.rect.top
                 for sprite in personagem.collision_sprites.sprites():
