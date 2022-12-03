@@ -8,7 +8,8 @@ class Alavanca(pygame.sprite.Sprite):
         self.y = y
         self.on = False
         self.alavanca_off = pygame.image.load("alavanca1.png").convert_alpha()
-        self.alavanca_off = pygame.transform.smoothscale(self.alavanca_off, (tile_size, tile_size))
+        self.alavanca_off = pygame.transform.smoothscale(
+            self.alavanca_off, (tile_size, tile_size))
         self.alavanca_on = pygame.transform.flip(
             self.alavanca_off, True, False)
         self.image = self.alavanca_off
@@ -34,13 +35,13 @@ class Alavanca(pygame.sprite.Sprite):
 
 
 class Chave(pygame.sprite.Sprite):
-    def __init__(self, x, y, grupo_colisao):
+    def __init__(self, x, y, tile_size, grupo_colisao):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.transform.scale(
-            pygame.image.load("chave.png"), (30, 50))
-        self.rect = self.image.get_rect(center=(x, y))
+        self.image = pygame.transform.smoothscale(
+            pygame.image.load("chave.png"), (tile_size * 0.45, tile_size * 0.9)).convert_alpha()
+        self.rect = self.image.get_rect(center=(x + tile_size / 2, y + tile_size / 2))
         self.grupo_colisao = grupo_colisao
         self.active = True
 
