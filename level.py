@@ -74,13 +74,13 @@ class Level:
                         self.visible_sprites.add(portao)
                         self.active_sprites.add(portao)
                     case 'H':
-                        plataforma = objetos.Plataforma(x, y, variacao_x=(
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, variacao_x=(
                             x-100, x+100), grupo_colisao=self.personagens_e_robos)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
                         self.active_sprites.add(plataforma)
                     case 'V':
-                        plataforma = objetos.Plataforma(x, y, variacao_y=(
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, variacao_y=(
                             y-100, y+100), grupo_colisao=self.personagens_e_robos, horizontal=False)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
@@ -101,7 +101,7 @@ class Level:
                         alavancas = self.alavancas.sprites()
 
                         plataforma_condicional = objetos.Plataforma_com_alavanca(
-                            x, y, alavanca=alavancas[0], variacao_x=(x-100, x+100), grupo_colisao=self.personagens_e_robos)
+                            x, y, self.tile_size, alavanca=alavancas[0], variacao_x=(x-100, x+100), grupo_colisao=self.personagens_e_robos)
                         self.plataformas_condicionais.add(
                             plataforma_condicional)
                         self.visible_sprites.add(plataforma_condicional)

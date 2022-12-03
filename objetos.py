@@ -102,12 +102,22 @@ class Portao(pygame.sprite.Sprite):
 class Plataforma(pygame.sprite.Sprite):
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
-    def __init__(self, x, y, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("plataforma.png")
-        self.rect = self.image.get_rect(center=(x, y))
+        self.image = pygame.image.load("plataforma.png").convert_alpha()
+        self.image = pygame.transform.smoothscale(
+            self.image, (tile_size, tile_size / 2))
+        self.rect = self.image.get_rect(topleft=(x, y))
+        padding_x = tile_size * 0.1
+        padding_y = tile_size * 0.13
+        self.rect_collision = pygame.Rect(
+            x + padding_x,
+            y + padding_y,
+            tile_size - padding_x,
+            tile_size / 2 - padding_y
+        )
         self.rect_over = self.rect.copy()
         self.rect_test = pygame.Rect(0, 0, 0, 0)
         self.grupo_colisao = grupo_colisao
@@ -123,10 +133,11 @@ class Plataforma(pygame.sprite.Sprite):
             if self.rect.left >= x_max or self.rect.left <= x_min:
                 self.platform_vel *= -1
             self.rect.left += self.platform_vel
-            self.rect_over.update(self.rect)
+            self.rect_collision.center = self.rect.center
+            self.rect_over.update(self.rect_collision)
             self.rect_over.y -= 1
             for personagens in self.grupo_colisao.sprites():
-                if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect):
+                if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect_collision):
                     personagens.rect.x += self.platform_vel
                     direita = personagens.direita
                     personagens.direita = self.platform_vel > 0
@@ -137,12 +148,13 @@ class Plataforma(pygame.sprite.Sprite):
             if self.rect.top >= y_max or self.rect.top <= y_min:
                 self.platform_vel *= -1
             self.rect.bottom += self.platform_vel
+            self.rect_collision.center = self.rect.center
             if self.platform_vel > 0:
-                self.rect_over.update(self.rect)
+                self.rect_over.update(self.rect_collision)
                 self.rect_over.y -= 1 + 2*self.platform_vel
                 for personagens in self.grupo_colisao.sprites():
-                    if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect) and personagens.state != 1:
-                        personagens.rect.bottom = self.rect.top
+                    if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect_collision) and personagens.state != 1:
+                        personagens.rect.bottom = self.rect_collision.top
                         personagens.check_vertical_collisions()
 
     def colisao(self):
@@ -155,20 +167,24 @@ class Plataforma(pygame.sprite.Sprite):
                 aceleracao_relativa = aceleracao
 
             if (
-                personagem.rect.left < self.rect.right and
-                personagem.rect.right > self.rect.left and
-                personagem.rect.bottom > self.rect.top and
-                personagem.rect.bottom < self.rect.bottom and
+                personagem.rect.left < self.rect_collision.right and
+                personagem.rect.right > self.rect_collision.left and
+                personagem.rect.bottom > self.rect_collision.top and
+                personagem.rect.bottom < self.rect_collision.bottom and
                 (aceleracao_relativa >= 0 or personagem.state == 2)
             ):
                 self.rect_test.update(personagem.rect)
-                self.rect_test.bottom = self.rect.top
+                self.rect_test.bottom = self.rect_collision.top
+                posicao_valida = True
                 for sprite in personagem.collision_sprites.sprites():
                     if sprite.rect.colliderect(self.rect_test):
-                        return
-                personagem.state = 0
-                personagem.aceleracao = 0
-                personagem.rect.bottom = self.rect.top
+                        posicao_valida = False
+                        break
+                
+                if posicao_valida:
+                    personagem.state = 0
+                    personagem.aceleracao = 0
+                    personagem.rect.bottom = self.rect_collision.top
 
     def update(self):
         self.colisao()
@@ -176,8 +192,8 @@ class Plataforma(pygame.sprite.Sprite):
 
 
 class Plataforma_com_alavanca(Plataforma):
-    def __init__(self, x, y, alavanca, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
-        super().__init__(x, y, variacao_x, variacao_y,
+    def __init__(self, x, y, tile_size, alavanca, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
+        super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
         self.alavanca = alavanca
 
