@@ -69,15 +69,15 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*2.4/5), 0, self.fonte)
+            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*3/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()
                 #INTERFACE DA TELA DE OPÇÕES
                 # BLA BLA BLA                
             try:
-                self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.15/5)
-                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/5.2, self.tela.get_height()*9.3/10)
+                self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.75/5)
+                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/4.2, self.tela.get_height()*9.3/10)
 
             except:
                 print("o usuário saiu pelo X da tela de controles")
@@ -112,7 +112,7 @@ class Interface:
             transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
             transicao.fill((0,0,0))
             controles = pygame.image.load("img/Controles.png")
-            controles = pygame.transform.scale(controles, (1920,1080))
+            controles = pygame.transform.scale(controles, (self.tela.get_width(),self.tela.get_height()))
             self.tela.blit(controles, (0,0))
 
             try:
@@ -202,6 +202,7 @@ class Botao:
     
     def pausa(self):
         Interface.mostrar_texto("PRESSIONE ESPAÇO PARA CONTINUAR", 20, (255,255,255), (Interface().tela.get_width/2.5), (Interface().tela.get_height/5))
+        Interface.blit
         pausado = True
         while pausado:
             for evento in pygame.event.get():
