@@ -7,7 +7,7 @@ class Alavanca(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.on = False
-        self.alavanca_off = pygame.image.load("alavanca1.png").convert_alpha()
+        self.alavanca_off = pygame.image.load("img/alavanca1.png").convert_alpha()
         self.alavanca_off = pygame.transform.smoothscale(
             self.alavanca_off, (tile_size, tile_size))
         self.alavanca_on = pygame.transform.flip(
@@ -40,7 +40,7 @@ class Chave(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.image = pygame.transform.smoothscale(
-            pygame.image.load("chave.png"), (tile_size * 0.45, tile_size * 0.9)).convert_alpha()
+            pygame.image.load("img/chave.png"), (tile_size * 0.45, tile_size * 0.9)).convert_alpha()
         self.rect = self.image.get_rect(
             center=(x + tile_size / 2, y + tile_size / 2))
         self.grupo_colisao = grupo_colisao
@@ -62,9 +62,9 @@ class Portao(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.img_aberto = pygame.image.load(
-            "portao_aberto.png").convert_alpha()
+            "img/portao_aberto.png").convert_alpha()
         self.img_fechado = pygame.image.load(
-            "portao_fechado.png").convert_alpha()
+            "img/portao_fechado.png").convert_alpha()
 
         largura, altura = self.img_fechado.get_size()
         fator = 2 * tile_size / largura
@@ -106,7 +106,7 @@ class Plataforma(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("plataforma.png").convert_alpha()
+        self.image = pygame.image.load("img/plataforma.png").convert_alpha()
         self.image = pygame.transform.smoothscale(
             self.image, (tile_size, tile_size / 2))
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -212,7 +212,7 @@ class Botao(pygame.sprite.Sprite):
         self.x = x
         self.y = y
 
-        self.img_solto = pygame.image.load("botao.png").convert_alpha()
+        self.img_solto = pygame.image.load("img/botao.png").convert_alpha()
         largura = self.img_solto.get_width()
 
         self.img_solto = pygame.transform.smoothscale(
@@ -220,7 +220,7 @@ class Botao(pygame.sprite.Sprite):
         largura_scaled, altura_scaled = self.img_solto.get_size()
 
         self.img_apertado = pygame.image.load(
-            "botao_apertado.png").convert_alpha()
+            "img/botao_apertado.png").convert_alpha()
         largura_apertado = self.img_apertado.get_width()
         fator = largura_apertado / largura
 
