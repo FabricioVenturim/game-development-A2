@@ -102,7 +102,7 @@ class Portao(pygame.sprite.Sprite):
 class Plataforma(pygame.sprite.Sprite):
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
-    def __init__(self, x, y, tile_size, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
         super().__init__()
         self.x = x
         self.y = y
@@ -122,8 +122,8 @@ class Plataforma(pygame.sprite.Sprite):
         self.rect_test = pygame.Rect(0, 0, 0, 0)
         self.grupo_colisao = grupo_colisao
         self.platform_vel = platform_vel
-        self.variacao_x = variacao_x
-        self.variacao_y = variacao_y
+        self.variacao_x = tuple(x + tile_size * lim for lim in variacao_x)
+        self.variacao_y = tuple(y + tile_size * lim for lim in variacao_y)
         self.horizontal = horizontal
 
     def movimentar_plataforma(self, horizontal):
@@ -192,7 +192,7 @@ class Plataforma(pygame.sprite.Sprite):
 
 
 class Plataforma_com_alavanca(Plataforma):
-    def __init__(self, x, y, tile_size, alavanca, variacao_x=None, variacao_y=None, platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, alavanca, variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
         super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
         self.alavanca = alavanca

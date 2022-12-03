@@ -503,8 +503,8 @@ class Robo(Personagem):
         img = "img/spritesheet_robo.png"
         super().__init__(x, y, tile_size, img, dict_animacoes_robo, collision_sprites)
         self.__x = x
-        self.__campo_de_visao = campo_de_visao
-        self.__x_distancia = x_distancia
+        self.__campo_de_visao = campo_de_visao * tile_size
+        self.__x_distancia = x_distancia * tile_size
         if direita_movimentacao:
             self.direita = False
         self.__vivo = True
