@@ -23,9 +23,12 @@ class Interface:
         self.rodando = True
 
         #aplicando o fundo
-        fundo = pygame.image.load("img/fundo2.png")
+        logo = pygame.image.load("img/logo.png")
+        logo = pygame.transform.scale(logo,(960,600))
+        fundo = pygame.image.load("img/fundo2.jpg")
+        #definindo as posições para que sejam as mais responsivas de acordo com o hardware
         fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
-        self.tela.blit(fundo,(0,0))
+        self.tela.blits([(fundo,(0,0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
 
 #função da interface da fase
     def rodar(self):
@@ -145,7 +148,7 @@ class Interface:
 
         #colocando de volta a imagem certa
         rodar = False
-        fundo = pygame.image.load("img/fundo2.png")
+        fundo = pygame.image.load("img/fundo2.jpg")
         controles = pygame.transform.scale(fundo,(2112,1188))
         self.tela.blit(controles, (0,0))
 
@@ -195,6 +198,7 @@ class Botao:
         tela.blit(self.texto_sup, self.texto_ret)
     
     def pausa(self):
+        Interface.mostrar_texto("PRESSIONE ESPAÇO PARA CONTINUAR", 20, (255,255,255), (Interface().tela.get_width/2.5), (Interface().tela.get_height/5))
         pausado = True
         while pausado:
             for evento in pygame.event.get():
@@ -204,9 +208,6 @@ class Botao:
                 elif evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     pygame.quit()
                     quit() 
-        return
-
-    def saida(self):
         return
 
 #rodando o jogo
