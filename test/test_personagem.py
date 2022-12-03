@@ -23,11 +23,11 @@ class MyTestCase(unittest.TestCase):
         self.boy.fun_correr_direita()
 
         #test
-        espectativa = 50 + 6
+        expectativa = 50 + 6
         realidade = self.boy.rect.x
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_movimentacao_girl_direita(self):
         """Testa se o player girl se move para a esquerda"""
@@ -39,11 +39,11 @@ class MyTestCase(unittest.TestCase):
         self.girl.fun_correr_direita()
 
         #test
-        espectativa = 50 + 6
+        expectativa = 50 + 6
         realidade = self.girl.rect.x
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_movimentacao_boy_esquerda(self):
         """Testa se o player boy se move para a esquerda"""
@@ -55,11 +55,11 @@ class MyTestCase(unittest.TestCase):
         self.boy.fun_correr_esquerda()
 
         #test
-        espectativa = 50 - 6
+        expectativa = 50 - 6
         realidade = self.boy.rect.x
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_fun_planar(self):
         """Testa se o boy ativa o planar"""
@@ -71,11 +71,11 @@ class MyTestCase(unittest.TestCase):
         self.boy.fun_planar()
 
         #test
-        espectativa = True
+        expectativa = True
         realidade = self.boy.planar
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_fun_planar_gravidade(self):
         """Testa se o boy possui gravidade ao ativar o planar"""
@@ -87,11 +87,11 @@ class MyTestCase(unittest.TestCase):
         self.boy.fun_planar()
 
         #test
-        espectativa = 2
+        expectativa = 2
         realidade = self.boy.state
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def teste_fun_deslizar_ativa(self):
         """Testa se o player girl corre mais ao ativar o deslizar"""
@@ -103,11 +103,11 @@ class MyTestCase(unittest.TestCase):
         self.girl.fun_correr_esquerda()
 
         #test
-        espectativa = 2
+        expectativa = 2
         realidade = self.girl.state
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_movimentacao_girl_esquerda(self):
         """Testa se o player girl se move para a esquerda"""
@@ -119,11 +119,11 @@ class MyTestCase(unittest.TestCase):
         self.girl.fun_correr_esquerda()
 
         #test
-        espectativa = 50 - 6
+        expectativa = 50 - 6
         realidade = self.girl.rect.x
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_bater_boy(self):
         """Testa se o player boy bate"""
@@ -136,11 +136,11 @@ class MyTestCase(unittest.TestCase):
         self.boy.fun_bater()
 
         #test
-        espectativa = True
+        expectativa = True
         realidade = self.boy.bater
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_longe_direita(self):
         """Testa se o robo não vê o player se estiver na mesma altura a direita"""
@@ -159,11 +159,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_longe_esquerda(self):
         """Testa se o robo não vê o player se estiver na mesma altura a esquerda"""
@@ -182,11 +182,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_perto_direita(self):
         """Testa se o robo não vê o player se estiver na mesma altura a direita bem perto"""
@@ -205,11 +205,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_perto_esquerda(self):
         """Testa se o robo não vê o player se estiver na mesma altura a esquerda bem perto"""
@@ -228,11 +228,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_atrás_esquerda(self):
         """Testa se o robo não vê o player se ele estiver atrás do robô a esquerda"""
@@ -251,11 +251,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_mesma_altura_fora_atrás_direita(self):
         """Testa se o robo não vê o player se ele estiver atrás do robô a direita"""
@@ -275,11 +275,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
     
     def test_verifica_player_altura_diferente(self):
         """Testa se o robo não vê o player se ele estiver em uma altura diferente"""
@@ -299,11 +299,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = False
+        expectativa = False
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_dentro_direita(self):
         """Testa se o robo vê player no campo de visão pela direita"""
@@ -323,11 +323,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = True
+        expectativa = True
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
     def test_verifica_player_dentro_esquerda(self):
         """Testa se o robo vê player no campo de visão pela esquerda"""
@@ -347,11 +347,11 @@ class MyTestCase(unittest.TestCase):
         self.robo.verifica_player(self.boy)
 
         #test
-        espectativa = True
+        expectativa = True
         realidade = self.robo.verifica_player(self.boy)
 
         # Assert
-        self.assertAlmostEqual(espectativa, realidade)
+        self.assertAlmostEqual(expectativa, realidade)
 
 
 if __name__ == '__main__':
