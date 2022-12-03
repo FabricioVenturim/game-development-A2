@@ -222,7 +222,7 @@ class Personagem(pygame.sprite.Sprite):
 
 
 class BoyNinja(Personagem):
-    def __init__(self, x, y, altura, collision_sprites):
+    def __init__(self, x, y, tile_size, collision_sprites):
         dict_animacoes_boy = {
             "parado": [0, 232, 455, 10],
             "correndo": [5940, 363, 455, 10],
@@ -231,7 +231,7 @@ class BoyNinja(Personagem):
             "voando": [24787, 443, 454, 10]
         }
         img = "img/spritesheet_boy.png"
-        super().__init__(x, y, altura, img, dict_animacoes_boy, collision_sprites)
+        super().__init__(x, y, tile_size, img, dict_animacoes_boy, collision_sprites)
         self.__bater = False
 
     @property
@@ -344,7 +344,7 @@ class BoyNinja(Personagem):
 
 
 class GirlNinja(Personagem):
-    def __init__(self, x, y, altura, screen, collision_sprites):
+    def __init__(self, x, y, tile_size, screen, collision_sprites):
         dict_animacoes_girl = {
             "parado": [0, 290, 500, 10],
             "correndo": [6906, 372, 500, 10],
@@ -353,7 +353,7 @@ class GirlNinja(Personagem):
             "ataque": [20400, 383, 514, 10]
         }
         img = "img/spritesheet_girl.png"
-        super().__init__(x, y, altura, img, dict_animacoes_girl, collision_sprites)
+        super().__init__(x, y, tile_size, img, dict_animacoes_girl, collision_sprites)
         self.screen = screen
         self.__deslizar = False
         self.__atirar = False
@@ -479,7 +479,7 @@ class GirlNinja(Personagem):
 class Robo(Personagem):
     temporizador = 0
 
-    def __init__(self, x, x_distancia, y, altura, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
+    def __init__(self, x, x_distancia, y, tile_size, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
         """_summary_: Classe que representa o Robo 
 
         :param x: posição x do robo
@@ -501,7 +501,7 @@ class Robo(Personagem):
             "morrendo": [10190, 562, 519, 10]
         }
         img = "img/spritesheet_robo.png"
-        super().__init__(x, y, altura, img, dict_animacoes_robo, collision_sprites)
+        super().__init__(x, y, tile_size, img, dict_animacoes_robo, collision_sprites)
         self.__x = x
         self.__campo_de_visao = campo_de_visao
         self.__x_distancia = x_distancia

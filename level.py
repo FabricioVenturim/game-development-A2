@@ -6,14 +6,15 @@ import objetos
 
 class Level:
     def __init__(self, level_data, surface):
+        level_map = level_data['level_map']
         self.screen = surface
         width, height = surface.get_size()
-        self.tile_size = height / len(level_data)
-        largura_level = len(max(level_data, key=len)) * self.tile_size
+        self.tile_size = height / len(level_map)
+        largura_level = len(max(level_map, key=len)) * self.tile_size
         self.inicio_x = (width - largura_level) / 2
         self.setup_level(level_data)
 
-    def setup_level(self, layout):
+    def setup_level(self, level_data):
         self.visible_sprites = pygame.sprite.Group()
         self.active_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
@@ -28,7 +29,16 @@ class Level:
         self.plataformas = pygame.sprite.Group()
         self.plataformas_condicionais = pygame.sprite.Group()
 
-        for row_index, row in enumerate(layout):
+        level_map = level_data['level_map']
+        sprite_settings = level_data['sprite_settings']
+        counter = {
+            'R': 0,
+            'H': 0,
+            'V': 0,
+            'M': 0
+        }
+
+        for row_index, row in enumerate(level_map):
             for col_index, col in enumerate(row):
                 x = self.inicio_x + col_index * self.tile_size
                 y = row_index * self.tile_size
@@ -54,9 +64,9 @@ class Level:
                         self.visible_sprites.add(self.girl)
                         self.active_sprites.add(self.girl)
                     case 'R':
-                        altura = self.tile_size
-                        robo = personagem.Robo(
-                            x, 120, y, altura, 20, self.tiles)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        robo = personagem.Robo(x=x, y=y, tile_size=self.tile_size, collision_sprites=self.tiles, **settings)
                         self.robos.add(robo)
                         self.personagens_e_robos.add(robo)
                         self.visible_sprites.add(robo)
@@ -74,14 +84,16 @@ class Level:
                         self.visible_sprites.add(portao)
                         self.active_sprites.add(portao)
                     case 'H':
-                        plataforma = objetos.Plataforma(x, y, self.tile_size, variacao_x=(
-                            x-100, x+100), grupo_colisao=self.personagens_e_robos)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, **settings)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
                         self.active_sprites.add(plataforma)
                     case 'V':
-                        plataforma = objetos.Plataforma(x, y, self.tile_size, variacao_y=(
-                            y-100, y+100), grupo_colisao=self.personagens_e_robos, horizontal=False)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, horizontal=False, **settings)
                         self.plataformas.add(plataforma)
                         self.visible_sprites.add(plataforma)
                         self.active_sprites.add(plataforma)
@@ -98,10 +110,12 @@ class Level:
                         self.visible_sprites.add(botao)
                         self.active_sprites.add(botao)
                     case 'M':
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
                         alavancas = self.alavancas.sprites()
 
                         plataforma_condicional = objetos.Plataforma_com_alavanca(
-                            x, y, self.tile_size, alavanca=alavancas[0], variacao_x=(x-100, x+100), grupo_colisao=self.personagens_e_robos)
+                            x, y, self.tile_size, alavanca=alavancas[0], grupo_colisao=self.personagens_e_robos, **settings)
                         self.plataformas_condicionais.add(
                             plataforma_condicional)
                         self.visible_sprites.add(plataforma_condicional)
