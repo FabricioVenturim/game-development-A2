@@ -41,7 +41,8 @@ class Chave(pygame.sprite.Sprite):
         self.y = y
         self.image = pygame.transform.smoothscale(
             pygame.image.load("chave.png"), (tile_size * 0.45, tile_size * 0.9)).convert_alpha()
-        self.rect = self.image.get_rect(center=(x + tile_size / 2, y + tile_size / 2))
+        self.rect = self.image.get_rect(
+            center=(x + tile_size / 2, y + tile_size / 2))
         self.grupo_colisao = grupo_colisao
         self.active = True
 
@@ -56,14 +57,29 @@ class Chave(pygame.sprite.Sprite):
 
 
 class Portao(pygame.sprite.Sprite):
-    def __init__(self, x, y, grupo_colisao, chaves=None, portoes=None):
+    def __init__(self, x, y, tile_size, grupo_colisao, chaves=None, portoes=None):
         super().__init__()
         self.x = x
         self.y = y
-        self.img_aberto = pygame.image.load("portao_aberto.png")
-        self.img_fechado = pygame.image.load("portao_fechado.png")
+        self.img_aberto = pygame.image.load(
+            "portao_aberto.png").convert_alpha()
+        self.img_fechado = pygame.image.load(
+            "portao_fechado.png").convert_alpha()
+
+        largura, altura = self.img_fechado.get_size()
+        fator = 2 * tile_size / largura
+        self.img_fechado = pygame.transform.smoothscale(self.img_fechado, (
+            largura * fator, altura * fator))
+
+        largura_aberto, altura_aberto = self.img_aberto.get_size()
+        self.img_aberto = pygame.transform.smoothscale(self.img_aberto, (
+            largura_aberto * fator, altura_aberto * fator))
+
         self.image = self.img_fechado
-        self.rect = self.image.get_rect(center=(x, y))
+        self.rect = self.img_fechado.get_rect(
+            midbottom=(x + tile_size, y + tile_size * 1.20))
+        self.rect_aberto = self.img_aberto.get_rect(
+            midbottom=(x + tile_size * 0.80, y + tile_size * 1.20))
         self.open = False
         self.grupo_colisao = grupo_colisao
         self.chaves = chaves
@@ -72,6 +88,7 @@ class Portao(pygame.sprite.Sprite):
     def abrir_portao(self):
         self.open = True
         self.image = self.img_aberto
+        self.rect = self.rect_aberto
 
     def liberar_portao(self):
         if self.chaves != None and self.portoes != None:

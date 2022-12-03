@@ -69,7 +69,7 @@ class Level:
                         self.active_sprites.add(chave)
                     case 'P':
                         portao = objetos.Portao(
-                            x, y, self.personagens, self.chaves, self.portoes)
+                            x, y, self.tile_size, self.personagens, self.chaves, self.portoes)
                         self.portoes.add(portao)
                         self.visible_sprites.add(portao)
                         self.active_sprites.add(portao)
