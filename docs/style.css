@@ -114,3 +114,40 @@ nav li{
 p{
     margin: 25px 200px;
 }
+
+.conteudo-diagrama {
+    margin: 10px 30px 15px; /*margem de 10px no topo, 90px nos lados e 15px para baixo*/
+}
+
+.titulo-centralizado.titulo_diagrama{
+    padding:  120px 0px 20px; 
+}
+
+.titulo-centralizado.titulo_h2_diagrama{
+    margin: 30px 0px 0px 0px;
+    padding: 30px 0px 0px 0px;
+    font-style: none; /*retira o itálico*/
+    font-size: 20px /*tamanho da fonte*/
+}
+.conteudo-diagrama p{
+    text-align: center;
+}
+
+.titulo-centralizado.titulo_h3_diagrama{
+    margin-top: 15px;
+    padding-top: 15px;
+    font-style: none; /*retira o itálico*/
+    font-size: 16px /*tamanho da fonte*/
+}
+
+.img_ddl{
+    margin: auto;
+    display: block;
+    height: 450px;
+}
+
+.container{
+    display: flex; /*Exibe os elementos como um contêiner flexível, para que todos fiquem um ao lado do outro*/
+    justify-content: space-around; /*Alinhar os itens flexíveis no centro do contêiner*/
+    align-items: center; /*align-items: Alinha os itens na vertical*/ 
+}
