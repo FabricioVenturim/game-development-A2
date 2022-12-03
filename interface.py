@@ -77,7 +77,7 @@ class Interface:
                 # BLA BLA BLA                
             try:
                 self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.75/5)
-                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/4.2, self.tela.get_height()*9.3/10)
+                self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/3.8, self.tela.get_height()*9.3/10)
 
             except:
                 print("o usuário saiu pelo X da tela de controles")
