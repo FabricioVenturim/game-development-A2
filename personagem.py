@@ -33,9 +33,6 @@ class Personagem(pygame.sprite.Sprite):
     # pulando = 1
     # caindo = 2
 
-    # Define a aceleração da gravidade
-    #gravidade = 2
-
     def __init__(self, x:int, y:int, tile_size:int, img:str, dict_animacoes:dict, collision_sprites:pygame.sprite.Group):
         """Funções construtoras do objeto
 
