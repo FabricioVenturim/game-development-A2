@@ -153,7 +153,6 @@ class Interface:
         logo = pygame.image.load("img/logo.png")
         logo = pygame.transform.scale(logo,(960,600))
         self.tela.blits([(controles, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
-        
 
 #criando uma classe para botão
 class Botao:
@@ -200,20 +199,9 @@ class Botao:
         #para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
     
-    def pausa(self):
-        Interface.mostrar_texto("PRESSIONE ESPAÇO PARA CONTINUAR", 20, (255,255,255), (Interface().tela.get_width/2.5), (Interface().tela.get_height/5))
-        Interface.blit
-        pausado = True
-        while pausado:
-            for evento in pygame.event.get():
-                if evento.type == pygame.KEYUP and evento.key == K_SPACE:
-                    pausado = False
-                
-                elif evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
-                    pygame.quit()
-                    quit() 
-        return
+    #criando a função de pausa do botão
 
+      
 #rodando o jogo
 jogo = Interface()
 jogo.tela_start()
