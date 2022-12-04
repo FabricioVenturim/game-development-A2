@@ -12,6 +12,7 @@ VELOCIDADE_PULO_BLC = GRAVIDADE_BLC * \
 VELOCIDADE_BLC = 0.1
 MOD_VELOCIDADE_CAINDO = 1.5
 MOD_VELOCIDADE_DESLIZANDO = 1.25
+VELOCIDADE_KUNAI_BLC = 0.2
 
 
 class Personagem(pygame.sprite.Sprite):
@@ -344,7 +345,7 @@ class BoyNinja(Personagem):
 
 
 class GirlNinja(Personagem):
-    def __init__(self, x, y, tile_size, screen, collision_sprites):
+    def __init__(self, x, y, tile_size, screen, collision_sprites, robos, alavancas):
         dict_animacoes_girl = {
             "parado": [0, 290, 500, 10],
             "correndo": [6906, 372, 500, 10],
@@ -357,7 +358,7 @@ class GirlNinja(Personagem):
         self.screen = screen
         self.__deslizar = False
         self.__atirar = False
-        self.kunai = Kunai(self.screen)
+        self.kunai = Kunai(tile_size, self.screen, collision_sprites, robos, alavancas)
         self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
 
     @property
@@ -469,7 +470,7 @@ class GirlNinja(Personagem):
                     # TODO: consertar kunai
                     self.fun_atirar()
 
-            if not self.deslizar:
+            if not self.deslizar and not self.atirar:
                 if keys[pygame.K_RIGHT]:
                     self.fun_correr_direita()
                 elif keys[pygame.K_LEFT]:
@@ -631,20 +632,26 @@ class Robo(Personagem):
 
 
 class Kunai(pygame.sprite.Sprite):
-    gravidade = 1.5
-    aceleracao_inicial = 25
-
-    def __init__(self, screen):
+    def __init__(self, tile_size, screen, collision_sprites, robos, alavancas):
         pygame.sprite.Sprite.__init__(self)
 
         self.screen = screen
         image = pygame.image.load("img/Kunai.png").convert_alpha()
+        largura, altura = image.get_size()
+        fator = tile_size / largura
         # redimensiona a imagem para o tamanho desejado
-        self.__image = pygame.transform.scale(image, (160/2.4, 32/2.4))
-        self.__rect = self.image.get_rect()
+        self.kunai_direita = pygame.transform.scale(image, (fator * largura, fator * altura))
+        self.kunai_esquerda = pygame.transform.flip(self.kunai_direita, True, False)
+        self.__rect = self.kunai_direita.get_rect()
+        self.aceleracao_inicial = tile_size * VELOCIDADE_PULO_BLC
         self.__aceleracao = self.aceleracao_inicial
         self.__direita = True
         self.__atirar = False
+        self.gravidade = tile_size * GRAVIDADE_BLC
+        self.velocidade = tile_size * VELOCIDADE_KUNAI_BLC
+        self.collision_sprites = collision_sprites
+        self.robos = robos
+        self.alavancas = alavancas
 
     @property
     def image(self):
@@ -687,6 +694,7 @@ class Kunai(pygame.sprite.Sprite):
         self.__atirar = value
 
     def fun_atirar(self, x, y, bool_direita):
+        self.aceleracao = self.aceleracao_inicial
         self.atirar = True
         self.direita = bool_direita
         if self.direita:
@@ -697,21 +705,35 @@ class Kunai(pygame.sprite.Sprite):
 
     def trajetoria(self):
         if self.direita:
-            self.rect.x += 15
+            self.rect.x += self.velocidade
         else:
-            self.rect.x -= 15
+            self.rect.x -= self.velocidade
 
         self.rect.y -= self.aceleracao
         self.aceleracao -= self.gravidade
 
         if self.direita:
-            self.screen.blit(self.image, self.rect)
+            self.screen.blit(self.kunai_direita, self.rect)
         else:
-            self.screen.blit(pygame.transform.flip(
-                self.image, True, False), self.rect)
+            self.screen.blit(self.kunai_esquerda, self.rect)
+    
+    def checar_colisao(self):
+        for alavanca in self.alavancas:
+            if self.rect.colliderect(alavanca.rect):
+                alavanca.mudar_direcao()
+        
+        for robo in self.robos:
+            if self.rect.colliderect(robo.rect):
+                robo.fun_morrer()
+
+        for sprite in self.collision_sprites:
+            if self.rect.colliderect(sprite.rect):
+                self.atirar = False
+                self.aceleracao = self.aceleracao_inicial
 
     def update(self):
         if self.atirar:
             self.trajetoria()
+            self.checar_colisao()
         else:
             self.aceleracao = self.aceleracao_inicial

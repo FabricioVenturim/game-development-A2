@@ -20,6 +20,8 @@ class Alavanca(pygame.sprite.Sprite):
         self.iscolliding = False
 
     def mudar_direcao(self):
+        self.on = not self.on
+        
         if self.on == False:
             self.image = self.alavanca_off
         else:
@@ -29,7 +31,6 @@ class Alavanca(pygame.sprite.Sprite):
         collision = bool(pygame.sprite.spritecollideany(
             self, self.grupo_colisao))
         if collision and not self.iscolliding:
-            self.on = not self.on
             self.mudar_direcao()
 
         self.iscolliding = collision

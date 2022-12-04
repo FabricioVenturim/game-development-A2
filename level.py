@@ -58,7 +58,7 @@ class Level:
                     case 'G':
                         altura = self.tile_size
                         self.girl = personagem.GirlNinja(
-                            x, y, altura, self.screen, self.tiles)
+                            x, y, altura, self.screen, self.tiles, self.robos, self.alavancas)
                         self.personagens.add(self.girl)
                         self.personagens_e_robos.add(self.girl)
                         self.visible_sprites.add(self.girl)
