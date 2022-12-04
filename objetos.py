@@ -1,4 +1,5 @@
 import pygame
+import math
 
 
 class Alavanca(pygame.sprite.Sprite):
@@ -21,7 +22,7 @@ class Alavanca(pygame.sprite.Sprite):
 
     def mudar_direcao(self):
         self.on = not self.on
-        
+
         if self.on == False:
             self.image = self.alavanca_off
         else:
@@ -104,7 +105,7 @@ class Portao(pygame.sprite.Sprite):
 class Plataforma(pygame.sprite.Sprite):
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
-    def __init__(self, x, y, tile_size, variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
         super().__init__()
         self.x = x
         self.y = y
@@ -123,7 +124,7 @@ class Plataforma(pygame.sprite.Sprite):
         self.rect_over = self.rect.copy()
         self.rect_test = pygame.Rect(0, 0, 0, 0)
         self.grupo_colisao = grupo_colisao
-        self.platform_vel = platform_vel
+        self.platform_vel = math.ceil(platform_vel * tile_size)
         self.variacao_x = tuple(x + tile_size * lim for lim in variacao_x)
         self.variacao_y = tuple(y + tile_size * lim for lim in variacao_y)
         self.horizontal = horizontal
@@ -194,7 +195,7 @@ class Plataforma(pygame.sprite.Sprite):
 
 
 class Plataforma_com_alavanca(Plataforma):
-    def __init__(self, x, y, tile_size, ativadores=[], variacao_x=(0,), variacao_y=(0,), platform_vel=3, grupo_colisao=None, horizontal=True):
+    def __init__(self, x, y, tile_size, ativadores=[], variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
         super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
         self.ativadores = ativadores
@@ -205,7 +206,7 @@ class Plataforma_com_alavanca(Plataforma):
             if ativador.on:
                 movimentar = True
                 break
-        
+
         if movimentar:
             self.movimentar_plataforma(self.horizontal)
 

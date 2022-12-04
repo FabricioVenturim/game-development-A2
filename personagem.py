@@ -46,7 +46,8 @@ class Personagem(pygame.sprite.Sprite):
 
         self.__index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
-        self.__rect = self.image.get_rect(midbottom=(x + tile_size / 2, y + tile_size))
+        self.__rect = self.image.get_rect(
+            midbottom=(x + tile_size / 2, y + tile_size))
 
         self.__direita = True
         self.__correr = False
@@ -358,7 +359,8 @@ class GirlNinja(Personagem):
         self.screen = screen
         self.__deslizar = False
         self.__atirar = False
-        self.kunai = Kunai(tile_size, self.screen, collision_sprites, robos, alavancas)
+        self.kunai = Kunai(tile_size, self.screen,
+                           collision_sprites, robos, alavancas)
         self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
 
     @property
@@ -640,8 +642,10 @@ class Kunai(pygame.sprite.Sprite):
         largura, altura = image.get_size()
         fator = tile_size / largura
         # redimensiona a imagem para o tamanho desejado
-        self.kunai_direita = pygame.transform.scale(image, (fator * largura, fator * altura))
-        self.kunai_esquerda = pygame.transform.flip(self.kunai_direita, True, False)
+        self.kunai_direita = pygame.transform.scale(
+            image, (fator * largura, fator * altura))
+        self.kunai_esquerda = pygame.transform.flip(
+            self.kunai_direita, True, False)
         self.__rect = self.kunai_direita.get_rect()
         self.aceleracao_inicial = tile_size * VELOCIDADE_PULO_BLC
         self.__aceleracao = self.aceleracao_inicial
@@ -716,12 +720,12 @@ class Kunai(pygame.sprite.Sprite):
             self.screen.blit(self.kunai_direita, self.rect)
         else:
             self.screen.blit(self.kunai_esquerda, self.rect)
-    
+
     def checar_colisao(self):
         for alavanca in self.alavancas:
             if self.rect.colliderect(alavanca.rect):
                 alavanca.mudar_direcao()
-        
+
         for robo in self.robos:
             if self.rect.colliderect(robo.rect):
                 robo.fun_morrer()

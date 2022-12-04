@@ -42,7 +42,7 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 3
+                    'platform_vel': 0.01
                 }
             ], 'V': [
                 {
