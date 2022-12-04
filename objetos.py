@@ -51,7 +51,7 @@ class Chave(pygame.sprite.Sprite):
 
     def pegar_chave(self, grupo_colisao):
         for personagem in grupo_colisao.sprites():
-            if personagem.rect.colliderect(self.rect):
+            if personagem.collision_rect.colliderect(self.rect):
                 self.active = False
                 self.kill()
 
@@ -140,8 +140,8 @@ class Plataforma(pygame.sprite.Sprite):
             self.rect_over.update(self.rect_collision)
             self.rect_over.y -= 1
             for personagens in self.grupo_colisao.sprites():
-                if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect_collision):
-                    personagens.rect.x += self.platform_vel
+                if personagens.collision_rect.colliderect(self.rect_over) and not personagens.collision_rect.colliderect(self.rect_collision):
+                    personagens.collision_rect.x += self.platform_vel
                     direita = personagens.direita
                     personagens.direita = self.platform_vel > 0
                     personagens.check_horizontal_collisions(2)
@@ -156,8 +156,8 @@ class Plataforma(pygame.sprite.Sprite):
                 self.rect_over.update(self.rect_collision)
                 self.rect_over.y -= 1 + 2*self.platform_vel
                 for personagens in self.grupo_colisao.sprites():
-                    if personagens.rect.colliderect(self.rect_over) and not personagens.rect.colliderect(self.rect_collision) and personagens.state != 1:
-                        personagens.rect.bottom = self.rect_collision.top
+                    if personagens.collision_rect.colliderect(self.rect_over) and not personagens.collision_rect.colliderect(self.rect_collision) and personagens.state != 1:
+                        personagens.collision_rect.bottom = self.rect_collision.top
                         personagens.check_vertical_collisions()
 
     def colisao(self):
@@ -170,13 +170,13 @@ class Plataforma(pygame.sprite.Sprite):
                 aceleracao_relativa = aceleracao
 
             if (
-                personagem.rect.left < self.rect_collision.right and
-                personagem.rect.right > self.rect_collision.left and
-                personagem.rect.bottom > self.rect_collision.top and
-                personagem.rect.bottom < self.rect_collision.bottom and
+                personagem.collision_rect.left < self.rect_collision.right and
+                personagem.collision_rect.right > self.rect_collision.left and
+                personagem.collision_rect.bottom > self.rect_collision.top and
+                personagem.collision_rect.bottom < self.rect_collision.bottom and
                 (aceleracao_relativa >= 0 or personagem.state == 2)
             ):
-                self.rect_test.update(personagem.rect)
+                self.rect_test.update(personagem.collision_rect)
                 self.rect_test.bottom = self.rect_collision.top
                 posicao_valida = True
                 for sprite in personagem.collision_sprites.sprites():
@@ -187,7 +187,7 @@ class Plataforma(pygame.sprite.Sprite):
                 if posicao_valida:
                     personagem.state = 0
                     personagem.aceleracao = 0
-                    personagem.rect.bottom = self.rect_collision.top
+                    personagem.collision_rect.bottom = self.rect_collision.top
 
     def update(self):
         self.colisao()
@@ -253,7 +253,7 @@ class Botao(pygame.sprite.Sprite):
     def apertar_botao(self):
         self.on = False
         for personagens in self.grupo_colisao.sprites():
-            if personagens.rect.colliderect(self.rect_collision):
+            if personagens.collision_rect.colliderect(self.rect_collision):
                 self.abaixar_botao()
                 self.on = True
         if not self.on:

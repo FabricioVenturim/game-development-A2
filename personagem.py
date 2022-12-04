@@ -26,14 +26,14 @@ class Personagem(pygame.sprite.Sprite):
     :type img: str
     :param dict_animacoes: Dicionário com as posições de cada animação
     :type dict_animacoes: dict
-    """    
+    """
 
     # Define estados possíveis do jogador
     # parado = 0
     # pulando = 1
     # caindo = 2
 
-    def __init__(self, x:int, y:int, tile_size:int, img:str, dict_animacoes:dict, collision_sprites:pygame.sprite.Group):
+    def __init__(self, x: int, y: int, tile_size: int, img: str, dict_animacoes: dict, collision_sprites: pygame.sprite.Group):
         """Funções construtoras do objeto
 
         :param x: Posição x do personagem
@@ -48,7 +48,7 @@ class Personagem(pygame.sprite.Sprite):
         :type dict_animacoes: dict
         :param collision_sprites: Grupo de sprites que o personagem pode colidir
         :type collision_sprites: pygame.sprite.Group
-        """        
+        """
 
         pygame.sprite.Sprite.__init__(self)
         self.state = 2
@@ -63,10 +63,8 @@ class Personagem(pygame.sprite.Sprite):
         self.aceleracao_pulo_inicial = tile_size * VELOCIDADE_PULO_BLC
         self.aceleracao = self.aceleracao_pulo_inicial
 
-
         self.velocidade = tile_size * VELOCIDADE_BLC
         self.velocidade_caindo = self.velocidade * MOD_VELOCIDADE_CAINDO
-
 
         for posicao in dict_animacoes.values():
             self.corta_sprite(
@@ -77,13 +75,13 @@ class Personagem(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(
             midbottom=(x + tile_size / 2, y + tile_size))
+        self.collision_rect = self.rect
 
         self.direita = True
         self.correr = False
         self.mask = pygame.mask.from_surface(self.image)
 
-
-    def corta_sprite(self,sprite_sheet:str, posicao_inicial:float, largura:float, altura:float, quantidade:int, redirecionamento:float):
+    def corta_sprite(self, sprite_sheet: str, posicao_inicial: float, largura: float, altura: float, quantidade: int, redirecionamento: float):
         """Função que corta a sprite sheet e adiciona as imagens em uma lista
 
         :param sprite_sheet: Caminho da imagem do personagem
@@ -98,7 +96,7 @@ class Personagem(pygame.sprite.Sprite):
         :type quantidade: int
         :param redirecionamento: Redirecionamento da imagem
         :type redirecionamento: float
-        """                
+        """
 
         for i in range(0, quantidade):
             largura_inicial = posicao_inicial
@@ -110,7 +108,7 @@ class Personagem(pygame.sprite.Sprite):
 
     def parado_animacao(self):
         """_summary_: Função que define a animação do personagem quando parado
-        """        
+        """
         if self.index_lista > 9:
             self.index_lista = 0
         self.index_lista += 0.25
@@ -119,10 +117,9 @@ class Personagem(pygame.sprite.Sprite):
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
 
-
-    def fun_correr_direita(self): 
+    def fun_correr_direita(self):
         """_summary_: Função que muda a posição do personagem correndo para a direita
-        """      
+        """
         self.direita = True
         self.correr = True
         if self.index_lista < 10:
@@ -134,7 +131,7 @@ class Personagem(pygame.sprite.Sprite):
 
     def fun_correr_esquerda(self):
         """_summary_: Função que muda a posição do personagem correndo para a esquerda
-        """        
+        """
         self.direita = False
         self.correr = True
         if self.index_lista < 10:
@@ -146,8 +143,8 @@ class Personagem(pygame.sprite.Sprite):
 
     def correr_animacao(self):
         """_summary_: Função que define a animação do personagem quando correndo
-        """        
-        if self.index_lista > 19:   
+        """
+        if self.index_lista > 19:
 
             self.index_lista = 10
         self.index_lista += 0.25
@@ -160,14 +157,14 @@ class Personagem(pygame.sprite.Sprite):
 
     def fun_cair(self):
         """_summary_: Função que muda a posição do personagem caindo
-        """        
+        """
         self.correr = False
         self.planar = False
         self.state = 2
 
     def cair(self):
         """_summary_: Função que define a animação do personagem quando caindo
-        """        
+        """
         self.apply_gravity()
         self.index_lista = 24
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -176,7 +173,7 @@ class Personagem(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         """_summary_: Função que define a gravidade do personagem
-        """        
+        """
         self.aceleracao += self.gravidade
         self.rect.y += self.aceleracao
 
@@ -186,7 +183,7 @@ class Personagem(pygame.sprite.Sprite):
 
     def fun_pular(self):
         """_summary_: Função que muda a posição do personagem pulando
-        """        
+        """
         self.correr = False
         self.state = 1
         self.aceleracao = self.aceleracao_pulo_inicial
@@ -195,7 +192,7 @@ class Personagem(pygame.sprite.Sprite):
 
     def pular_animacao(self):
         """_summary_: Função que define a animação do personagem quando pulando
-        """        
+        """
         ####### animação #######
         if self.index_lista > 29:
             self.index_lista = 20
@@ -219,32 +216,32 @@ class Personagem(pygame.sprite.Sprite):
             self.rect.y -= self.aceleracao
             self.aceleracao += self.gravidade
 
-    def check_horizontal_collisions(self, dimensao:float):
+    def check_horizontal_collisions(self, dimensao: float):
         """_summary_: Função que verifica as colisões horizontais do personagem
 
         :param dimensao: Dimensão do personagem
         :type dimensao: float
-        """        
-        rect_img = self.rect.copy()
+        """
+        rect_img = self.collision_rect.copy()
         if self.direita:
             rect_img.x += self.tile_size/dimensao
         for sprite in self.collision_sprites.sprites():
             if rect_img.colliderect(sprite.rect):
                 if self.direita:
-                    self.rect.right = sprite.rect.left - self.tile_size/dimensao
+                    self.collision_rect.right = sprite.rect.left - self.tile_size/dimensao
                 else:
-                    self.rect.left = sprite.rect.right
+                    self.collision_rect.left = sprite.rect.right
 
     def check_vertical_collisions(self):
         """_summary_: Função que verifica as colisões verticais do personagem
-        """        
+        """
         for sprite in self.collision_sprites.sprites():
-            if self.rect.colliderect(sprite.rect):
+            if self.collision_rect.colliderect(sprite.rect):
                 if self.state == 1:
-                    self.rect.top = sprite.rect.bottom + 1
+                    self.collision_rect.top = sprite.rect.bottom + 1
                     self.aceleracao = -1
                 else:
-                    self.rect.bottom = sprite.rect.top
+                    self.collision_rect.bottom = sprite.rect.top
                     self.aceleracao = 0
                     self.state = 0
 
@@ -262,10 +259,9 @@ class BoyNinja(Personagem):
         :type collision_sprites: pygame.sprite.Group
         :param robos: Sprites dos robôs
         :type robos: pygame.sprite.Group
-        """        
-    
-   
-    def __init__(self, x:int, y:int, tile_size:int, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group):
+        """
+
+    def __init__(self, x: int, y: int, tile_size: int, collision_sprites: pygame.sprite.Group, robos: pygame.sprite.Group):
         """_summary_: Construtor da classe
 
         :param x: Posição x do personagem
@@ -278,7 +274,7 @@ class BoyNinja(Personagem):
         :type collision_sprites: pygame.sprite.Group
         :param robos: Sprites dos robôs
         :type robos: pygame.sprite.Group
-        """        
+        """
         dict_animacoes_boy = {
             "parado": [0, 232, 455, 10],
             "correndo": [5940, 363, 455, 10],
@@ -294,7 +290,7 @@ class BoyNinja(Personagem):
 
     def fun_bater(self):
         """_summary_: Função que ativa o personagem batendo
-        """        
+        """
         self.bater = True
         self.correr = False
         if self.index_lista < 30:
@@ -302,7 +298,7 @@ class BoyNinja(Personagem):
 
     def bater_animacao(self):
         """_summary_: Função que define a animação do personagem quando bate
-        """        
+        """
         if self.index_lista == 30:
             if self.direita:
                 self.rect.x -= 15
@@ -327,7 +323,7 @@ class BoyNinja(Personagem):
 
     def fun_planar(self):
         """_summary_: Função que ativa a planagem do personagem
-        """        
+        """
         self.correr = False
         self.planar = True
         self.state = 2
@@ -336,8 +332,8 @@ class BoyNinja(Personagem):
 
     def planar_animacao(self):
         """_summary_: Função que define a animação do personagem quando plana
-        """        
-        if self.index_lista > 49:   
+        """
+        if self.index_lista > 49:
             self.index_lista = 40
         self.index_lista += 0.5
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -348,17 +344,17 @@ class BoyNinja(Personagem):
         # Atualiza o estado para caindo
 
         self.aceleracao = 3
-        self.rect.y += self.aceleracao
+        self.collision_rect.y += self.aceleracao
 
     def checar_colisao(self):
         """_summary_: Função que checa as colisões do personagem"""
         for robo in self.robos:
-            if self.rect.colliderect(robo.rect):
+            if self.collision_rect.colliderect(robo.rect):
                 robo.fun_morrer()
 
     def update(self):
         """_summary_: Função que atualiza a posição do personagem
-        """      
+        """
 
         if self.state == 0:
             self.planar = False
@@ -388,7 +384,7 @@ class BoyNinja(Personagem):
         # Controle de animação do personagem para parado
         else:
             self.parado_animacao()
-        
+
         if self.bater:
             self.state = 0
         else:
@@ -399,7 +395,7 @@ class BoyNinja(Personagem):
 
     def read_input(self):
         """_summary_: Função que lê as entradas do teclado
-        """        
+        """
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_f] and self.state == 0:
@@ -420,11 +416,9 @@ class BoyNinja(Personagem):
             elif self.planar:
                 self.fun_cair()
 
-        
-
 
 class GirlNinja(Personagem):
-    def __init__(self, x:int, y:int, tile_size:int, screen:pygame.Surface, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group, alavancas:pygame.sprite.Group):
+    def __init__(self, x: int, y: int, tile_size: int, screen: pygame.Surface, collision_sprites: pygame.sprite.Group, robos: pygame.sprite.Group, alavancas: pygame.sprite.Group):
         """_summary_: Construtor da classe GirlNinja
 
         :param x: Posição x do personagem
@@ -441,7 +435,7 @@ class GirlNinja(Personagem):
         :type robos: pygame.sprite.Group
         :param alavancas: Sprites das alavancas
         :type alavancas: pygame.sprite.Group
-        """        
+        """
 
         dict_animacoes_girl = {
             "parado": [0, 290, 500, 10],
@@ -458,10 +452,12 @@ class GirlNinja(Personagem):
         self.kunai = Kunai(tile_size, self.screen,
                            collision_sprites, robos, alavancas)
         self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
+        self.deslizar_rect = self.collision_rect.copy()
+        self.deslizar_rect.height /= 2
 
     def fun_deslizar(self):
         """_summary_: Função que ativa o personagem deslizando
-        """        
+        """
         self.deslizar = True
         self.correr = False
 
@@ -474,7 +470,7 @@ class GirlNinja(Personagem):
 
     def deslizar_animacao(self):
         """_summary_: Função que define a animação do personagem quando desliza
-        """        
+        """
         if self.index_lista > 39:
             self.index_lista = 30
         self.index_lista += 0.25
@@ -487,7 +483,7 @@ class GirlNinja(Personagem):
 
     def fun_atirar(self):
         """_summary_: Função que ativa o personagem atirando
-        """        
+        """
         self.atirar = True
         self.correr = False
 
@@ -496,8 +492,8 @@ class GirlNinja(Personagem):
 
     def atirar_animacao(self):
         """_summary_: Função que define a animação do personagem quando atira
-        """        
-        if self.index_lista > 49:   
+        """
+        if self.index_lista > 49:
             self.index_lista = 40
             self.atirar = False
 
@@ -513,21 +509,27 @@ class GirlNinja(Personagem):
 
     def update(self):
         """_summary_: Função que atualiza a posição do personagem
-        """        
+        """
         # Atualiza a posição do kunai
         self.kunai.update()
+
+        self.rect.midbottom = self.collision_rect.midbottom
 
         # Atualiza o estado quando caindo
 
         self.read_input()
 
+        self.collision_rect.midbottom = self.rect.midbottom
         self.check_horizontal_collisions(4)
+        self.rect.midbottom = self.collision_rect.midbottom
+        self.collision_rect = self.rect
 
         # controle de animação do personagem para cair
         if self.state == 2:
             self.cair()
         # controle de animação do personagem para deslizar
         elif self.deslizar:
+            self.collision_rect = self.deslizar_rect
             self.deslizar_animacao()
         # Controle de animação do personagem para correr
         elif self.correr and self.state != 1:
@@ -545,7 +547,21 @@ class GirlNinja(Personagem):
         if self.state == 0:
             self.apply_gravity()
             self.state = 2
+
+        self.collision_rect.midbottom = self.rect.midbottom
         self.check_vertical_collisions()
+        self.rect.midbottom = self.collision_rect.midbottom
+
+        self.rect.center = self.collision_rect.center
+
+    def pode_levantar(self):
+        """_summary_: Função que verifica se o personagem pode levantar
+        """
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.rect):
+                return False
+
+        return True
 
     def read_input(self):
         """_summary_: Função que lê as entradas do teclado"""
@@ -553,10 +569,10 @@ class GirlNinja(Personagem):
 
         if not self.atirar:
             if self.state == 0:
-                if keys[pygame.K_UP]:
-                    self.fun_pular()
-                elif keys[pygame.K_DOWN]:
+                if keys[pygame.K_DOWN] or not self.pode_levantar():
                     self.fun_deslizar()
+                elif keys[pygame.K_UP]:
+                    self.fun_pular()
                 elif keys[pygame.K_RSHIFT]:
                     # TODO: consertar kunai
                     self.fun_atirar()
@@ -568,9 +584,10 @@ class GirlNinja(Personagem):
                     self.fun_correr_esquerda()
 
 
-class Robo(Personagem):  
+class Robo(Personagem):
     temporizador = 0
-    def __init__(self, x:int, x_distancia:int, y:int, tile_size:int, campo_de_visao:int, collision_sprites:pygame.sprite.Group, movimentacao:bool=True, direita_movimentacao:bool=True):
+
+    def __init__(self, x: int, x_distancia: int, y: int, tile_size: int, campo_de_visao: int, collision_sprites: pygame.sprite.Group, movimentacao: bool = True, direita_movimentacao: bool = True):
         """_summary_: Construtor da classe Robo
         :param x: posição x do robo
         :type x: int
@@ -589,7 +606,7 @@ class Robo(Personagem):
         :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True
         :type direita_movimentacao: bool, optional
         """
-        
+
         dict_animacoes_robo = {
             "parado": [0, 567, 555, 10],
             "correndo": [5670, 567, 550, 8],
@@ -607,15 +624,15 @@ class Robo(Personagem):
 
     def fun_morrer(self):
         """_summary_: Função que faz a animação do robo morrer
-        """        
+        """
         self.vivo = False
         if self.index_lista < 18:
             self.index_lista = 18
 
     def correr_animacao(self):
         """_summary_: Função que faz a animação do robo correr
-        """    
-        if self.index_lista > 17: 
+        """
+        if self.index_lista > 17:
             self.index_lista = 10
         self.index_lista += 0.25
         self.image = self.imagens_ninja[int(self.index_lista)]
@@ -624,43 +641,43 @@ class Robo(Personagem):
         if self.direita == False:
             self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
-        
+
     def verifica_player(self, player: object):
         """_summary_: Função que verifica se o player está dentro do campo de visão do robo
         :param player: Objeto do tipo Personagem
         :type player: object
-        """        
+        """
         if self.direita:     # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
-            if self.rect.x < player.rect.x < self.rect.x + self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+            if self.collision_rect.x < player.collision_rect.x < self.collision_rect.x + self.campo_de_visao and self.collision_rect.y - 50 <= player.collision_rect.y <= self.collision_rect.y + 50:
                 self.correr = False
                 print("DIREITAA campo de visão")
-                return True #Para fazer o test do player
+                return True  # Para fazer o test do player
             else:
                 return False
-        else: # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
-            if self.rect.x > player.rect.x > self.rect.x - self.campo_de_visao and self.rect.y - 50 <= player.rect.y <= self.rect.y + 50:
+        else:  # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
+            if self.collision_rect.x > player.collision_rect.x > self.collision_rect.x - self.campo_de_visao and self.collision_rect.y - 50 <= player.collision_rect.y <= self.collision_rect.y + 50:
                 self.correr = False
-                print("ESQUERDA campo de visão") 
-                return True #Para fazer o test do player
+                print("ESQUERDA campo de visão")
+                return True  # Para fazer o test do player
             else:
                 return False
 
     def animacao_morrer(self):
         """_summary_: Função que faz a animação do robo morrer
-        """  
-        if self.index_lista > 27:   
+        """
+        if self.index_lista > 27:
             self.index_lista = 27
         self.index_lista += 0.25
-        self.image= self.imagens_ninja[int(self.index_lista)]
-        
+        self.image = self.imagens_ninja[int(self.index_lista)]
+
         # vira a image se o personagem estiver olhando para o outro lado
         if self.direita == False:
-            self.image= pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.flip(self.image, True, False)
         self.correr = False
 
     def update(self):
         """_summary_: Função que atualiza a posição do robo
-        """     
+        """
 
         if self.vivo == False:
             self.state = 0
@@ -684,14 +701,14 @@ class Robo(Personagem):
                 self.correr_animacao()
                 if self.direita:
                     self.fun_correr_direita()
-                    if self.rect.x >= self.x + self.x_distancia:
-                        self.rect.x = self.x + self.x_distancia
+                    if self.collision_rect.x >= self.x + self.x_distancia:
+                        self.collision_rect.x = self.x + self.x_distancia
                         self.x = self.x + self.x_distancia
                         self.temporizador = 0
                 else:
                     self.fun_correr_esquerda()
-                    if self.rect.x <= self.x - self.x_distancia:
-                        self.rect.x = self.x - self.x_distancia
+                    if self.collision_rect.x <= self.x - self.x_distancia:
+                        self.collision_rect.x = self.x - self.x_distancia
                         self.x = self.x - self.x_distancia
                         self.temporizador = 0
             else:
@@ -711,7 +728,7 @@ class Robo(Personagem):
 
 
 class Kunai(pygame.sprite.Sprite):
-    def __init__(self, tile_size:int, screen:pygame.Surface, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group, alavancas:pygame.sprite.Group):
+    def __init__(self, tile_size: int, screen: pygame.Surface, collision_sprites: pygame.sprite.Group, robos: pygame.sprite.Group, alavancas: pygame.sprite.Group):
         """_summary_: Classe que cria o objeto Kunai
 
         :param tile_size: Tamanho do tile
@@ -724,7 +741,7 @@ class Kunai(pygame.sprite.Sprite):
         :type robos: pygame.sprite.Group
         :param alavancas: Grupo de sprites das alavancas
         :type alavancas: pygame.sprite.Group
-        """        
+        """
 
         pygame.sprite.Sprite.__init__(self)
 
@@ -748,7 +765,7 @@ class Kunai(pygame.sprite.Sprite):
         self.robos = robos
         self.alavancas = alavancas
 
-    def fun_atirar(self, x:int, y:int, bool_direita:bool):
+    def fun_atirar(self, x: int, y: int, bool_direita: bool):
         """_summary_: Função que atira o kunai
 
         :param x: Posição x do kunai
@@ -757,7 +774,7 @@ class Kunai(pygame.sprite.Sprite):
         :type y: int
         :param bool_direita: Direção do kunai
         :type bool_direita: bool
-        """    
+        """
         self.aceleracao = self.aceleracao_inicial
         self.atirar = True
         self.direita = bool_direita
@@ -769,7 +786,7 @@ class Kunai(pygame.sprite.Sprite):
 
     def trajetoria(self):
         """_summary_: Função que faz o objeto Kunai seguir uma trajetória
-        """        
+        """
         if self.direita:
             self.rect.x += self.velocidade
         else:
@@ -800,7 +817,7 @@ class Kunai(pygame.sprite.Sprite):
 
     def update(self):
         """_summary_: Função que atualiza a posição do objeto Kunai
-        """        
+        """
         if self.atirar:
             self.trajetoria()
             self.checar_colisao()
