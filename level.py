@@ -50,7 +50,7 @@ class Level:
                     case 'B':
                         altura = self.tile_size
                         self.boy = personagem.BoyNinja(
-                            x, y, altura, self.tiles)
+                            x, y, altura, self.tiles, self.robos)
                         self.personagens.add(self.boy)
                         self.personagens_e_robos.add(self.boy)
                         self.visible_sprites.add(self.boy)
