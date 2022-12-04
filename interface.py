@@ -227,6 +227,8 @@ class Botao:
     def __init__ (self, texto, x, y, posicao, elevacao, fonte):
         #determinando as propriedades do botao como posicao e cor
         self.pressionado = False
+
+        #determinando a elevacao do botao
         self.elevacao = elevacao
         self.elevacao_dinamica = elevacao
         self.original_posicao_y = posicao[1]
@@ -247,6 +249,8 @@ class Botao:
     #função para gerar o botão
     def desenhar(self, tela):
         pos = pygame.mouse.get_pos()
+
+        #deixando o botao vermelho com o mouse em cima
         if self.topo_ret.collidepoint(pos):
             self.topo_cor = (227, 53, 41)
             if pygame.mouse.get_pressed()[0] and not self.clicado:
