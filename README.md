@@ -22,7 +22,9 @@ Passo 2: Para executar o programa, é necessário rodar o arquivo main.py da pas
 
 Trazer um divertido modo multiplayer em que os jogadores precisam trabalhar juntos para resolverem quebra-cabeças interagindo com os elementos do cenário e combinando habilidades especiais e únicas para roubar as chaves sem serem vistos pelos robôs seguranças.
 
-O jogo baseia-se em fases que são finalizadas quando todas as chaves da sala forem pegos e os jogadores saírem pelo local indicado.
+O jogo baseia-se em fases que são finalizadas quando todas as chaves da sala forem pegas e os jogadores saírem pelo local indicado.
+
+De modo geral, esse jogo pode ser caracterizado como ÚNICO, quem imaginaria, ninjas e robôs se enfrentando num cenário místico medieval? Ainda por cima, um jogo colaborativo para jogar com o seu amigo e se divertir!!
 
 ## Documentação
 
