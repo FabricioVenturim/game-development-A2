@@ -1,5 +1,20 @@
 FPS = 60
 
+# Legenda:
+# X: Bloco de chão
+# B: BoyNinja
+# G: GirlNinja
+# C: Chave
+# M: Plataforma condicional (precisa de alavanca ou botão para mexer)
+# T: Botão
+# P: Saída (ocupa o bloco da direita também)
+# A: Alavanca
+# H: Plataforma horizontal
+# R: Robo
+# V: Plataforma vertical
+
+# Unidade de medidas dos parâmetros estão em blocos
+
 level_data = [
     {
         'level_map': [
