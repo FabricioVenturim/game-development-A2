@@ -15,12 +15,12 @@ class DuoNinja:
                                         
         dict_animacoes_girl = {"parado": [0, 290, 500, 10, 3.5], "correndo": [6906, 372, 500, 10, 3.5], "pulando": [2910, 399, 500, 10, 3.5], "deslizando": [16425, 397, 401, 10, 3.5], "ataque": [20400, 383, 514, 10, 3.5]}
         self.sprites_girl = pygame.sprite.Group()
-        self.girl = personagem.GirlNinja(300, 500, "img/spritesheet_girl.png", dict_animacoes_girl, self.screen)
+        self.girl = personagem.GirlNinja(300, 200, "img/spritesheet_girl.png", dict_animacoes_girl, self.screen)
         self.sprites_girl.add(self.girl)
 
         dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
         self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(950, 250, 200, 280 , "img/spritesheet_robo.png", dict_animacoes_robo)
+        self.robo = personagem.Robo(870, 450, 100, 200, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = True)
         self.sprites_robo.add(self.robo)
 
         ##### Teste de objetos para colisão, no futuro isso será um objeto #####
@@ -142,7 +142,11 @@ class DuoNinja:
             if col_kunai:
                 self.girl.kunai.atirar = False
                 break
-
+        
+        #Verifica campo de visão do robo
+        if self.robo.vivo:
+            self.robo.verifica_player(self.boy)
+            self.robo.verifica_player(self.girl)
 
     def _draw(self):
         self.screen.fill((255, 255, 255))
