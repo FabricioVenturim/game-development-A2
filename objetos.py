@@ -144,7 +144,7 @@ class Plataforma(pygame.sprite.Sprite):
                     personagens.rect.x += self.platform_vel
                     direita = personagens.direita
                     personagens.direita = self.platform_vel > 0
-                    personagens.check_horizontal_collisions()
+                    personagens.check_horizontal_collisions(2)
                     personagens.direita = direita
         else:
             y_min, y_max = self.variacao_y

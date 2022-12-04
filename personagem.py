@@ -36,21 +36,25 @@ class Personagem(pygame.sprite.Sprite):
     # Define a aceleração da gravidade
     #gravidade = 2
 
-    def __init__(self, x, y, tile_size, img, dict_animacoes, collision_sprites):
+    def __init__(self, x:int, y:int, tile_size:int, img:str, dict_animacoes:dict, collision_sprites:pygame.sprite.Group):
         """Funções construtoras do objeto
 
         :param x: Posição x do personagem
         :type x: int or float
         :param y: Posição y do personagem
+        :param tile_size: Tamanho do tile
+        :type tile_size: int
         :type y: int or float
         :param img: Caminho da imagem do personagem
         :type img: str
         :param dict_animacoes: Dicionário com as posições de cada animação
         :type dict_animacoes: dict
+        :param collision_sprites: Grupo de sprites que o personagem pode colidir
+        :type collision_sprites: pygame.sprite.Group
         """        
 
         pygame.sprite.Sprite.__init__(self)
-        self.__state = 2
+        self.state = 2
         self.collision_sprites = collision_sprites
 
         self.tile_size = tile_size
@@ -71,55 +75,15 @@ class Personagem(pygame.sprite.Sprite):
             self.corta_sprite(
                 sprite_sheet, posicao[0], posicao[1], posicao[2], posicao[3], fator)
 
-        self.__index_lista = 0
+        self.index_lista = 0
         self.image = self.imagens_ninja[self.index_lista]
 
-        self.__rect = self.image.get_rect(
+        self.rect = self.image.get_rect(
             midbottom=(x + tile_size / 2, y + tile_size))
 
-        self.__direita = True
-        self.__correr = False
+        self.direita = True
+        self.correr = False
         self.mask = pygame.mask.from_surface(self.image)
-
-    @property
-    def index_lista(self):
-        return self.__index_lista
-
-    @index_lista.setter
-    def index_lista(self, value):
-        self.__index_lista = value
-
-    @property
-    def rect(self):
-        return self.__rect
-
-    @rect.setter
-    def rect(self, value):
-        self.__rect = value
-
-    @property
-    def state(self):
-        return self.__state
-
-    @state.setter
-    def state(self, state):
-        self.__state = state
-
-    @property
-    def direita(self):
-        return self.__direita
-
-    @direita.setter
-    def direita(self, value):
-        self.__direita = value
-
-    @property
-    def correr(self):
-        return self.__correr
-
-    @correr.setter
-    def correr(self, value):
-        self.__correr = value
 
 
     def corta_sprite(self,sprite_sheet:str, posicao_inicial:float, largura:float, altura:float, quantidade:int, redirecionamento:float):
@@ -214,6 +178,8 @@ class Personagem(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(self.image, True, False)
 
     def apply_gravity(self):
+        """_summary_: Função que define a gravidade do personagem
+        """        
         self.aceleracao += self.gravidade
         self.rect.y += self.aceleracao
 
@@ -256,7 +222,12 @@ class Personagem(pygame.sprite.Sprite):
             self.rect.y -= self.aceleracao
             self.aceleracao += self.gravidade
 
-    def check_horizontal_collisions(self, dimensao):
+    def check_horizontal_collisions(self, dimensao:float):
+        """_summary_: Função que verifica as colisões horizontais do personagem
+
+        :param dimensao: Dimensão do personagem
+        :type dimensao: float
+        """        
         rect_img = self.rect.copy()
         if self.direita:
             rect_img.x += self.tile_size/dimensao
@@ -268,6 +239,8 @@ class Personagem(pygame.sprite.Sprite):
                     self.rect.left = sprite.rect.right
 
     def check_vertical_collisions(self):
+        """_summary_: Função que verifica as colisões verticais do personagem
+        """        
         for sprite in self.collision_sprites.sprites():
             if self.rect.colliderect(sprite.rect):
                 if self.state == 1:
@@ -280,30 +253,34 @@ class Personagem(pygame.sprite.Sprite):
 
 
 class BoyNinja(Personagem):
-    """_summary_: Classe que define o personagem ninja menino
+    """_summary_: Construtor da classe
 
-    :param x: Posição x do personagem
-    :type x: int or float
-    :param y: Posição y do personagem
-    :type y: int or float
-    :param img: Caminho da imagem do personagem
-    :type img: str
-    :param dict_animacoes: Dicionário com as posições de cada animação
-    :type dict_animacoes: dict
-    """    
+        :param x: Posição x do personagem
+        :type x: int or float
+        :param y: Posição y do personagem
+        :type y: int or float
+        :param tile_size: Tamanho do tile
+        :type tile_size: int
+        :param collision_sprites: Sprites que o personagem pode colidir
+        :type collision_sprites: pygame.sprite.Group
+        :param robos: Sprites dos robôs
+        :type robos: pygame.sprite.Group
+        """        
     
    
-    def __init__(self, x, y, tile_size, collision_sprites, robos):
+    def __init__(self, x:int, y:int, tile_size:int, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group):
         """_summary_: Construtor da classe
 
         :param x: Posição x do personagem
         :type x: int or float
         :param y: Posição y do personagem
         :type y: int or float
-        :param img: Caminho da imagem do personagem
-        :type img: str
-        :param dict_animacoes: Dicionário com as posições de cada animação
-        :type dict_animacoes: dict
+        :param tile_size: Tamanho do tile
+        :type tile_size: int
+        :param collision_sprites: Sprites que o personagem pode colidir
+        :type collision_sprites: pygame.sprite.Group
+        :param robos: Sprites dos robôs
+        :type robos: pygame.sprite.Group
         """        
         dict_animacoes_boy = {
             "parado": [0, 232, 455, 10],
@@ -314,25 +291,9 @@ class BoyNinja(Personagem):
         }
         img = "img/spritesheet_boy.png"
         super().__init__(x, y, tile_size, img, dict_animacoes_boy, collision_sprites)
-        self.__bater = False
-        self.__planar = False
+        self.bater = False
+        self.planar = False
         self.robos = robos
-
-    @property
-    def bater(self):
-        return self.__bater
-
-    @bater.setter
-    def bater(self, value):
-        self.__bater = value
-
-    @property
-    def planar(self):
-        return self.__planar
-
-    @planar.setter
-    def planar(self, value):
-        self.__planar = value
 
     def fun_bater(self):
         """_summary_: Função que ativa o personagem batendo
@@ -345,7 +306,6 @@ class BoyNinja(Personagem):
     def bater_animacao(self):
         """_summary_: Função que define a animação do personagem quando bate
         """        
-
         if self.index_lista == 30:
             if self.direita:
                 self.rect.x -= 15
@@ -394,6 +354,7 @@ class BoyNinja(Personagem):
         self.rect.y += self.aceleracao
 
     def checar_colisao(self):
+        """_summary_: Função que checa as colisões do personagem"""
         for robo in self.robos:
             if self.rect.colliderect(robo.rect):
                 robo.fun_morrer()
@@ -440,7 +401,12 @@ class BoyNinja(Personagem):
             self.check_vertical_collisions()
 
     def read_input(self):
+        """_summary_: Função que lê as entradas do teclado
+        """        
         keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_f] and self.state == 0:
+            self.fun_bater()
 
         if not self.bater:
             if keys[pygame.K_d]:
@@ -457,12 +423,29 @@ class BoyNinja(Personagem):
             elif self.planar:
                 self.fun_cair()
 
-            if keys[pygame.K_f] and self.state == 0:
-                self.fun_bater()
+        
 
 
 class GirlNinja(Personagem):
-    def __init__(self, x, y, tile_size, screen, collision_sprites, robos, alavancas):
+    def __init__(self, x:int, y:int, tile_size:int, screen:pygame.Surface, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group, alavancas:pygame.sprite.Group):
+        """_summary_: Construtor da classe GirlNinja
+
+        :param x: Posição x do personagem
+        :type x: int
+        :param y: Posição y do personagem
+        :type y: int
+        :param tile_size: Tamanho do tile
+        :type tile_size: int
+        :param screen: Tela do jogo
+        :type screen: pygame.Surface
+        :param collision_sprites: Sprites que o personagem pode colidir
+        :type collision_sprites: pygame.sprite.Group
+        :param robos: Sprites dos robôs
+        :type robos: pygame.sprite.Group
+        :param alavancas: Sprites das alavancas
+        :type alavancas: pygame.sprite.Group
+        """        
+
         dict_animacoes_girl = {
             "parado": [0, 290, 500, 10],
             "correndo": [6906, 372, 500, 10],
@@ -473,27 +456,11 @@ class GirlNinja(Personagem):
         img = "img/spritesheet_girl.png"
         super().__init__(x, y, tile_size, img, dict_animacoes_girl, collision_sprites)
         self.screen = screen
-        self.__deslizar = False
-        self.__atirar = False
+        self.deslizar = False
+        self.atirar = False
         self.kunai = Kunai(tile_size, self.screen,
                            collision_sprites, robos, alavancas)
         self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
-
-    @property
-    def deslizar(self):
-        return self.__deslizar
-
-    @deslizar.setter
-    def deslizar(self, value):
-        self.__deslizar = value
-
-    @property
-    def atirar(self):
-        return self.__atirar
-
-    @atirar.setter
-    def atirar(self, value):
-        self.__atirar = value
 
     def fun_deslizar(self):
         """_summary_: Função que ativa o personagem deslizando
@@ -584,6 +551,7 @@ class GirlNinja(Personagem):
         self.check_vertical_collisions()
 
     def read_input(self):
+        """_summary_: Função que lê as entradas do teclado"""
         keys = pygame.key.get_pressed()
 
         if not self.atirar:
@@ -603,30 +571,9 @@ class GirlNinja(Personagem):
                     self.fun_correr_esquerda()
 
 
-class Robo(Personagem):
-    """_summary_: Classe que representa o Robo 
-
-        :param x: posição x do robo
-        :type x: int
-        :param x_distancia: distancia que o robo irá se mover
-        :type x_distancia: int   
-        :param y: posição y do robo
-        :type y: int
-        :param campo_de_visao: distancia que o robo irá ver o personagem
-        :type campo_de_visao: int
-        :param img: imagem do robo
-        :type img: str
-        :param dict_animacoes: dicionario com as animações do robo
-        :type dict_animacoes: dict
-        :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True
-        :type movimentacao: bool, optional
-        :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True
-        :type direita_movimentacao: bool, optional
-        """        
+class Robo(Personagem):  
     temporizador = 0
-
-
-    def __init__(self, x, x_distancia, y, tile_size, campo_de_visao, collision_sprites, movimentacao=True, direita_movimentacao=True):
+    def __init__(self, x:int, x_distancia:int, y:int, tile_size:int, campo_de_visao:int, collision_sprites:pygame.sprite.Group, movimentacao:bool=True, direita_movimentacao:bool=True):
         """_summary_: Construtor da classe Robo
         :param x: posição x do robo
         :type x: int
@@ -634,8 +581,12 @@ class Robo(Personagem):
         :type x_distancia: int   
         :param y: posição y do robo
         :type y: int
+        :param tile_size: tamanho do tile
+        :type tile_size: int
         :param campo_de_visao: distancia que o robo irá ver o personagem
         :type campo_de_visao: int
+        :param collision_sprites: grupo de sprites que o robo irá colidir
+        :type collision_sprites: pygame.sprite.Group
         :param movimentacao: Se o robô irá se mover ou ficará parado, defaults to True
         :type movimentacao: bool, optional
         :param direita_movimentacao: Qual direção o robô irá se mover de acordo com a posição inicial, defaults to True
@@ -649,53 +600,13 @@ class Robo(Personagem):
         }
         img = "img/spritesheet_robo.png"
         super().__init__(x, y, tile_size, img, dict_animacoes_robo, collision_sprites)
-        self.__x = x
-        self.__campo_de_visao = campo_de_visao * tile_size
-        self.__x_distancia = x_distancia * tile_size
+        self.x = x
+        self.campo_de_visao = campo_de_visao * tile_size
+        self.x_distancia = x_distancia * tile_size
         if direita_movimentacao:
             self.direita = False
-        self.__vivo = True
-        self.__movimentacao = movimentacao
-
-    @property
-    def campo_de_visao(self):
-        return self.__campo_de_visao
-
-    @campo_de_visao.setter
-    def campo_de_visao(self, value):
-        self.__campo_de_visao = value
-
-    @property
-    def x(self):
-        return self.__x
-
-    @x.setter
-    def x(self, value):
-        self.__x = value
-
-    @property
-    def x_distancia(self):
-        return self.__x_distancia
-
-    @x_distancia.setter
-    def x_distancia(self, value):
-        self.__x_distancia = value
-
-    @property
-    def movimentacao(self):
-        return self.__movimentacao
-
-    @movimentacao.setter
-    def movimentacao(self, value):
-        self.__movimentacao = value
-
-    @property
-    def vivo(self):
-        return self.__vivo
-
-    @vivo.setter
-    def vivo(self, value):
-        self.__vivo = value
+        self.vivo = True
+        self.movimentacao = movimentacao
 
     def fun_morrer(self):
         """_summary_: Função que faz a animação do robo morrer
@@ -739,9 +650,7 @@ class Robo(Personagem):
 
     def animacao_morrer(self):
         """_summary_: Função que faz a animação do robo morrer
-        """        
-        # if self.index_lista == 24: # quando a colisão tiver certa, aí isso vai sair
-        #     self.rect.y += 10
+        """  
         if self.index_lista > 27:   
             self.index_lista = 27
         self.index_lista += 0.25
@@ -754,7 +663,11 @@ class Robo(Personagem):
 
     def update(self):
         """_summary_: Função que atualiza a posição do robo
-        """        
+        """     
+
+        if self.vivo == False:
+            self.state = 0
+
         if self.state == 2:
             self.cair()
 
@@ -791,11 +704,31 @@ class Robo(Personagem):
             self.parado_animacao()
         self.temporizador += 1
 
-        self.check_horizontal_collisions(2)
+        if self.vivo == False:
+            self.state = 0
+        else:
+            if self.state == 0:
+                self.apply_gravity()
+                self.state = 2
+            self.check_vertical_collisions()
 
 
 class Kunai(pygame.sprite.Sprite):
-    def __init__(self, tile_size, screen, collision_sprites, robos, alavancas):
+    def __init__(self, tile_size:int, screen:pygame.Surface, collision_sprites:pygame.sprite.Group, robos:pygame.sprite.Group, alavancas:pygame.sprite.Group):
+        """_summary_: Classe que cria o objeto Kunai
+
+        :param tile_size: Tamanho do tile
+        :type tile_size: int
+        :param screen: Tela do jogo
+        :type screen: pygame.Surface
+        :param collision_sprites: Grupo de sprites que colidem
+        :type collision_sprites: pygame.sprite.Group
+        :param robos: Grupo de sprites dos robos
+        :type robos: pygame.sprite.Group
+        :param alavancas: Grupo de sprites das alavancas
+        :type alavancas: pygame.sprite.Group
+        """        
+
         pygame.sprite.Sprite.__init__(self)
 
         self.screen = screen
@@ -807,58 +740,27 @@ class Kunai(pygame.sprite.Sprite):
             image, (fator * largura, fator * altura))
         self.kunai_esquerda = pygame.transform.flip(
             self.kunai_direita, True, False)
-        self.__rect = self.kunai_direita.get_rect()
+        self.rect = self.kunai_direita.get_rect()
         self.aceleracao_inicial = tile_size * VELOCIDADE_PULO_BLC
-        self.__aceleracao = self.aceleracao_inicial
-        self.__direita = True
-        self.__atirar = False
+        self.aceleracao = self.aceleracao_inicial
+        self.direita = True
+        self.atirar = False
         self.gravidade = tile_size * GRAVIDADE_BLC
         self.velocidade = tile_size * VELOCIDADE_KUNAI_BLC
         self.collision_sprites = collision_sprites
         self.robos = robos
         self.alavancas = alavancas
 
-    @property
-    def image(self):
-        return self.__image
+    def fun_atirar(self, x:int, y:int, bool_direita:bool):
+        """_summary_: Função que atira o kunai
 
-    @image.setter
-    def image(self, value):
-        self.__image = value
-
-    @property
-    def rect(self):
-        return self.__rect
-
-    @rect.setter
-    def rect(self, value):
-        self.__rect = value
-
-    @property
-    def aceleracao(self):
-        return self.__aceleracao
-
-    @aceleracao.setter
-    def aceleracao(self, value):
-        self.__aceleracao = value
-
-    @property
-    def direita(self):
-        return self.__direita
-
-    @direita.setter
-    def direita(self, value):
-        self.__direita = value
-
-    @property
-    def atirar(self):
-        return self.__atirar
-
-    @atirar.setter
-    def atirar(self, value):
-        self.__atirar = value
-
-    def fun_atirar(self, x, y, bool_direita):
+        :param x: Posição x do kunai
+        :type x: int
+        :param y: Posição y do kunai
+        :type y: int
+        :param bool_direita: Direção do kunai
+        :type bool_direita: bool
+        """    
         self.aceleracao = self.aceleracao_inicial
         self.atirar = True
         self.direita = bool_direita
@@ -885,6 +787,7 @@ class Kunai(pygame.sprite.Sprite):
             self.screen.blit(self.kunai_esquerda, self.rect)
 
     def checar_colisao(self):
+        """_summary_: Função que checa se o kunai colidiu com algum objeto"""
         for alavanca in self.alavancas:
             if self.rect.colliderect(alavanca.rect):
                 alavanca.mudar_direcao()
