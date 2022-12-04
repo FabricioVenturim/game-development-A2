@@ -26,6 +26,7 @@ class Interface:
         logo = pygame.image.load("img/logo.png")
         logo = pygame.transform.scale(logo,(960,600))
         fundo = pygame.image.load("img/fundo2.jpg")
+
         #definindo as posições para que sejam as mais responsivas de acordo com o hardware
         fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
         self.tela.blits([(fundo,(0,0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
@@ -50,6 +51,7 @@ class Interface:
         fonte = pygame.font.SysFont("Arial", tamanho)
         texto = fonte.render(texto, True, cor)
         texto_ret = texto.get_rect()
+
         #para posicionar o texto de acordo com o centro
         texto_ret.midtop = (x, y)
         self.tela.blit(texto, texto_ret)
@@ -72,26 +74,31 @@ class Interface:
             botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*3/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
-                self.tela_controles()          
+                self.tela_controles()     
+
+            #criando os textos da interface     
             try:
                 self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.75/5)
                 self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/3.8, self.tela.get_height()*9.3/10)
 
+            #caso o processo de rodar da interface seja interrompido
             except:
                 print("o usuário saiu pelo X da tela de controles")
                 sys.exit()
 
+            #permitindo a saída do usuário
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     self.rodar = False
                     pygame.quit()
                     sys.exit()
 
+                #definindo a tecla de saída
                 if evento.type == pygame.KEYUP and evento.key == K_ESCAPE:
                     self.rodar = False
                     pygame.quit()
        
-                  
+                #defininido a tecla para COMEÇAR O JOGO
                 if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
                     pygame.mixer.music.stop()
@@ -103,9 +110,11 @@ class Interface:
                 print("Saiu do Jogo")
                 break
             
+            #criando um botão de pausa
             pausa = Botao("II",75,75,(10,10),2, self.fonte)
             pausa.desenhar(self.tela)
 
+            #definindo a função do botão
             if pausa.clicado == True:
                 self.tela_pausa()
                 pygame.display.update()
@@ -122,6 +131,7 @@ class Interface:
 
             try:
                 for evento in pygame.event.get():
+
                     #criando o botão para voltar da interface de controles
                     voltar = Botao("VOLTAR",200,100,(15,15), 3, self.fonte)
                     voltar.desenhar(self.tela)
@@ -159,29 +169,41 @@ class Interface:
         logo = pygame.transform.scale(logo,(960,600))
         self.tela.blits([(fundo, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
 
+    #criando uma função para interface de pausa
     def tela_pausa(self):
+
+        #definindo as funcionalidades
         pausado = True
         while pausado:
+        
+            #permitindo a saída do usuário
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                
+
                 if evento.type == pygame.KEYUP:
+
+                    #definindo o Q para saída
                     if evento.key == K_q:
                         pausado = False
 
+                    #definindo o ESC para encerramento
                     elif evento.key == pygame.K_ESCAPE:
                         pygame.quit()
                         quit()
             
+            #definindo as cores
             self.tela.fill((66, 47, 7))
+            
+            #criando um botão de controles para a interface de pausa
             controles = Botao("CONTROLES", 300, 120, (self.tela.get_width()*5/12, self.tela.get_height()*2.7/5), 0, self.fonte)
             controles.desenhar(self.tela)
 
             if controles.clicado == True:
                 self.tela_controles()
 
+            #texto que aparece na interface de pausa
             Interface.mostrar_texto(self, "PAUSADO", 150, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*1/9)
             Interface.mostrar_texto(self, "PRESSIONE Q PARA CONTINUAR", 36, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*2.5/3)
             pygame.display.update()
