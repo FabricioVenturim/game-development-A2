@@ -72,9 +72,7 @@ class Interface:
             botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*3/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
-                self.tela_controles()
-                #INTERFACE DA TELA DE OPÇÕES
-                # BLA BLA BLA                
+                self.tela_controles()          
             try:
                 self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0,0,0), self.tela.get_width()*1/4, self.tela.get_height()*3.75/5)
                 self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici", 20, (255, 255, 255), self.tela.get_width()/3.8, self.tela.get_height()*9.3/10)
@@ -104,6 +102,13 @@ class Interface:
             except:
                 print("Saiu do Jogo")
                 break
+            
+            pausa = Botao("II",75,75,(10,10),2, self.fonte)
+            pausa.desenhar(self.tela)
+
+            if pausa.clicado == True:
+                self.tela_pausa()
+                pygame.display.update()
 
     #criando uma função para a tela de controles
     def tela_controles(self):
@@ -149,10 +154,46 @@ class Interface:
         #colocando de volta a imagem certa
         rodar = False
         fundo = pygame.image.load("img/fundo2.jpg")
-        controles = pygame.transform.scale(fundo,(2112,1188))
+        fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
         logo = pygame.image.load("img/logo.png")
         logo = pygame.transform.scale(logo,(960,600))
-        self.tela.blits([(controles, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+        self.tela.blits([(fundo, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+
+    def tela_pausa(self):
+        pausado = True
+        while pausado:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                
+                if evento.type == pygame.KEYUP:
+                    if evento.key == K_q:
+                        pausado = False
+
+                    elif evento.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        quit()
+            
+            self.tela.fill((66, 47, 7))
+            controles = Botao("CONTROLES", 300, 120, (self.tela.get_width()*5/12, self.tela.get_height()*2.7/5), 0, self.fonte)
+            controles.desenhar(self.tela)
+
+            if controles.clicado == True:
+                self.tela_controles()
+
+            Interface.mostrar_texto(self, "PAUSADO", 150, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*1/9)
+            Interface.mostrar_texto(self, "PRESSIONE Q PARA CONTINUAR", 36, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*2.5/3)
+            pygame.display.update()
+
+
+        #caso pare de pausar, voltar ao normal
+        pausado = False
+        fundo = pygame.image.load("img/fundo2.jpg")
+        fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
+        logo = pygame.image.load("img/logo.png")
+        logo = pygame.transform.scale(logo,(960,600))
+        self.tela.blits([(fundo, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
 
 #criando uma classe para botão
 class Botao:
