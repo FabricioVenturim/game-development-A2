@@ -98,7 +98,7 @@ class Interface:
                     self.rodar = False
                     pygame.quit()
        
-                #defininido a tecla para COMEÇAR O JOGO
+                #defininido a tecla para COMEÇAR O JOGO -------------------------------- ATENCAO
                 if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
                     pygame.mixer.music.stop()
@@ -188,6 +188,11 @@ class Interface:
                     if evento.key == K_q:
                         pausado = False
 
+                    #definindo R para reiniciar o jogo
+                    if evento.key == K_r:
+                        pausado = False
+                        #FUNÇÃO PARA COMEÇAR A FASE ----------------------------------- ATENCAO
+
                     #definindo o ESC para encerramento
                     elif evento.key == pygame.K_ESCAPE:
                         pygame.quit()
@@ -205,7 +210,7 @@ class Interface:
 
             #texto que aparece na interface de pausa
             Interface.mostrar_texto(self, "PAUSADO", 150, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*1/9)
-            Interface.mostrar_texto(self, "PRESSIONE Q PARA CONTINUAR", 36, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*2.5/3)
+            Interface.mostrar_texto(self, "PRESSIONE Q PARA CONTINUAR E R PARA REINICIAR", 36, (255,255,255), self.tela.get_width()/2, self.tela.get_height()*2.5/3)
             pygame.display.update()
 
 
@@ -261,8 +266,6 @@ class Botao:
         
         #para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
-    
-    #criando a função de pausa do botão
 
       
 #rodando o jogo
