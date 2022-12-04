@@ -5,6 +5,8 @@ import sys
 #criando a classe interface
 class Interface:
     def __init__(self):
+        """Função utilizada para iniciar a interface
+        """
 
         #definindo as propriedades iniciais, além de iniciar algumas ações
         pygame.init()
@@ -33,12 +35,16 @@ class Interface:
 
 #função da interface da fase
     def rodar(self):
+        """Função utilizada para gerar rodar o jogo
+        """
         self.jogando = True
         while self.jogando:
             self.tempo.tick(60)
             self.eventos()
 
     #possibilitando que as pessoas fechem o jogo 
+        """Função utilizada para promover os eventos básicos
+        """
     def eventos(self):
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -48,6 +54,19 @@ class Interface:
 
     #criando uma função para o texto
     def mostrar_texto(self, texto, tamanho, cor, x, y):
+        """Função para aparecer o texto na interface
+
+        :param texto: texto que aparece
+        :type texto: str
+        :param tamanho: número do tamanho da fonte
+        :type tamanho: int
+        :param cor: a cor da escrita em RGB
+        :type cor: tuple
+        :param x: a coordenada x da escrita
+        :type x: float
+        :param y: a coordenada y da escrita
+        :type y: float
+        """
         fonte = pygame.font.SysFont("Arial", tamanho)
         texto = fonte.render(texto, True, cor)
         texto_ret = texto.get_rect()
@@ -58,6 +77,8 @@ class Interface:
 
     #começar a trilha sonora de inicio e iniciar a tela de esperar
     def tela_start(self):
+        """Cria a interface inicial, com música e sala de espera
+        """
         pygame.mixer.music.load("audio/trilha sonora2.mp3")
         pygame.mixer.music.play()
         pygame.display.flip()
@@ -65,6 +86,8 @@ class Interface:
 
 #função da interface de espera
     def esperar(self):
+        """Função da sala de espera, enquanto o jogador não inicia a fase
+        """
         esperando = True
         while esperando:
             #criando um botão de pausa
@@ -121,6 +144,9 @@ class Interface:
 
     #criando uma função para a tela de controles
     def tela_controles(self):
+        """
+        Função utilizada para criar a tela que exibe controles
+        """
         rodar = True
         while rodar:
             transicao = pygame.Surface((0,0), pygame.FULLSCREEN)
@@ -171,6 +197,9 @@ class Interface:
 
     #criando uma função para interface de pausa
     def tela_pausa(self):
+        """
+        Função para criar uma interface de pausado       
+        """
 
         #definindo as funcionalidades
         pausado = True
@@ -216,15 +245,39 @@ class Interface:
 
         #caso pare de pausar, voltar ao normal
         pausado = False
+
+        #imagem de fundo
         fundo = pygame.image.load("img/fundo2.jpg")
         fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
+
+        #logo do jogo
         logo = pygame.image.load("img/logo.png")
         logo = pygame.transform.scale(logo,(960,600))
         self.tela.blits([(fundo, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
 
+    #criando uma funcao para a tela de derrota do jogo
+    def tela_derrota(self):
+        return
+
 #criando uma classe para botão
 class Botao:
     def __init__ (self, texto, x, y, posicao, elevacao, fonte):
+        """Função utilizada para criar o botão e suas propriedades
+
+        :param texto: texto do botão
+        :type texto: str
+        :param x: comprimento do botão
+        :type x: float
+        :param y: altura do botão
+        :type y: float
+        :param posicao: as coordenadas da tela que o botão aparece
+        :type posicao: tuple
+        :param elevacao: a elevação do botão
+        :type elevacao: int
+        :param fonte: a fonte das escrita do botão
+        :type fonte: str
+        """
+
         #determinando as propriedades do botao como posicao e cor
         self.pressionado = False
 
@@ -245,9 +298,14 @@ class Botao:
         #o texto do botao
         self.texto_sup = fonte.render(texto, True, (255,255,255))
         self.texto_ret = self.texto_sup.get_rect(center = self.topo_ret.center)
-        
+
     #função para gerar o botão
     def desenhar(self, tela):
+        """gerando o botão na interface da tela
+
+        :param tela: a interface que o botão vai ser gerado
+        :type tela: pygame.Surface
+        """
         pos = pygame.mouse.get_pos()
 
         #deixando o botao vermelho com o mouse em cima
