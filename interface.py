@@ -30,14 +30,14 @@ class Interface:
 
         # aplicando o fundo
         logo = pygame.image.load("img/logo.png")
-        logo = pygame.transform.scale(logo, (960, 600))
+        logo = pygame.transform.scale(logo, (720, 450))
         fundo = pygame.image.load("img/fundo2.jpg")
 
         # definindo as posições para que sejam as mais responsivas de acordo com o hardware
         fundo = pygame.transform.scale(
             fundo, (self.tela.get_width(), self.tela.get_height()))
         self.tela.blits(
-            [(fundo, (0, 0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+            [(fundo, (0, 0)), (logo, (self.tela.get_width()/12, self.tela.get_height()/100))])
 
 # função da interface da fase
     def rodar(self):
@@ -133,9 +133,9 @@ class Interface:
             # criando os textos da interface
             try:
                 self.mostrar_texto("PRESSIONE ESPAÇO PARA COMEÇAR", 36, (0, 0, 0),
-                                   self.tela.get_width()*1/4, self.tela.get_height()*3.75/5)
+                                   self.tela.get_width()*1/3.3, self.tela.get_height()*4/5)
                 self.mostrar_texto("- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici",
-                                   20, (255, 255, 255), self.tela.get_width()/3.8, self.tela.get_height()*9.3/10)
+                                   20, (255, 255, 255), self.tela.get_width()/3.5, self.tela.get_height()*9.3/10)
 
             # caso o processo de rodar da interface seja interrompido
             except:
@@ -230,9 +230,9 @@ class Interface:
         fundo = pygame.transform.scale(
             fundo, (self.tela.get_width(), self.tela.get_height()))
         logo = pygame.image.load("img/logo.png")
-        logo = pygame.transform.scale(logo, (960, 600))
+        logo = pygame.transform.smoothscale(logo, (720, 450))
         self.tela.blits(
-            [(fundo, (0, 0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+            [(fundo, (0, 0)), (logo, (self.tela.get_width()/12, self.tela.get_height()/100))])
 
     # criando uma função para interface de pausa
     def tela_pausa(self):
@@ -294,9 +294,9 @@ class Interface:
 
         # logo do jogo
         logo = pygame.image.load("img/logo.png")
-        logo = pygame.transform.scale(logo, (960, 600))
+        logo = pygame.transform.scale(logo, (720, 450))
         self.tela.blits(
-            [(fundo, (0, 0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+            [(fundo, (0, 0)), (logo, (self.tela.get_width()/12, self.tela.get_height()/100))])
 
     # criando uma funcao para a tela de derrota do jogo
     def tela_derrota(self):
@@ -350,10 +350,10 @@ class Interface:
 
                     # logo do jogo
                     logo = pygame.image.load("img/logo.png")
-                    logo = pygame.transform.scale(logo, (960, 600))
+                    logo = pygame.transform.scale(logo, (720, 450))
 
                     self.tela.blits(
-                        [(fundo, (0, 0)), (logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+                        [(fundo, (0, 0)), (logo, (self.tela.get_width()/12, self.tela.get_height()/100))])
                     self.tela_start()
                     pygame.display.update()
 
@@ -438,3 +438,4 @@ class Botao_Clicavel:
 
         # para aparecer o elemento
         tela.blit(self.texto_sup, self.texto_ret)
+
