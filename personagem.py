@@ -528,7 +528,7 @@ class GirlNinja(Personagem):
         if self.state == 2:
             self.cair()
         # controle de animação do personagem para deslizar
-        elif self.deslizar:
+        if self.deslizar:
             self.collision_rect = self.deslizar_rect
             self.deslizar_animacao()
         # Controle de animação do personagem para correr
@@ -568,10 +568,10 @@ class GirlNinja(Personagem):
         keys = pygame.key.get_pressed()
 
         if not self.atirar:
-            if self.state == 0:
-                if keys[pygame.K_DOWN] or not self.pode_levantar():
-                    self.fun_deslizar()
-                elif keys[pygame.K_UP]:
+            if (keys[pygame.K_DOWN] or not self.pode_levantar()) and self.state != 1:
+                self.fun_deslizar()
+            elif self.state == 0:
+                if keys[pygame.K_UP]:
                     self.fun_pular()
                 elif keys[pygame.K_RSHIFT]:
                     # TODO: consertar kunai
