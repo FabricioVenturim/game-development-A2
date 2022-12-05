@@ -49,6 +49,13 @@ class Interface:
             self.level.update()
             self.level.draw()
 
+            if self.level.venceu:
+                self.level_index += 1
+                if self.level_index >= len(config.level_data):
+                    self.jogando = False # TODO: tela de vitória
+                else:
+                    self.definir_level(self.level_index)
+
             if self.level.perdeu:
                 self.tela_derrota()
 
