@@ -147,6 +147,17 @@ class Portao(pygame.sprite.Sprite):
         self.grupo_colisao = grupo_colisao
         self.chaves = chaves
         self.portoes = portoes
+        self.pers_no_portao = None
+        self.liberar_fase = False
+
+    def verificar_personagens_portao(self):
+        if self.open == True:
+            self.pers_no_portao = 0
+            for personagem in self.grupo_colisao.sprites():
+                if self.rect.contains(personagem.rect):
+                    self.pers_no_portao += 1
+            if self.pers_no_portao == len(self.grupo_colisao.sprites()):
+                self.liberar_fase = True
 
     def abrir_portao(self):
         """
@@ -166,6 +177,7 @@ class Portao(pygame.sprite.Sprite):
 
     def update(self):
         self.liberar_portao()
+        self.verificar_personagens_portao()
 
 
 class Plataforma(pygame.sprite.Sprite):
