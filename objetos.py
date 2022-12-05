@@ -286,7 +286,6 @@ class Botao(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom = (x,y))
         self.ativo = False
         self.grupo_colisao = grupo_colisao
-        self.mask = pygame.mask.from_surface(self.image)
         self.rect_collision = self.rect
 
 
