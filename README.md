@@ -26,6 +26,9 @@ O jogo baseia-se em fases que são finalizadas quando todas as chaves da sala fo
 
 De modo geral, esse jogo pode ser caracterizado como ÚNICO, quem imaginaria, ninjas e robôs se enfrentando num cenário místico medieval? Ainda por cima, um jogo colaborativo para jogar com o seu amigo e se divertir!!
 
+## História
+Dois ninjas inimigos buscavam uma suposta joia rara, conhecida como pedra filosofal. No entanto, ao almejarem o objetivo, um portal se abre debaixo de seus pés, teleportando-os para uma dimensão totalmente diferente. Assim, para saírem deste lugar, precisam trabalhar em equipe e deixar suas rivalidades de lado. Porém, um novo obstáculo aparece para complicar a vida desses ninjas, ROBÔS ASSASSINOS. Como eles poderão escapar deste místico?
+
 ## Documentação
 
 O link para toda documentação das funções dos métodos também estão disponíveis no site, mas o link direto é:
