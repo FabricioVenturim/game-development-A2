@@ -39,7 +39,7 @@ class Interface:
     def rodar(self):
         """Função utilizada para gerar rodar o jogo
         """
-        pausa = Botao("II",75,75,(10,10),2, self.fonte)
+        pausa = Botao_Clicavel("II",75,75,(10,10),2, self.fonte)
         
         self.level_index = 0
         self.level = Level(config.level_data[self.level_index], self.tela)
@@ -48,6 +48,9 @@ class Interface:
         while self.jogando:
             self.level.update()
             self.level.draw()
+
+            if self.level.perdeu:
+                self.tela_derrota()
 
             pausa.desenhar(self.tela)
             if pausa.clicado == True:
@@ -235,7 +238,7 @@ class Interface:
                     #definindo R para reiniciar o jogo
                     if evento.key == K_r:
                         pausado = False
-                        self.level = Level(config.level_data[self.level_index], self.tela)
+                        self.definir_level(self.level_index)
 
                     #definindo o ESC para encerramento
                     elif evento.key == pygame.K_ESCAPE:
@@ -274,11 +277,21 @@ class Interface:
     def tela_derrota(self):
         self.tela.fill((66, 47, 7))
         self.mostrar_texto("DERROTA", 100, (0,0,0), self.tela.get_width()/2.3, self.tela.get_height()/9)
-        reiniciar = Botao_Clicavel("TENTE NOVAMENTE", 300, 120, (self.tela.get_width()/2.3, self.tela.get_height()*3.5/5))
+        reiniciar = Botao_Clicavel("TENTE NOVAMENTE", 300, 120, (self.tela.get_width()/2.3, self.tela.get_height()*3.5/5), 6, self.fonte)
         
-        if reiniciar.clicado == True:
-            #função para começar a fase
-            return
+        while self.jogando:
+            reiniciar.desenhar(self.tela)
+
+            if reiniciar.clicado == True:
+                self.definir_level(self.level_index)
+                return
+            
+            self.eventos()
+            pygame.display.update()
+            self.tempo.tick(60)
+    
+    def definir_level(self, level_index):
+        self.level = Level(config.level_data[level_index], self.tela)
             
 #criando uma classe para botão
 class Botao_Clicavel:
