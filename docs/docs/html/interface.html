@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interface &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Level" href="level.html" />
+    <link rel="prev" title="game-development-A2" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">game-development-A2</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interface.Botao_Clicavel"><code class="docutils literal notranslate"><span class="pre">Botao_Clicavel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Botao_Clicavel.desenhar"><code class="docutils literal notranslate"><span class="pre">Botao_Clicavel.desenhar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#interface.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.definir_level"><code class="docutils literal notranslate"><span class="pre">Interface.definir_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.esperar"><code class="docutils literal notranslate"><span class="pre">Interface.esperar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.eventos"><code class="docutils literal notranslate"><span class="pre">Interface.eventos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.mostrar_texto"><code class="docutils literal notranslate"><span class="pre">Interface.mostrar_texto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.rodar"><code class="docutils literal notranslate"><span class="pre">Interface.rodar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.tela_controles"><code class="docutils literal notranslate"><span class="pre">Interface.tela_controles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.tela_derrota"><code class="docutils literal notranslate"><span class="pre">Interface.tela_derrota()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.tela_pausa"><code class="docutils literal notranslate"><span class="pre">Interface.tela_pausa()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.tela_start"><code class="docutils literal notranslate"><span class="pre">Interface.tela_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interface.Interface.tela_vitoria"><code class="docutils literal notranslate"><span class="pre">Interface.tela_vitoria()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="level.html">Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html">Objetos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html">Personagem</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">game-development-A2</a></li>
+      <li class="breadcrumb-item active">Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/interface.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-interface">
+<span id="interface"></span><h1>Interface<a class="headerlink" href="#module-interface" title="Link permanente para este cabeçalho"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.Botao_Clicavel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Botao_Clicavel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comprimento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altura</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posicao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevacao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fonte</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Botao_Clicavel"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Botao_Clicavel" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Botao_Clicavel.desenhar">
+<span class="sig-name descname"><span class="pre">desenhar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tela</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Botao_Clicavel.desenhar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Botao_Clicavel.desenhar" title="Link permanente para esta definição"></a></dt>
+<dd><p>gerando o botão na interface da tela</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>tela</strong> (<em>pygame.Surface</em>) – a interface que o botão vai ser gerado</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.Interface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><a class="reference internal" href="_modules/interface.html#Interface"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.definir_level">
+<span class="sig-name descname"><span class="pre">definir_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.definir_level"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.definir_level" title="Link permanente para esta definição"></a></dt>
+<dd><p>função para definir o level do fase</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>level_index</strong> (<em>int</em>) – número da fase que o personagem</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.esperar">
+<span class="sig-name descname"><span class="pre">esperar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.esperar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.esperar" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função da sala de espera, enquanto o jogador não inicia a fase</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.eventos">
+<span class="sig-name descname"><span class="pre">eventos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.eventos"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.eventos" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função utilizada para promover os eventos básicos</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.mostrar_texto">
+<span class="sig-name descname"><span class="pre">mostrar_texto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tamanho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.mostrar_texto"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.mostrar_texto" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função para aparecer o texto na interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texto</strong> (<em>str</em>) – texto que aparece</p></li>
+<li><p><strong>tamanho</strong> (<em>int</em>) – número do tamanho da fonte</p></li>
+<li><p><strong>cor</strong> (<em>tuple</em>) – a cor da escrita em RGB</p></li>
+<li><p><strong>x</strong> (<em>float</em>) – a coordenada x da escrita</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – a coordenada y da escrita</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.rodar">
+<span class="sig-name descname"><span class="pre">rodar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.rodar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.rodar" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função utilizada para gerar rodar o jogo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.tela_controles">
+<span class="sig-name descname"><span class="pre">tela_controles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.tela_controles"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.tela_controles" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função utilizada para criar a tela que exibe controles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.tela_derrota">
+<span class="sig-name descname"><span class="pre">tela_derrota</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.tela_derrota"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.tela_derrota" title="Link permanente para esta definição"></a></dt>
+<dd><p>função para aparecer a tela de derrota</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.tela_pausa">
+<span class="sig-name descname"><span class="pre">tela_pausa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.tela_pausa"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.tela_pausa" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função para criar uma interface de pausado</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.tela_start">
+<span class="sig-name descname"><span class="pre">tela_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.tela_start"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.tela_start" title="Link permanente para esta definição"></a></dt>
+<dd><p>Cria a interface inicial, com música e sala de espera</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Interface.tela_vitoria">
+<span class="sig-name descname"><span class="pre">tela_vitoria</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface.html#Interface.tela_vitoria"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#interface.Interface.tela_vitoria" title="Link permanente para esta definição"></a></dt>
+<dd><p>função para aparecer a tela de vitória do jogo</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
+        <a href="modules.html" class="btn btn-neutral float-left" title="game-development-A2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="level.html" class="btn btn-neutral float-right" title="Level" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

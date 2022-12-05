@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>interface &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Buscar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">game-development-A2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte para interface</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">from</span> <span class="nn">pygame.locals</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">level</span> <span class="kn">import</span> <span class="n">Level</span>
+<span class="kn">import</span> <span class="nn">config</span>
+
+<span class="c1"># criando a classe interface</span>
+
+
+<div class="viewcode-block" id="Interface"><a class="viewcode-back" href="../interface.html#interface.Interface">[documentos]</a><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função utilizada para iniciar a interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># definindo as propriedades iniciais, além de iniciar algumas ações</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+        <span class="c1"># definindo nome e icon</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;Double Ninjas: Uma Missão Quase Possível&quot;</span><span class="p">)</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/ying yang.png&quot;</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_icon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
+
+        <span class="c1"># definindo as propriedades da tela</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">FULLSCREEN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tempo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rodando</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># aplicando o fundo</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/logo.png&quot;</span><span class="p">)</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">450</span><span class="p">))</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/fundo2.jpg&quot;</span><span class="p">)</span>
+
+        <span class="c1"># definindo as posições para que sejam as mais responsivas de acordo com o hardware</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+            <span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blits</span><span class="p">(</span>
+            <span class="p">[(</span><span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">))])</span>
+
+<span class="c1"># função da interface da fase</span>
+<div class="viewcode-block" id="Interface.rodar"><a class="viewcode-back" href="../interface.html#interface.Interface.rodar">[documentos]</a>    <span class="k">def</span> <span class="nf">rodar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função utilizada para gerar rodar o jogo</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pausa</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;II&quot;</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">Level</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">level_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">level_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">venceu</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">level_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">level_data</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tela_vitoria</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">definir_level</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_index</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">perdeu</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tela_derrota</span><span class="p">()</span>
+
+            <span class="n">pausa</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pausa</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tela_pausa</span><span class="p">()</span>
+
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">FPS</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eventos</span><span class="p">()</span></div>
+
+    <span class="c1"># possibilitando que as pessoas fechem o jogo</span>
+<div class="viewcode-block" id="Interface.eventos"><a class="viewcode-back" href="../interface.html#interface.Interface.eventos">[documentos]</a>    <span class="k">def</span> <span class="nf">eventos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função utilizada para promover os eventos básicos</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">evento</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rodando</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1"># criando uma função para o texto</span>
+<div class="viewcode-block" id="Interface.mostrar_texto"><a class="viewcode-back" href="../interface.html#interface.Interface.mostrar_texto">[documentos]</a>    <span class="k">def</span> <span class="nf">mostrar_texto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texto</span><span class="p">,</span> <span class="n">tamanho</span><span class="p">,</span> <span class="n">cor</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função para aparecer o texto na interface</span>
+
+<span class="sd">        :param texto: texto que aparece</span>
+<span class="sd">        :type texto: str</span>
+<span class="sd">        :param tamanho: número do tamanho da fonte</span>
+<span class="sd">        :type tamanho: int</span>
+<span class="sd">        :param cor: a cor da escrita em RGB</span>
+<span class="sd">        :type cor: tuple</span>
+<span class="sd">        :param x: a coordenada x da escrita</span>
+<span class="sd">        :type x: float</span>
+<span class="sd">        :param y: a coordenada y da escrita</span>
+<span class="sd">        :type y: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fonte</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="n">tamanho</span><span class="p">)</span>
+        <span class="n">texto</span> <span class="o">=</span> <span class="n">fonte</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cor</span><span class="p">)</span>
+        <span class="n">texto_ret</span> <span class="o">=</span> <span class="n">texto</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+
+        <span class="c1"># para posicionar o texto de acordo com o centro</span>
+        <span class="n">texto_ret</span><span class="o">.</span><span class="n">midtop</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span> <span class="n">texto_ret</span><span class="p">)</span></div>
+
+    <span class="c1"># começar a trilha sonora de inicio e iniciar a tela de esperar</span>
+<div class="viewcode-block" id="Interface.tela_start"><a class="viewcode-back" href="../interface.html#interface.Interface.tela_start">[documentos]</a>    <span class="k">def</span> <span class="nf">tela_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cria a interface inicial, com música e sala de espera</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;audio/trilha sonora2.mp3&quot;</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">esperar</span><span class="p">()</span></div>
+
+<span class="c1"># função da interface de espera</span>
+<div class="viewcode-block" id="Interface.esperar"><a class="viewcode-back" href="../interface.html#interface.Interface.esperar">[documentos]</a>    <span class="k">def</span> <span class="nf">esperar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função da sala de espera, enquanto o jogador não inicia a fase</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">esperando</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">esperando</span><span class="p">:</span>
+            <span class="c1"># criando um botão de pausa</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">FPS</span><span class="p">)</span>
+
+            <span class="c1"># aparecendo o texto de teclar para começar</span>
+            <span class="n">botao_jogar</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;CONTROLES&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span>
+            <span class="p">)</span><span class="o">*</span><span class="mf">2.1</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mi">3</span><span class="o">/</span><span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+            <span class="n">botao_jogar</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">botao_jogar</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tela_controles</span><span class="p">()</span>
+
+            <span class="c1"># criando os textos da interface</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="s2">&quot;PRESSIONE ESPAÇO PARA COMEÇAR&quot;</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mf">3.3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mi">4</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="s2">&quot;- Desenvolvido por Fabrício Venturin, Lucas Cuan, Pedro Thomaz Martins e Yonathan Rabinovici&quot;</span><span class="p">,</span>
+                                   <span class="mi">20</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mf">3.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mf">9.3</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+
+            <span class="c1"># caso o processo de rodar da interface seja interrompido</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;o usuário saiu pelo X da tela de controles&quot;</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+            <span class="c1"># permitindo a saída do usuário</span>
+            <span class="k">for</span> <span class="n">evento</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rodar</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+                <span class="c1"># definindo a tecla de saída</span>
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span> <span class="ow">and</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rodar</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+
+                <span class="c1"># defininido a tecla para COMEÇAR O JOGO</span>
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span> <span class="ow">and</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+                    <span class="n">esperando</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;audio/trilha sonora.mp3&quot;</span><span class="p">)</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rodar</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saiu do Jogo&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="c1"># criando um botão de pausa</span>
+            <span class="n">pausa</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;II&quot;</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+            <span class="n">pausa</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+
+            <span class="c1"># definindo a função do botão</span>
+            <span class="k">if</span> <span class="n">pausa</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tela_pausa</span><span class="p">()</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+    <span class="c1"># criando uma função para a tela de controles</span>
+<div class="viewcode-block" id="Interface.tela_controles"><a class="viewcode-back" href="../interface.html#interface.Interface.tela_controles">[documentos]</a>    <span class="k">def</span> <span class="nf">tela_controles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Função utilizada para criar a tela que exibe controles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rodar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">rodar</span><span class="p">:</span>
+            <span class="n">transicao</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">FULLSCREEN</span><span class="p">)</span>
+            <span class="n">transicao</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">controles</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/Controles.png&quot;</span><span class="p">)</span>
+            <span class="n">controles</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+                <span class="n">controles</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">controles</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">evento</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+
+                    <span class="c1"># criando o botão para voltar da interface de controles</span>
+                    <span class="n">voltar</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span>
+                        <span class="s2">&quot;VOLTAR&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+                    <span class="n">voltar</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+                    <span class="c1"># garantindo que quando clicado a imagem suma</span>
+                    <span class="k">if</span> <span class="n">voltar</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">controles</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+                        <span class="k">break</span>
+
+                    <span class="c1"># possibilitando o fechamento do jogo</span>
+                    <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">rodando</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+                    <span class="c1"># definindo ESC para sair do jogos</span>
+                    <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYUP</span> <span class="ow">and</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span><span class="p">:</span>
+                        <span class="n">rodar</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+            <span class="c1"># tratando a exceção de quando alguém sair na tela de controles</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;o usuário saiu da tela de controles&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+        <span class="c1"># colocando de volta a imagem certa</span>
+        <span class="n">rodar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/fundo2.jpg&quot;</span><span class="p">)</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+            <span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/logo.png&quot;</span><span class="p">)</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">450</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blits</span><span class="p">(</span>
+            <span class="p">[(</span><span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">))])</span></div>
+
+    <span class="c1"># criando uma função para interface de pausa</span>
+<div class="viewcode-block" id="Interface.tela_pausa"><a class="viewcode-back" href="../interface.html#interface.Interface.tela_pausa">[documentos]</a>    <span class="k">def</span> <span class="nf">tela_pausa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Função para criar uma interface de pausado       </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># definindo as funcionalidades</span>
+        <span class="n">pausado</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">pausado</span><span class="p">:</span>
+
+            <span class="c1"># permitindo a saída do usuário</span>
+            <span class="k">for</span> <span class="n">evento</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                    <span class="n">quit</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span><span class="p">:</span>
+
+                    <span class="c1"># definindo o Q para saída</span>
+                    <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_q</span><span class="p">:</span>
+                        <span class="n">pausado</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="c1"># definindo R para reiniciar o jogo</span>
+                    <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_r</span><span class="p">:</span>
+                        <span class="n">pausado</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">definir_level</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_index</span><span class="p">)</span>
+
+                    <span class="c1"># definindo o ESC para encerramento</span>
+                    <span class="k">elif</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_ESCAPE</span><span class="p">:</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                        <span class="n">quit</span><span class="p">()</span>
+
+            <span class="c1"># definindo as cores</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">66</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+            <span class="c1"># criando um botão de controles para a interface de pausa</span>
+            <span class="n">controles</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;CONTROLES&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span>
+            <span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mf">2.7</span><span class="o">/</span><span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+            <span class="n">controles</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">controles</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tela_controles</span><span class="p">()</span>
+
+            <span class="c1"># texto que aparece na interface de pausa</span>
+            <span class="n">Interface</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;PAUSADO&quot;</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span>
+            <span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span>
+            <span class="n">Interface</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;PRESSIONE Q PARA CONTINUAR E R PARA REINICIAR&quot;</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="p">(</span>
+                <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mf">2.5</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># caso pare de pausar, voltar ao normal</span>
+        <span class="n">pausado</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># imagem de fundo</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/fundo2.jpg&quot;</span><span class="p">)</span>
+        <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+            <span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+
+        <span class="c1"># logo do jogo</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/logo.png&quot;</span><span class="p">)</span>
+        <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">450</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blits</span><span class="p">(</span>
+            <span class="p">[(</span><span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">))])</span></div>
+
+    <span class="c1"># criando uma funcao para a tela de derrota do jogo</span>
+<div class="viewcode-block" id="Interface.tela_derrota"><a class="viewcode-back" href="../interface.html#interface.Interface.tela_derrota">[documentos]</a>    <span class="k">def</span> <span class="nf">tela_derrota</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;função para aparecer a tela de derrota</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">66</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="s2">&quot;DERROTA&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">reiniciar</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;TENTE NOVAMENTE&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span>
+        <span class="p">)</span><span class="o">/</span><span class="mf">2.3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mf">3.5</span><span class="o">/</span><span class="mi">5</span><span class="p">),</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">jogando</span><span class="p">:</span>
+            <span class="n">reiniciar</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">reiniciar</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">definir_level</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_index</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">eventos</span><span class="p">()</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">FPS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.definir_level"><a class="viewcode-back" href="../interface.html#interface.Interface.definir_level">[documentos]</a>    <span class="k">def</span> <span class="nf">definir_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;função para definir o level do fase</span>
+
+<span class="sd">        :param level_index: número da fase que o personagem</span>
+<span class="sd">        :type level_index: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">Level</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">level_data</span><span class="p">[</span><span class="n">level_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interface.tela_vitoria"><a class="viewcode-back" href="../interface.html#interface.Interface.tela_vitoria">[documentos]</a>    <span class="k">def</span> <span class="nf">tela_vitoria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;função para aparecer a tela de vitória do jogo</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rodar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">rodar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">66</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mostrar_texto</span><span class="p">(</span><span class="s2">&quot;PARABÉNS, VOCÊS PASSARAM!&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span>
+            <span class="n">voltar</span> <span class="o">=</span> <span class="n">Botao_Clicavel</span><span class="p">(</span><span class="s2">&quot;VOLTAR&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(</span>
+            <span class="p">)</span><span class="o">/</span><span class="mf">2.3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">*</span><span class="mf">3.5</span><span class="o">/</span><span class="mi">5</span><span class="p">),</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fonte</span><span class="p">)</span>
+            <span class="n">voltar</span><span class="o">.</span><span class="n">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">evento</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="c1"># garantindo que quando clicado a imagem suma</span>
+                <span class="k">if</span> <span class="n">voltar</span><span class="o">.</span><span class="n">clicado</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+
+                    <span class="c1"># imagem de fundo</span>
+                    <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/fundo2.jpg&quot;</span><span class="p">)</span>
+                    <span class="n">fundo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span>
+                        <span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+
+                    <span class="c1"># logo do jogo</span>
+                    <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/logo.png&quot;</span><span class="p">)</span>
+                    <span class="n">logo</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">450</span><span class="p">))</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">blits</span><span class="p">(</span>
+                        <span class="p">[(</span><span class="n">fundo</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="p">(</span><span class="n">logo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tela</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">100</span><span class="p">))])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tela_start</span><span class="p">()</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+                <span class="c1"># definindo ESC para sair do jogos</span>
+                <span class="k">if</span> <span class="n">evento</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYUP</span> <span class="ow">and</span> <span class="n">evento</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rodando</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">rodar</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+                <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tempo</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">FPS</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># criando uma classe para botão</span>
+<div class="viewcode-block" id="Botao_Clicavel"><a class="viewcode-back" href="../interface.html#interface.Botao_Clicavel">[documentos]</a><span class="k">class</span> <span class="nc">Botao_Clicavel</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texto</span><span class="p">,</span> <span class="n">comprimento</span><span class="p">,</span> <span class="n">altura</span><span class="p">,</span> <span class="n">posicao</span><span class="p">,</span> <span class="n">elevacao</span><span class="p">,</span> <span class="n">fonte</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função utilizada para criar o botão e suas propriedades</span>
+
+<span class="sd">        :param texto: texto do botão</span>
+<span class="sd">        :type texto: str</span>
+<span class="sd">        :param comprimento: comprimento do botão</span>
+<span class="sd">        :type comprimento: float</span>
+<span class="sd">        :param altura: altura do botão</span>
+<span class="sd">        :type altura: float</span>
+<span class="sd">        :param posicao: as coordenadas da tela que o botão aparece</span>
+<span class="sd">        :type posicao: tuple</span>
+<span class="sd">        :param elevacao: a elevação do botão</span>
+<span class="sd">        :type elevacao: int</span>
+<span class="sd">        :param fonte: a fonte das escrita do botão</span>
+<span class="sd">        :type fonte: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># determinando as propriedades do botao como posicao e cor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pressionado</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># determinando a elevacao do botao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevacao</span> <span class="o">=</span> <span class="n">elevacao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevacao_dinamica</span> <span class="o">=</span> <span class="n">elevacao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_posicao_y</span> <span class="o">=</span> <span class="n">posicao</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clicado</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># retangulo de cima do botao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="n">posicao</span><span class="p">,</span> <span class="p">(</span><span class="n">comprimento</span><span class="p">,</span> <span class="n">altura</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topo_cor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">105</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+        <span class="c1"># retangulo de baixo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baixo_ret</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="n">posicao</span><span class="p">,</span> <span class="p">(</span><span class="n">comprimento</span><span class="p">,</span> <span class="n">altura</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baixo_cor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">56</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+        <span class="c1"># o texto do botao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texto_sup</span> <span class="o">=</span> <span class="n">fonte</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texto_ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">texto_sup</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+
+    <span class="c1"># função para gerar o botão</span>
+<div class="viewcode-block" id="Botao_Clicavel.desenhar"><a class="viewcode-back" href="../interface.html#interface.Botao_Clicavel.desenhar">[documentos]</a>    <span class="k">def</span> <span class="nf">desenhar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tela</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;gerando o botão na interface da tela</span>
+
+<span class="sd">        :param tela: a interface que o botão vai ser gerado</span>
+<span class="sd">        :type tela: pygame.Surface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mouse</span><span class="o">.</span><span class="n">get_pos</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clicado</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># deixando o botao vermelho com o mouse em cima</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">collidepoint</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topo_cor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">227</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">41</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clicado</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mouse</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topo_cor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">105</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+        <span class="c1"># aplicando a elevacao no botao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_posicao_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevacao_dinamica</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texto_ret</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baixo_ret</span><span class="o">.</span><span class="n">midtop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">midtop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baixo_ret</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevacao_dinamica</span>
+
+        <span class="c1"># aplicando as características do botão</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">tela</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baixo_cor</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">baixo_ret</span><span class="p">,</span> <span class="n">border_radius</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">tela</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_cor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topo_ret</span><span class="p">,</span> <span class="n">border_radius</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+        <span class="c1"># para aparecer o elemento</span>
+        <span class="n">tela</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">texto_sup</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">texto_ret</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

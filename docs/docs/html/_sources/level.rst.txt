@@ -1,7 +1,7 @@
-Personagem 
+Level
 ============
 
-.. automodule:: personagem
+.. automodule:: level
    :members:
    :undoc-members:
    :show-inheritance:

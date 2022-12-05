@@ -1,7 +1,7 @@
-Personagem 
+Interface
 ============
 
-.. automodule:: personagem
+.. automodule:: interface
    :members:
    :undoc-members:
    :show-inheritance:

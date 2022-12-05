@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Objetos" href="objetos.html" />
+    <link rel="prev" title="Interface" href="interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">game-development-A2</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Level</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#level.Level"><code class="docutils literal notranslate"><span class="pre">Level</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.build_level"><code class="docutils literal notranslate"><span class="pre">Level.build_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.checa_chaves"><code class="docutils literal notranslate"><span class="pre">Level.checa_chaves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.checa_derrota"><code class="docutils literal notranslate"><span class="pre">Level.checa_derrota()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.checa_vitoria"><code class="docutils literal notranslate"><span class="pre">Level.checa_vitoria()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.draw"><code class="docutils literal notranslate"><span class="pre">Level.draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.establish_connections"><code class="docutils literal notranslate"><span class="pre">Level.establish_connections()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.setup_level"><code class="docutils literal notranslate"><span class="pre">Level.setup_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#level.Level.update"><code class="docutils literal notranslate"><span class="pre">Level.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html">Objetos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html">Personagem</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">game-development-A2</a></li>
+      <li class="breadcrumb-item active">Level</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/level.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-level">
+<span id="level"></span><h1>Level<a class="headerlink" href="#module-level" title="Link permanente para este cabeçalho"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="level.Level">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">level.</span></span><span class="sig-name descname"><span class="pre">Level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Cria os objetos do jogo a partir do arquivo de configuração</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.build_level">
+<span class="sig-name descname"><span class="pre">build_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprite_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.build_level"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.build_level" title="Link permanente para esta definição"></a></dt>
+<dd><p>Cria os objetos do jogo a partir do mapa do nível e das configurações</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level_map</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Mapa indicando a posição de cada elemento do nível</p></li>
+<li><p><strong>sprite_settings</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><em>dict</em><em>]</em><em>]</em>) – Configurações dos elementos customizáveis</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.checa_chaves">
+<span class="sig-name descname"><span class="pre">checa_chaves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.checa_chaves"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.checa_chaves" title="Link permanente para esta definição"></a></dt>
+<dd><p>Checa se os jogadores pegaram as chaves e atualiza o texto na tela</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.checa_derrota">
+<span class="sig-name descname"><span class="pre">checa_derrota</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.checa_derrota"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.checa_derrota" title="Link permanente para esta definição"></a></dt>
+<dd><p>Checa se os jogadores perderam o jogo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.checa_vitoria">
+<span class="sig-name descname"><span class="pre">checa_vitoria</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.checa_vitoria"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.checa_vitoria" title="Link permanente para esta definição"></a></dt>
+<dd><p>Checa se os jogadores venceram o jogo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.draw"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.draw" title="Link permanente para esta definição"></a></dt>
+<dd><p>Desenha os elementos na tela</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.establish_connections">
+<span class="sig-name descname"><span class="pre">establish_connections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.establish_connections"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.establish_connections" title="Link permanente para esta definição"></a></dt>
+<dd><p>Estabelece as conexões entre ativadores e ativáveis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>connections</strong> (<em>list</em><em>[</em><em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em><em>]</em>) – Elementos ativadores de cada ativável</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.setup_level">
+<span class="sig-name descname"><span class="pre">setup_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.setup_level"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.setup_level" title="Link permanente para esta definição"></a></dt>
+<dd><p>Cria os objetos do jogo a partir dos dados do nível</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>level_data</strong> (<em>dict</em>) – dicionário com os dados do nível</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="level.Level.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/level.html#Level.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#level.Level.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>Atualiza os elementos do jogo</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
+        <a href="interface.html" class="btn btn-neutral float-left" title="Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="objetos.html" class="btn btn-neutral float-right" title="Objetos" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

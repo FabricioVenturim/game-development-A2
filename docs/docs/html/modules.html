@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game-development-A2 &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Interface" href="interface.html" />
+    <link rel="prev" title="Welcome to DuoNinja’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">game-development-A2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="level.html">Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html">Objetos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html">Personagem</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">game-development-A2</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="game-development-a2">
+<h1>game-development-A2<a class="headerlink" href="#game-development-a2" title="Link permanente para este cabeçalho"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interface.html#interface.Botao_Clicavel"><code class="docutils literal notranslate"><span class="pre">Botao_Clicavel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Botao_Clicavel.desenhar"><code class="docutils literal notranslate"><span class="pre">Botao_Clicavel.desenhar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html#interface.Interface"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.definir_level"><code class="docutils literal notranslate"><span class="pre">Interface.definir_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.esperar"><code class="docutils literal notranslate"><span class="pre">Interface.esperar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.eventos"><code class="docutils literal notranslate"><span class="pre">Interface.eventos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.mostrar_texto"><code class="docutils literal notranslate"><span class="pre">Interface.mostrar_texto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.rodar"><code class="docutils literal notranslate"><span class="pre">Interface.rodar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.tela_controles"><code class="docutils literal notranslate"><span class="pre">Interface.tela_controles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.tela_derrota"><code class="docutils literal notranslate"><span class="pre">Interface.tela_derrota()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.tela_pausa"><code class="docutils literal notranslate"><span class="pre">Interface.tela_pausa()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.tela_start"><code class="docutils literal notranslate"><span class="pre">Interface.tela_start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interface.html#interface.Interface.tela_vitoria"><code class="docutils literal notranslate"><span class="pre">Interface.tela_vitoria()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="level.html">Level</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="level.html#level.Level"><code class="docutils literal notranslate"><span class="pre">Level</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.build_level"><code class="docutils literal notranslate"><span class="pre">Level.build_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.checa_chaves"><code class="docutils literal notranslate"><span class="pre">Level.checa_chaves()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.checa_derrota"><code class="docutils literal notranslate"><span class="pre">Level.checa_derrota()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.checa_vitoria"><code class="docutils literal notranslate"><span class="pre">Level.checa_vitoria()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.draw"><code class="docutils literal notranslate"><span class="pre">Level.draw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.establish_connections"><code class="docutils literal notranslate"><span class="pre">Level.establish_connections()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.setup_level"><code class="docutils literal notranslate"><span class="pre">Level.setup_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="level.html#level.Level.update"><code class="docutils literal notranslate"><span class="pre">Level.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objetos.html">Objetos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Alavanca"><code class="docutils literal notranslate"><span class="pre">Alavanca</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Alavanca.mudar_direcao"><code class="docutils literal notranslate"><span class="pre">Alavanca.mudar_direcao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Alavanca.update"><code class="docutils literal notranslate"><span class="pre">Alavanca.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Botao"><code class="docutils literal notranslate"><span class="pre">Botao</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Botao.abaixar_botao"><code class="docutils literal notranslate"><span class="pre">Botao.abaixar_botao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Botao.apertar_botao"><code class="docutils literal notranslate"><span class="pre">Botao.apertar_botao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Botao.update"><code class="docutils literal notranslate"><span class="pre">Botao.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Chave"><code class="docutils literal notranslate"><span class="pre">Chave</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Chave.pegar_chave"><code class="docutils literal notranslate"><span class="pre">Chave.pegar_chave()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Chave.update"><code class="docutils literal notranslate"><span class="pre">Chave.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Plataforma"><code class="docutils literal notranslate"><span class="pre">Plataforma</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Plataforma.colisao"><code class="docutils literal notranslate"><span class="pre">Plataforma.colisao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Plataforma.movimentar_plataforma"><code class="docutils literal notranslate"><span class="pre">Plataforma.movimentar_plataforma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Plataforma.update"><code class="docutils literal notranslate"><span class="pre">Plataforma.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Plataforma_com_alavanca"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Plataforma_com_alavanca.movimentar_condicional"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca.movimentar_condicional()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Plataforma_com_alavanca.update"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html#objetos.Portao"><code class="docutils literal notranslate"><span class="pre">Portao</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Portao.abrir_portao"><code class="docutils literal notranslate"><span class="pre">Portao.abrir_portao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Portao.liberar_portao"><code class="docutils literal notranslate"><span class="pre">Portao.liberar_portao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Portao.update"><code class="docutils literal notranslate"><span class="pre">Portao.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="objetos.html#objetos.Portao.verificar_personagens_portao"><code class="docutils literal notranslate"><span class="pre">Portao.verificar_personagens_portao()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="personagem.html">Personagem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html#personagem.BoyNinja"><code class="docutils literal notranslate"><span class="pre">BoyNinja</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.bater_animacao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.bater_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.checar_colisao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.checar_colisao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.fun_bater"><code class="docutils literal notranslate"><span class="pre">BoyNinja.fun_bater()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.fun_planar"><code class="docutils literal notranslate"><span class="pre">BoyNinja.fun_planar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.planar_animacao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.planar_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.read_input"><code class="docutils literal notranslate"><span class="pre">BoyNinja.read_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.BoyNinja.update"><code class="docutils literal notranslate"><span class="pre">BoyNinja.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html#personagem.GirlNinja"><code class="docutils literal notranslate"><span class="pre">GirlNinja</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.atirar_animacao"><code class="docutils literal notranslate"><span class="pre">GirlNinja.atirar_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.deslizar_animacao"><code class="docutils literal notranslate"><span class="pre">GirlNinja.deslizar_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.fun_atirar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.fun_atirar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.fun_deslizar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.fun_deslizar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.pode_levantar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.pode_levantar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.read_input"><code class="docutils literal notranslate"><span class="pre">GirlNinja.read_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.GirlNinja.update"><code class="docutils literal notranslate"><span class="pre">GirlNinja.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html#personagem.Kunai"><code class="docutils literal notranslate"><span class="pre">Kunai</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Kunai.checar_colisao"><code class="docutils literal notranslate"><span class="pre">Kunai.checar_colisao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Kunai.fun_atirar"><code class="docutils literal notranslate"><span class="pre">Kunai.fun_atirar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Kunai.trajetoria"><code class="docutils literal notranslate"><span class="pre">Kunai.trajetoria()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Kunai.update"><code class="docutils literal notranslate"><span class="pre">Kunai.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html#personagem.Personagem"><code class="docutils literal notranslate"><span class="pre">Personagem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.apply_gravity"><code class="docutils literal notranslate"><span class="pre">Personagem.apply_gravity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.cair"><code class="docutils literal notranslate"><span class="pre">Personagem.cair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.check_horizontal_collisions"><code class="docutils literal notranslate"><span class="pre">Personagem.check_horizontal_collisions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.check_vertical_collisions"><code class="docutils literal notranslate"><span class="pre">Personagem.check_vertical_collisions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.correr_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.correr_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.corta_sprite"><code class="docutils literal notranslate"><span class="pre">Personagem.corta_sprite()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.fun_cair"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_cair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.fun_correr_direita"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_correr_direita()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.fun_correr_esquerda"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_correr_esquerda()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.fun_pular"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_pular()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.parado_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.parado_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Personagem.pular_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.pular_animacao()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html#personagem.Robo"><code class="docutils literal notranslate"><span class="pre">Robo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.animacao_morrer"><code class="docutils literal notranslate"><span class="pre">Robo.animacao_morrer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.correr_animacao"><code class="docutils literal notranslate"><span class="pre">Robo.correr_animacao()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.fun_morrer"><code class="docutils literal notranslate"><span class="pre">Robo.fun_morrer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.temporizador"><code class="docutils literal notranslate"><span class="pre">Robo.temporizador</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.update"><code class="docutils literal notranslate"><span class="pre">Robo.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="personagem.html#personagem.Robo.verifica_player"><code class="docutils literal notranslate"><span class="pre">Robo.verifica_player()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to DuoNinja’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="interface.html" class="btn btn-neutral float-right" title="Interface" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

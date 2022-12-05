@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Objetos &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="next" title="Personagem" href="personagem.html" />
+    <link rel="prev" title="Level" href="level.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">game-development-A2</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="level.html">Level</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Objetos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Alavanca"><code class="docutils literal notranslate"><span class="pre">Alavanca</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Alavanca.mudar_direcao"><code class="docutils literal notranslate"><span class="pre">Alavanca.mudar_direcao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Alavanca.update"><code class="docutils literal notranslate"><span class="pre">Alavanca.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Botao"><code class="docutils literal notranslate"><span class="pre">Botao</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Botao.abaixar_botao"><code class="docutils literal notranslate"><span class="pre">Botao.abaixar_botao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Botao.apertar_botao"><code class="docutils literal notranslate"><span class="pre">Botao.apertar_botao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Botao.update"><code class="docutils literal notranslate"><span class="pre">Botao.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Chave"><code class="docutils literal notranslate"><span class="pre">Chave</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Chave.pegar_chave"><code class="docutils literal notranslate"><span class="pre">Chave.pegar_chave()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Chave.update"><code class="docutils literal notranslate"><span class="pre">Chave.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Plataforma"><code class="docutils literal notranslate"><span class="pre">Plataforma</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Plataforma.colisao"><code class="docutils literal notranslate"><span class="pre">Plataforma.colisao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Plataforma.movimentar_plataforma"><code class="docutils literal notranslate"><span class="pre">Plataforma.movimentar_plataforma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Plataforma.update"><code class="docutils literal notranslate"><span class="pre">Plataforma.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Plataforma_com_alavanca"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Plataforma_com_alavanca.movimentar_condicional"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca.movimentar_condicional()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Plataforma_com_alavanca.update"><code class="docutils literal notranslate"><span class="pre">Plataforma_com_alavanca.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#objetos.Portao"><code class="docutils literal notranslate"><span class="pre">Portao</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Portao.abrir_portao"><code class="docutils literal notranslate"><span class="pre">Portao.abrir_portao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Portao.liberar_portao"><code class="docutils literal notranslate"><span class="pre">Portao.liberar_portao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Portao.update"><code class="docutils literal notranslate"><span class="pre">Portao.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#objetos.Portao.verificar_personagens_portao"><code class="docutils literal notranslate"><span class="pre">Portao.verificar_personagens_portao()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="personagem.html">Personagem</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">game-development-A2</a></li>
+      <li class="breadcrumb-item active">Objetos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/objetos.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-objetos">
+<span id="objetos"></span><h1>Objetos<a class="headerlink" href="#module-objetos" title="Link permanente para este cabeçalho"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Alavanca">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Alavanca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Alavanca"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Alavanca" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>Classe da Alavanca</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>x (float): posição x que a alavanca será colocada
+y (float): posição y que a alavanca será colocada
+grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Alavanca.mudar_direcao">
+<span class="sig-name descname"><span class="pre">mudar_direcao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Alavanca.mudar_direcao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Alavanca.mudar_direcao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que altera muda a imagem da alavanca: ativada ou desativada</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Alavanca.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Alavanca.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Alavanca.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Botao">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Botao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botoes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Botao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Botao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>Classe dos botões</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Args:</dt><dd><p>x (float): posição x que o botao será colocado
+y (float): posição y que o botao será colocado
+tile_size (float): tamanho da tile
+grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com o botão</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Botao.abaixar_botao">
+<span class="sig-name descname"><span class="pre">abaixar_botao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Botao.abaixar_botao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Botao.abaixar_botao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que faz o botão ser abaixado</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Botao.apertar_botao">
+<span class="sig-name descname"><span class="pre">apertar_botao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Botao.apertar_botao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Botao.apertar_botao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que detecta a colisão com o grupo_colisao(personagens)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Botao.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Botao.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Botao.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Chave">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Chave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Chave"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Chave" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>Classe da Chave</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>x (float): posição x que a chave será colocada
+y (float): posição y que a chave será colocada
+tile_size (float): tamanho da tile
+grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Chave.pegar_chave">
+<span class="sig-name descname"><span class="pre">pegar_chave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Chave.pegar_chave"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Chave.pegar_chave" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que apaga a chave da fase caso algum integrante do grupo_colisao toque na chave</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grupo_colisao (pygame.sprite.Group): Grupo que pode pegar a chave</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Chave.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Chave.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Chave.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Plataforma">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Plataforma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variacao_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variacao_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform_vel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<dl class="simple">
+<dt>Classe das plataformas</dt><dd><dl class="simple">
+<dt>Args:</dt><dd><p>x (float): posição x que a plataforma será colocada
+y (float): posição y que a plataforma será colocada
+tile_size (float): tamanho da tile
+variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. Defaults to None.
+variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. Defaults to None.
+platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.
+grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
+horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Plataforma.colisao">
+<span class="sig-name descname"><span class="pre">colisao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma.colisao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma.colisao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que cria a colisão dos personagens com a plataforma</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Plataforma.movimentar_plataforma">
+<span class="sig-name descname"><span class="pre">movimentar_plataforma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma.movimentar_plataforma"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma.movimentar_plataforma" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que movimenta a plataforma</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>horizontal (bool): Movimentação horizontal da plataforma</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Plataforma.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Plataforma_com_alavanca">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Plataforma_com_alavanca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ativadores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variacao_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variacao_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform_vel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma_com_alavanca"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma_com_alavanca" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <a class="reference internal" href="#objetos.Plataforma" title="objetos.Plataforma"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plataforma</span></code></a></p>
+<p>Classe da plataforma que é ativada por alvanca
+Args:</p>
+<blockquote>
+<div><p>x (float): posição x que a plataforma será colocada
+y (float): posição y que a plataforma será colocada
+tile_size (float): tamanho da tile
+ativadores (list): Lista dos ativadores da plataforma
+variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. 
+variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. 
+platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.
+grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
+horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Plataforma_com_alavanca.movimentar_condicional">
+<span class="sig-name descname"><span class="pre">movimentar_condicional</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma_com_alavanca.movimentar_condicional"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma_com_alavanca.movimentar_condicional" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que movimenta a plataforma caso a alavanca ligada à ela esteja ativada</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Plataforma_com_alavanca.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Plataforma_com_alavanca.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Plataforma_com_alavanca.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id17"><span class="problematic" id="id18">*</span></a>args, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="objetos.Portao">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">objetos.</span></span><span class="sig-name descname"><span class="pre">Portao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grupo_colisao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chaves</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portoes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Portao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Portao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<dl class="simple">
+<dt>Classe de Portão</dt><dd><dl class="simple">
+<dt>Args:</dt><dd><p>x (float): posição x que o portão será colocado
+y (float): posição y que o portão será colocado
+grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão
+chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão
+portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Portao.abrir_portao">
+<span class="sig-name descname"><span class="pre">abrir_portao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Portao.abrir_portao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Portao.abrir_portao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que mostra a imagem do portão aberto</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Portao.liberar_portao">
+<span class="sig-name descname"><span class="pre">liberar_portao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Portao.liberar_portao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Portao.liberar_portao" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que libera o portão caso a chave tenha sido “pega”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Portao.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Portao.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Portao.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>method to control sprite behavior</p>
+<p>Sprite.update(<a href="#id21"><span class="problematic" id="id22">*</span></a>args, <a href="#id23"><span class="problematic" id="id24">**</span></a>kwargs):</p>
+<p>The default implementation of this method does nothing; it’s just a
+convenient “hook” that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="objetos.Portao.verificar_personagens_portao">
+<span class="sig-name descname"><span class="pre">verificar_personagens_portao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/objetos.html#Portao.verificar_personagens_portao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#objetos.Portao.verificar_personagens_portao" title="Link permanente para esta definição"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
+        <a href="level.html" class="btn btn-neutral float-left" title="Level" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="personagem.html" class="btn btn-neutral float-right" title="Personagem" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>objetos &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Buscar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">game-development-A2</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">objetos</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte para objetos</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="Alavanca"><a class="viewcode-back" href="../objetos.html#objetos.Alavanca">[documentos]</a><span class="k">class</span> <span class="nc">Alavanca</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classe da Alavanca</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a alavanca será colocada</span>
+<span class="sd">            y (float): posição y que a alavanca será colocada</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a alavanca será colocada</span>
+<span class="sd">            y (float): posição y que a alavanca será colocada</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="s2">&quot;img/alavanca1.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span><span class="p">,</span> <span class="p">(</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_on</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">midbottom</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">1.20</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span> <span class="o">=</span> <span class="n">grupo_colisao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iscolliding</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Alavanca.mudar_direcao"><a class="viewcode-back" href="../objetos.html#objetos.Alavanca.mudar_direcao">[documentos]</a>    <span class="k">def</span> <span class="nf">mudar_direcao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Função que altera muda a imagem da alavanca: ativada ou desativada</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_off</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alavanca_on</span></div>
+
+<div class="viewcode-block" id="Alavanca.update"><a class="viewcode-back" href="../objetos.html#objetos.Alavanca.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">collision</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollideany</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">collision</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">iscolliding</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mudar_direcao</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">iscolliding</span> <span class="o">=</span> <span class="n">collision</span></div></div>
+
+
+<div class="viewcode-block" id="Chave"><a class="viewcode-back" href="../objetos.html#objetos.Chave">[documentos]</a><span class="k">class</span> <span class="nc">Chave</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classe da Chave</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a chave será colocada</span>
+<span class="sd">            y (float): posição y que a chave será colocada</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a chave será colocada</span>
+<span class="sd">            y (float): posição y que a chave será colocada</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/chave.png&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.45</span><span class="p">,</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">))</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span> <span class="o">=</span> <span class="n">grupo_colisao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Chave.pegar_chave"><a class="viewcode-back" href="../objetos.html#objetos.Chave.pegar_chave">[documentos]</a>    <span class="k">def</span> <span class="nf">pegar_chave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função que apaga a chave da fase caso algum integrante do grupo_colisao toque na chave</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group): Grupo que pode pegar a chave</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">personagem</span> <span class="ow">in</span> <span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Chave.update"><a class="viewcode-back" href="../objetos.html#objetos.Chave.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pegar_chave</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Portao"><a class="viewcode-back" href="../objetos.html#objetos.Portao">[documentos]</a><span class="k">class</span> <span class="nc">Portao</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classe de Portão</span>
+<span class="sd">            Args:</span>
+<span class="sd">                x (float): posição x que o portão será colocado</span>
+<span class="sd">                y (float): posição y que o portão será colocado</span>
+<span class="sd">                grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão</span>
+<span class="sd">                chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão</span>
+<span class="sd">                portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">,</span> <span class="n">chaves</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">portoes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classe de Portão</span>
+<span class="sd">            Args:</span>
+<span class="sd">                x (float): posição x que o portão será colocado</span>
+<span class="sd">                y (float): posição y que o portão será colocado</span>
+<span class="sd">                grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão</span>
+<span class="sd">                chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão</span>
+<span class="sd">                portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="s2">&quot;img/portao_aberto.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="s2">&quot;img/portao_fechado.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+
+        <span class="n">largura</span><span class="p">,</span> <span class="n">altura</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+        <span class="n">fator</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="n">largura</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span><span class="p">,</span> <span class="p">(</span>
+            <span class="n">largura</span> <span class="o">*</span> <span class="n">fator</span><span class="p">,</span> <span class="n">altura</span> <span class="o">*</span> <span class="n">fator</span><span class="p">))</span>
+
+        <span class="n">largura_aberto</span><span class="p">,</span> <span class="n">altura_aberto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span><span class="p">,</span> <span class="p">(</span>
+            <span class="n">largura_aberto</span> <span class="o">*</span> <span class="n">fator</span><span class="p">,</span> <span class="n">altura_aberto</span> <span class="o">*</span> <span class="n">fator</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_fechado</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">midbottom</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">1.20</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect_aberto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">midbottom</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.80</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">1.20</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span> <span class="o">=</span> <span class="n">grupo_colisao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chaves</span> <span class="o">=</span> <span class="n">chaves</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">portoes</span> <span class="o">=</span> <span class="n">portoes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pers_no_portao</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liberar_fase</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Portao.verificar_personagens_portao"><a class="viewcode-back" href="../objetos.html#objetos.Portao.verificar_personagens_portao">[documentos]</a>    <span class="k">def</span> <span class="nf">verificar_personagens_portao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">open</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pers_no_portao</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">personagem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">personagem</span><span class="o">.</span><span class="n">rect</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pers_no_portao</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pers_no_portao</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">liberar_fase</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Portao.abrir_portao"><a class="viewcode-back" href="../objetos.html#objetos.Portao.abrir_portao">[documentos]</a>    <span class="k">def</span> <span class="nf">abrir_portao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Função que mostra a imagem do portão aberto</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_aberto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_aberto</span></div>
+
+<div class="viewcode-block" id="Portao.liberar_portao"><a class="viewcode-back" href="../objetos.html#objetos.Portao.liberar_portao">[documentos]</a>    <span class="k">def</span> <span class="nf">liberar_portao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Função que libera o portão caso a chave tenha sido &quot;pega&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chaves</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">portoes</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chaves</span><span class="o">.</span><span class="n">sprites</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">portoes</span><span class="o">.</span><span class="n">sprites</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">abrir_portao</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Portao.update"><a class="viewcode-back" href="../objetos.html#objetos.Portao.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liberar_portao</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verificar_personagens_portao</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Plataforma"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma">[documentos]</a><span class="k">class</span> <span class="nc">Plataforma</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classe das plataformas</span>
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a plataforma será colocada</span>
+<span class="sd">            y (float): posição y que a plataforma será colocada</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. Defaults to None.</span>
+<span class="sd">            variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. Defaults to None.</span>
+<span class="sd">            platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.</span>
+<span class="sd">            horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="c1"># variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y</span>
+    <span class="c1"># Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">variacao_x</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">variacao_y</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">platform_vel</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">horizontal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/plataforma.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span><span class="n">topleft</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="n">padding_x</span> <span class="o">=</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.1</span>
+        <span class="n">padding_y</span> <span class="o">=</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.13</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span>
+            <span class="n">x</span> <span class="o">+</span> <span class="n">padding_x</span><span class="p">,</span>
+            <span class="n">y</span> <span class="o">+</span> <span class="n">padding_y</span><span class="p">,</span>
+            <span class="n">tile_size</span> <span class="o">-</span> <span class="n">padding_x</span><span class="p">,</span>
+            <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">padding_y</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect_test</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span> <span class="o">=</span> <span class="n">grupo_colisao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">platform_vel</span> <span class="o">*</span> <span class="n">tile_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variacao_x</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="n">lim</span> <span class="k">for</span> <span class="n">lim</span> <span class="ow">in</span> <span class="n">variacao_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variacao_y</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="n">lim</span> <span class="k">for</span> <span class="n">lim</span> <span class="ow">in</span> <span class="n">variacao_y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span> <span class="o">=</span> <span class="n">horizontal</span>
+
+<div class="viewcode-block" id="Plataforma.movimentar_plataforma"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma.movimentar_plataforma">[documentos]</a>    <span class="k">def</span> <span class="nf">movimentar_plataforma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">horizontal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Função que movimenta a plataforma</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            horizontal (bool): Movimentação horizontal da plataforma</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span> <span class="o">=</span> <span class="n">horizontal</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variacao_x</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&gt;=</span> <span class="n">x_max</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">x_min</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">personagens</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="p">):</span>
+                    <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span>
+                    <span class="n">direita</span> <span class="o">=</span> <span class="n">personagens</span><span class="o">.</span><span class="n">direita</span>
+                    <span class="n">personagens</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                    <span class="n">personagens</span><span class="o">.</span><span class="n">check_horizontal_collisions</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">personagens</span><span class="o">.</span><span class="n">direita</span> <span class="o">=</span> <span class="n">direita</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variacao_y</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;=</span> <span class="n">y_max</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;=</span> <span class="n">y_min</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span>
+                <span class="k">for</span> <span class="n">personagens</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_over</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="p">)</span> <span class="ow">and</span> <span class="n">personagens</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">top</span>
+                        <span class="n">personagens</span><span class="o">.</span><span class="n">check_vertical_collisions</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Plataforma.colisao"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma.colisao">[documentos]</a>    <span class="k">def</span> <span class="nf">colisao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Função que cria a colisão dos personagens com a plataforma</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">personagem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+            <span class="n">aceleracao</span> <span class="o">=</span> <span class="o">-</span><span class="n">personagem</span><span class="o">.</span><span class="n">aceleracao</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span><span class="p">:</span>
+                <span class="n">aceleracao_relativa</span> <span class="o">=</span> <span class="n">aceleracao</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_vel</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aceleracao_relativa</span> <span class="o">=</span> <span class="n">aceleracao</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span>
+                <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span>
+                <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">top</span> <span class="ow">and</span>
+                <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">bottom</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="n">aceleracao_relativa</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">personagem</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect_test</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rect_test</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">top</span>
+                <span class="n">posicao_valida</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">sprite</span> <span class="ow">in</span> <span class="n">personagem</span><span class="o">.</span><span class="n">collision_sprites</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">sprite</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_test</span><span class="p">):</span>
+                        <span class="n">posicao_valida</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">break</span>
+
+                <span class="k">if</span> <span class="n">posicao_valida</span><span class="p">:</span>
+                    <span class="n">personagem</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">personagem</span><span class="o">.</span><span class="n">aceleracao</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">personagem</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="o">.</span><span class="n">top</span></div>
+
+<div class="viewcode-block" id="Plataforma.update"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colisao</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">movimentar_plataforma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Plataforma_com_alavanca"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma_com_alavanca">[documentos]</a><span class="k">class</span> <span class="nc">Plataforma_com_alavanca</span><span class="p">(</span><span class="n">Plataforma</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Classe da plataforma que é ativada por alvanca</span>
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que a plataforma será colocada</span>
+<span class="sd">            y (float): posição y que a plataforma será colocada</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            ativadores (list): Lista dos ativadores da plataforma</span>
+<span class="sd">            variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. </span>
+<span class="sd">            variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. </span>
+<span class="sd">            platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.</span>
+<span class="sd">            horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">ativadores</span><span class="o">=</span><span class="p">[],</span> <span class="n">variacao_x</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">variacao_y</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">platform_vel</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">horizontal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">variacao_x</span><span class="p">,</span> <span class="n">variacao_y</span><span class="p">,</span>
+                         <span class="n">platform_vel</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">,</span> <span class="n">horizontal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ativadores</span> <span class="o">=</span> <span class="n">ativadores</span>
+
+<div class="viewcode-block" id="Plataforma_com_alavanca.movimentar_condicional"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma_com_alavanca.movimentar_condicional">[documentos]</a>    <span class="k">def</span> <span class="nf">movimentar_condicional</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Função que movimenta a plataforma caso a alavanca ligada à ela esteja ativada</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">movimentar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">ativador</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ativadores</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ativador</span><span class="o">.</span><span class="n">on</span><span class="p">:</span>
+                <span class="n">movimentar</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">movimentar</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">movimentar_plataforma</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizontal</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Plataforma_com_alavanca.update"><a class="viewcode-back" href="../objetos.html#objetos.Plataforma_com_alavanca.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colisao</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">movimentar_condicional</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Botao"><a class="viewcode-back" href="../objetos.html#objetos.Botao">[documentos]</a><span class="k">class</span> <span class="nc">Botao</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classe dos botões</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): posição x que o botao será colocado</span>
+<span class="sd">            y (float): posição y que o botao será colocado</span>
+<span class="sd">            tile_size (float): tamanho da tile</span>
+<span class="sd">            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com o botão</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span> <span class="n">botoes</span><span class="p">,</span> <span class="n">grupo_colisao</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;img/botao.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="n">largura</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span><span class="p">,</span> <span class="p">(</span><span class="n">tile_size</span><span class="p">,</span> <span class="n">tile_size</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">))</span>
+        <span class="n">largura_scaled</span><span class="p">,</span> <span class="n">altura_scaled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_apertado</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="s2">&quot;img/botao_apertado.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert_alpha</span><span class="p">()</span>
+        <span class="n">largura_apertado</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_apertado</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+        <span class="n">fator</span> <span class="o">=</span> <span class="n">largura_apertado</span> <span class="o">/</span> <span class="n">largura</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_apertado</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">smoothscale</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_apertado</span><span class="p">,</span> <span class="p">(</span><span class="n">largura_scaled</span> <span class="o">*</span> <span class="n">fator</span><span class="p">,</span> <span class="n">altura_scaled</span> <span class="o">*</span> <span class="n">fator</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">midbottom</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">tile_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">tile_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">midbottom</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">midbottom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">botoes</span> <span class="o">=</span> <span class="n">botoes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span> <span class="o">=</span> <span class="n">grupo_colisao</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_surface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span>
+
+<div class="viewcode-block" id="Botao.abaixar_botao"><a class="viewcode-back" href="../objetos.html#objetos.Botao.abaixar_botao">[documentos]</a>    <span class="k">def</span> <span class="nf">abaixar_botao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Função que faz o botão ser abaixado</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_apertado</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span><span class="n">midbottom</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">midbottom</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Botao.apertar_botao"><a class="viewcode-back" href="../objetos.html#objetos.Botao.apertar_botao">[documentos]</a>    <span class="k">def</span> <span class="nf">apertar_botao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Função que detecta a colisão com o grupo_colisao(personagens)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">personagens</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grupo_colisao</span><span class="o">.</span><span class="n">sprites</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">personagens</span><span class="o">.</span><span class="n">collision_rect</span><span class="o">.</span><span class="n">colliderect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect_collision</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">abaixar_botao</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">on</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_solto</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span><span class="n">midbottom</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">midbottom</span><span class="p">)</span></div>
+        <span class="c1"># print(self.on)</span>
+
+<div class="viewcode-block" id="Botao.update"><a class="viewcode-back" href="../objetos.html#objetos.Botao.update">[documentos]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apertar_botao</span><span class="p">()</span></div></div>
+        <span class="c1"># self.abaixar_botao()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

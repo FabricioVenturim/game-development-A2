@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personagem &mdash; documentação DuoNinja 30/11/2022</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Buscar" href="search.html" />
+    <link rel="prev" title="Objetos" href="objetos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DuoNinja
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">game-development-A2</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="level.html">Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objetos.html">Objetos</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Personagem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#personagem.BoyNinja"><code class="docutils literal notranslate"><span class="pre">BoyNinja</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.bater_animacao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.bater_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.checar_colisao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.checar_colisao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.fun_bater"><code class="docutils literal notranslate"><span class="pre">BoyNinja.fun_bater()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.fun_planar"><code class="docutils literal notranslate"><span class="pre">BoyNinja.fun_planar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.planar_animacao"><code class="docutils literal notranslate"><span class="pre">BoyNinja.planar_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.read_input"><code class="docutils literal notranslate"><span class="pre">BoyNinja.read_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.BoyNinja.update"><code class="docutils literal notranslate"><span class="pre">BoyNinja.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#personagem.GirlNinja"><code class="docutils literal notranslate"><span class="pre">GirlNinja</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.atirar_animacao"><code class="docutils literal notranslate"><span class="pre">GirlNinja.atirar_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.deslizar_animacao"><code class="docutils literal notranslate"><span class="pre">GirlNinja.deslizar_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.fun_atirar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.fun_atirar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.fun_deslizar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.fun_deslizar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.pode_levantar"><code class="docutils literal notranslate"><span class="pre">GirlNinja.pode_levantar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.read_input"><code class="docutils literal notranslate"><span class="pre">GirlNinja.read_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.GirlNinja.update"><code class="docutils literal notranslate"><span class="pre">GirlNinja.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#personagem.Kunai"><code class="docutils literal notranslate"><span class="pre">Kunai</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Kunai.checar_colisao"><code class="docutils literal notranslate"><span class="pre">Kunai.checar_colisao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Kunai.fun_atirar"><code class="docutils literal notranslate"><span class="pre">Kunai.fun_atirar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Kunai.trajetoria"><code class="docutils literal notranslate"><span class="pre">Kunai.trajetoria()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Kunai.update"><code class="docutils literal notranslate"><span class="pre">Kunai.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#personagem.Personagem"><code class="docutils literal notranslate"><span class="pre">Personagem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.apply_gravity"><code class="docutils literal notranslate"><span class="pre">Personagem.apply_gravity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.cair"><code class="docutils literal notranslate"><span class="pre">Personagem.cair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.check_horizontal_collisions"><code class="docutils literal notranslate"><span class="pre">Personagem.check_horizontal_collisions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.check_vertical_collisions"><code class="docutils literal notranslate"><span class="pre">Personagem.check_vertical_collisions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.correr_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.correr_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.corta_sprite"><code class="docutils literal notranslate"><span class="pre">Personagem.corta_sprite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.fun_cair"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_cair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.fun_correr_direita"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_correr_direita()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.fun_correr_esquerda"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_correr_esquerda()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.fun_pular"><code class="docutils literal notranslate"><span class="pre">Personagem.fun_pular()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.parado_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.parado_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Personagem.pular_animacao"><code class="docutils literal notranslate"><span class="pre">Personagem.pular_animacao()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#personagem.Robo"><code class="docutils literal notranslate"><span class="pre">Robo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.animacao_morrer"><code class="docutils literal notranslate"><span class="pre">Robo.animacao_morrer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.correr_animacao"><code class="docutils literal notranslate"><span class="pre">Robo.correr_animacao()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.fun_morrer"><code class="docutils literal notranslate"><span class="pre">Robo.fun_morrer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.temporizador"><code class="docutils literal notranslate"><span class="pre">Robo.temporizador</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.update"><code class="docutils literal notranslate"><span class="pre">Robo.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#personagem.Robo.verifica_player"><code class="docutils literal notranslate"><span class="pre">Robo.verifica_player()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DuoNinja</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">game-development-A2</a></li>
+      <li class="breadcrumb-item active">Personagem</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/personagem.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-personagem">
+<span id="personagem"></span><h1>Personagem<a class="headerlink" href="#module-personagem" title="Link permanente para este cabeçalho"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="personagem.BoyNinja">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">personagem.</span></span><span class="sig-name descname"><span class="pre">BoyNinja</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <a class="reference internal" href="#personagem.Personagem" title="personagem.Personagem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Personagem</span></code></a></p>
+<p>_summary_: Construtor da classe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em><em> or </em><em>float</em>) – Posição x do personagem</p></li>
+<li><p><strong>y</strong> (<em>int</em><em> or </em><em>float</em>) – Posição y do personagem</p></li>
+<li><p><strong>tile_size</strong> (<em>int</em>) – Tamanho do tile</p></li>
+<li><p><strong>collision_sprites</strong> (<em>pygame.sprite.Group</em>) – Sprites que o personagem pode colidir</p></li>
+<li><p><strong>robos</strong> (<em>pygame.sprite.Group</em>) – Sprites dos robôs</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.bater_animacao">
+<span class="sig-name descname"><span class="pre">bater_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.bater_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.bater_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando bate</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.checar_colisao">
+<span class="sig-name descname"><span class="pre">checar_colisao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.checar_colisao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.checar_colisao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que checa as colisões do personagem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.fun_bater">
+<span class="sig-name descname"><span class="pre">fun_bater</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.fun_bater"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.fun_bater" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que ativa o personagem batendo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.fun_planar">
+<span class="sig-name descname"><span class="pre">fun_planar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.fun_planar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.fun_planar" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que ativa a planagem do personagem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.planar_animacao">
+<span class="sig-name descname"><span class="pre">planar_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.planar_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.planar_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando plana</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.read_input">
+<span class="sig-name descname"><span class="pre">read_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.read_input"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.read_input" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que lê as entradas do teclado</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.BoyNinja.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#BoyNinja.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.BoyNinja.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que atualiza a posição do personagem</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="personagem.GirlNinja">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">personagem.</span></span><span class="sig-name descname"><span class="pre">GirlNinja</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alavancas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <a class="reference internal" href="#personagem.Personagem" title="personagem.Personagem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Personagem</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.atirar_animacao">
+<span class="sig-name descname"><span class="pre">atirar_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.atirar_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.atirar_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando atira</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.deslizar_animacao">
+<span class="sig-name descname"><span class="pre">deslizar_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.deslizar_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.deslizar_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando desliza</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.fun_atirar">
+<span class="sig-name descname"><span class="pre">fun_atirar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.fun_atirar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.fun_atirar" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que ativa o personagem atirando</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.fun_deslizar">
+<span class="sig-name descname"><span class="pre">fun_deslizar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.fun_deslizar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.fun_deslizar" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que ativa o personagem deslizando</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.pode_levantar">
+<span class="sig-name descname"><span class="pre">pode_levantar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.pode_levantar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.pode_levantar" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que verifica se o personagem pode levantar</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.read_input">
+<span class="sig-name descname"><span class="pre">read_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.read_input"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.read_input" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que lê as entradas do teclado</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.GirlNinja.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#GirlNinja.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.GirlNinja.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que atualiza a posição do personagem</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="personagem.Kunai">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">personagem.</span></span><span class="sig-name descname"><span class="pre">Kunai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alavancas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Kunai"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Kunai" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Kunai.checar_colisao">
+<span class="sig-name descname"><span class="pre">checar_colisao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Kunai.checar_colisao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Kunai.checar_colisao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que checa se o kunai colidiu com algum objeto</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Kunai.fun_atirar">
+<span class="sig-name descname"><span class="pre">fun_atirar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool_direita</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Kunai.fun_atirar"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Kunai.fun_atirar" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que atira o kunai</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – Posição x do kunai</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Posição y do kunai</p></li>
+<li><p><strong>bool_direita</strong> (<em>bool</em>) – Direção do kunai</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Kunai.trajetoria">
+<span class="sig-name descname"><span class="pre">trajetoria</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Kunai.trajetoria"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Kunai.trajetoria" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que faz o objeto Kunai seguir uma trajetória</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Kunai.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Kunai.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Kunai.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que atualiza a posição do objeto Kunai</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="personagem.Personagem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">personagem.</span></span><span class="sig-name descname"><span class="pre">Personagem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_animacoes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>Objeto com funções básicas de todos os personagens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em><em> or </em><em>float</em>) – Posição x do personagem</p></li>
+<li><p><strong>y</strong> (<em>int</em><em> or </em><em>float</em>) – Posição y do personagem</p></li>
+<li><p><strong>img</strong> (<em>str</em>) – Caminho da imagem do personagem</p></li>
+<li><p><strong>dict_animacoes</strong> (<em>dict</em>) – Dicionário com as posições de cada animação</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.apply_gravity">
+<span class="sig-name descname"><span class="pre">apply_gravity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.apply_gravity"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.apply_gravity" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a gravidade do personagem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.cair">
+<span class="sig-name descname"><span class="pre">cair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.cair"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.cair" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando caindo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.check_horizontal_collisions">
+<span class="sig-name descname"><span class="pre">check_horizontal_collisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensao</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.check_horizontal_collisions"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.check_horizontal_collisions" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que verifica as colisões horizontais do personagem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>dimensao</strong> (<em>float</em>) – Dimensão do personagem</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.check_vertical_collisions">
+<span class="sig-name descname"><span class="pre">check_vertical_collisions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.check_vertical_collisions"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.check_vertical_collisions" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que verifica as colisões verticais do personagem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.correr_animacao">
+<span class="sig-name descname"><span class="pre">correr_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.correr_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.correr_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando correndo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.corta_sprite">
+<span class="sig-name descname"><span class="pre">corta_sprite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sprite_sheet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posicao_inicial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largura</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altura</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantidade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redirecionamento</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.corta_sprite"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.corta_sprite" title="Link permanente para esta definição"></a></dt>
+<dd><p>Função que corta a sprite sheet e adiciona as imagens em uma lista</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sprite_sheet</strong> (<em>str</em>) – Caminho da imagem do personagem</p></li>
+<li><p><strong>posicao_inicial</strong> (<em>float</em>) – Posição inicial da sprite sheet</p></li>
+<li><p><strong>largura</strong> (<em>float</em>) – Largura da imagem</p></li>
+<li><p><strong>altura</strong> (<em>float</em>) – Altura da imagem</p></li>
+<li><p><strong>quantidade</strong> (<em>int</em>) – Quantidade de imagens</p></li>
+<li><p><strong>redirecionamento</strong> (<em>float</em>) – Redirecionamento da imagem</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.fun_cair">
+<span class="sig-name descname"><span class="pre">fun_cair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.fun_cair"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.fun_cair" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que muda a posição do personagem caindo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.fun_correr_direita">
+<span class="sig-name descname"><span class="pre">fun_correr_direita</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.fun_correr_direita"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.fun_correr_direita" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que muda a posição do personagem correndo para a direita</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.fun_correr_esquerda">
+<span class="sig-name descname"><span class="pre">fun_correr_esquerda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.fun_correr_esquerda"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.fun_correr_esquerda" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que muda a posição do personagem correndo para a esquerda</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.fun_pular">
+<span class="sig-name descname"><span class="pre">fun_pular</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.fun_pular"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.fun_pular" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que muda a posição do personagem pulando</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.parado_animacao">
+<span class="sig-name descname"><span class="pre">parado_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.parado_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.parado_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando parado</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Personagem.pular_animacao">
+<span class="sig-name descname"><span class="pre">pular_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Personagem.pular_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Personagem.pular_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que define a animação do personagem quando pulando</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="personagem.Robo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">personagem.</span></span><span class="sig-name descname"><span class="pre">Robo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_distancia</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tile_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campo_de_visao</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">movimentacao</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direita_movimentacao</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo" title="Link permanente para esta definição"></a></dt>
+<dd><p>Base: <a class="reference internal" href="#personagem.Personagem" title="personagem.Personagem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Personagem</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Robo.animacao_morrer">
+<span class="sig-name descname"><span class="pre">animacao_morrer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo.animacao_morrer"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo.animacao_morrer" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que faz a animação do robo morrer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Robo.correr_animacao">
+<span class="sig-name descname"><span class="pre">correr_animacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo.correr_animacao"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo.correr_animacao" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que faz a animação do robo correr</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Robo.fun_morrer">
+<span class="sig-name descname"><span class="pre">fun_morrer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo.fun_morrer"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo.fun_morrer" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que faz a animação do robo morrer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="personagem.Robo.temporizador">
+<span class="sig-name descname"><span class="pre">temporizador</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#personagem.Robo.temporizador" title="Link permanente para esta definição"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Robo.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo.update"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo.update" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que atualiza a posição do robo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="personagem.Robo.verifica_player">
+<span class="sig-name descname"><span class="pre">verifica_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personagem.html#Robo.verifica_player"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#personagem.Robo.verifica_player" title="Link permanente para esta definição"></a></dt>
+<dd><p>_summary_: Função que verifica se o player está dentro do campo de visão do robo
+:param player: Objeto do tipo Personagem
+:type player: object</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
+        <a href="objetos.html" class="btn btn-neutral float-left" title="Objetos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Fabrício, Pedro, Lucas Cuan, Yoni.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

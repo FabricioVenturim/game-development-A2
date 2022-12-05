@@ -1,7 +1,7 @@
-Personagem 
+Objetos
 ============
 
-.. automodule:: personagem
+.. automodule:: objetos
    :members:
    :undoc-members:
    :show-inheritance:
