@@ -31,11 +31,17 @@ class Level:
         
         right_wall = pygame.image.load("img/wall.png").convert()
         largura, altura = right_wall.get_size()
-        wall_width = largura * height / altura
+        fator = height / altura
+        wall_width = largura * fator
         self.right_wall = pygame.transform.scale(right_wall, (wall_width, height))
         self.left_wall = pygame.transform.flip(self.right_wall, True, True)
         self.left_wall_x = self.inicio_x - wall_width + self.tile_size
         self.right_wall_x = self.inicio_x + largura_level - self.tile_size
+
+        ground = pygame.image.load("img/ground.png").convert_alpha()
+        largura_ground, altura_ground = ground.get_size()
+        self.ground = pygame.transform.scale(ground, (largura_ground * fator, altura_ground * fator))
+        self.ground_y = height - int(self.tile_size * 1.4)
 
     def setup_level(self, level_data):
         self.visible_sprites = pygame.sprite.Group()
@@ -180,6 +186,7 @@ class Level:
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         self.visible_sprites.draw(self.screen)
+        self.screen.blit(self.ground, (0, self.ground_y))
         self.screen.blit(self.left_wall, (self.left_wall_x, 0))
         self.screen.blit(self.right_wall, (self.right_wall_x, 0))
         self.screen.blit(self.texto, self.texto_pos)

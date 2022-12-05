@@ -286,11 +286,17 @@ class BoyNinja(Personagem):
         super().__init__(x, y, tile_size, img, dict_animacoes_boy, collision_sprites)
         self.bater = False
         self.planar = False
+        self.aterrisagem = False
         self.robos = robos
+
+        self.som_pulo = pygame.mixer.Sound("audio/boy jump.mp3")
+        self.som_bater = pygame.mixer.Sound("audio/facada no ar.mp3")
+        self.som_aterrisagem = pygame.mixer.Sound("audio/aterrisagem.mp3")
 
     def fun_bater(self):
         """_summary_: Função que ativa o personagem batendo
         """
+        self.som_bater.play()
         self.bater = True
         self.correr = False
         if self.index_lista < 30:
@@ -388,7 +394,12 @@ class BoyNinja(Personagem):
         if self.bater:
             self.state = 0
         else:
-            if self.state == 0:
+            if self.state != 0:
+                self.aterrisagem = True
+            else:
+                if self.aterrisagem:
+                    self.som_aterrisagem.play()
+                self.aterrisagem = False
                 self.apply_gravity()
                 self.state = 2
             self.check_vertical_collisions()
@@ -398,7 +409,7 @@ class BoyNinja(Personagem):
         """
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_f] and self.state == 0:
+        if keys[pygame.K_f] and self.state == 0 and not self.bater:
             self.fun_bater()
 
         if not self.bater:
@@ -409,6 +420,7 @@ class BoyNinja(Personagem):
 
             if keys[pygame.K_w]:
                 if self.state == 0:
+                    self.som_pulo.play()
                     self.fun_pular()
                 elif self.state == 2:
                     self.fun_planar()
@@ -449,11 +461,16 @@ class GirlNinja(Personagem):
         self.screen = screen
         self.deslizar = False
         self.atirar = False
+        self.aterrisagem = False
         self.kunai = Kunai(tile_size, self.screen,
                            collision_sprites, robos, alavancas)
         self.velocidade_deslizando = self.velocidade * MOD_VELOCIDADE_DESLIZANDO
         self.deslizar_rect = self.collision_rect.copy()
         self.deslizar_rect.height /= 2
+
+        self.som_kunai = pygame.mixer.Sound("audio/arremessar adaga.mp3")
+        self.som_pulo = pygame.mixer.Sound("audio/girl jump.mp3")
+        self.som_aterrisagem = pygame.mixer.Sound("audio/aterrisagem.mp3")
 
     def fun_deslizar(self):
         """_summary_: Função que ativa o personagem deslizando
@@ -484,6 +501,7 @@ class GirlNinja(Personagem):
     def fun_atirar(self):
         """_summary_: Função que ativa o personagem atirando
         """
+        self.som_kunai.play()
         self.atirar = True
         self.correr = False
 
@@ -547,7 +565,12 @@ class GirlNinja(Personagem):
         else:
             self.parado_animacao()
 
-        if self.state == 0:
+        if self.state != 0:
+            self.aterrisagem = True
+        else:
+            if self.aterrisagem:
+                self.som_aterrisagem.play()
+            self.aterrisagem = False
             self.apply_gravity()
             self.state = 2
 
@@ -575,6 +598,7 @@ class GirlNinja(Personagem):
                 self.fun_deslizar()
             elif self.state == 0:
                 if keys[pygame.K_UP]:
+                    self.som_pulo.play()
                     self.fun_pular()
                 elif keys[pygame.K_RSHIFT]:
                     self.fun_atirar()
