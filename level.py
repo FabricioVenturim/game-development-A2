@@ -6,16 +6,29 @@ import objetos
 
 class Level:
     def __init__(self, level_data, surface):
+        level_map = level_data['level_map']
         self.screen = surface
         width, height = surface.get_size()
-        self.tile_size = height / len(level_data)
-        largura_level = len(max(level_data, key=len)) * self.tile_size
+        self.tile_size = height / len(level_map)
+        largura_level = len(max(level_map, key=len)) * self.tile_size
         self.inicio_x = (width - largura_level) / 2
         self.setup_level(level_data)
+        
+        right_wall = pygame.image.load("img/wall.png").convert()
+        largura, altura = right_wall.get_size()
+        wall_width = largura * height / altura
+        self.right_wall = pygame.transform.scale(right_wall, (wall_width, height))
+        self.left_wall = pygame.transform.flip(self.right_wall, True, True)
+        self.left_wall_x = self.inicio_x - wall_width + self.tile_size
+        self.right_wall_x = self.inicio_x + largura_level - self.tile_size
 
-    def setup_level(self, layout):
+    def setup_level(self, level_data):
+        self.visible_sprites = pygame.sprite.Group()
+        self.active_sprites = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.personagens = pygame.sprite.Group()
+        self.personagens_e_robos = pygame.sprite.Group()
+        # TODO: Remover grupos desncecessários
         self.robos = pygame.sprite.Group()
         self.alavancas = pygame.sprite.Group()
         self.chaves = pygame.sprite.Group()
@@ -24,68 +37,118 @@ class Level:
         self.plataformas = pygame.sprite.Group()
         self.plataformas_condicionais = pygame.sprite.Group()
 
-        for row_index, row in enumerate(layout):
+        level_map = level_data['level_map']
+        sprite_settings = level_data['sprite_settings']
+        counter = {
+            'R': 0,
+            'H': 0,
+            'V': 0,
+            'M': 0
+        }
+
+        for row_index, row in enumerate(level_map):
             for col_index, col in enumerate(row):
                 x = self.inicio_x + col_index * self.tile_size
                 y = row_index * self.tile_size
                 match(col):
                     case 'X':
-                        self.tiles.add(Tile((x, y), self.tile_size))
+                        tile = Tile((x, y), self.tile_size)
+                        self.tiles.add(tile)
+                        self.visible_sprites.add(tile)
                     case 'B':
-                        self.boy = personagem.BoyNinja(x, y, self.tiles)
+                        altura = self.tile_size
+                        self.boy = personagem.BoyNinja(
+                            x, y, altura, self.tiles, self.robos)
                         self.personagens.add(self.boy)
+                        self.personagens_e_robos.add(self.boy)
+                        self.visible_sprites.add(self.boy)
+                        self.active_sprites.add(self.boy)
                     case 'G':
-                        # TODO: implementar escalabilidade de tamanho dos personagens
-                        self.girl = personagem.GirlNinja(x, y, self.screen, self.tiles)
+                        altura = self.tile_size
+                        self.girl = personagem.GirlNinja(
+                            x, y, altura, self.screen, self.tiles, self.robos, self.alavancas)
                         self.personagens.add(self.girl)
+                        self.personagens_e_robos.add(self.girl)
+                        self.visible_sprites.add(self.girl)
+                        self.active_sprites.add(self.girl)
                     case 'R':
-                        self.robo = personagem.Robo(x, 120, y, 20, self.tiles)
-                        self.robos.add(self.robo)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        robo = personagem.Robo(x=x, y=y, tile_size=self.tile_size, collision_sprites=self.tiles, **settings)
+                        self.robos.add(robo)
+                        self.personagens_e_robos.add(robo)
+                        self.visible_sprites.add(robo)
+                        self.active_sprites.add(robo)
                     case 'C':
-                        self.chave = objetos.Chave(x, y, self.personagens)
-                        self.chaves.add(self.chave)
+                        chave = objetos.Chave(
+                            x, y, self.tile_size, self.personagens)
+                        self.chaves.add(chave)
+                        self.visible_sprites.add(chave)
+                        self.active_sprites.add(chave)
                     case 'P':
-                        self.portao = objetos.Portao(x, y, self.personagens, self.chaves, self.portoes)
-                        self.portoes.add(self.portao)
+                        portao = objetos.Portao(
+                            x, y, self.tile_size, self.personagens, self.chaves, self.portoes)
+                        self.portoes.add(portao)
+                        self.visible_sprites.add(portao)
+                        self.active_sprites.add(portao)
                     case 'H':
-                        self.plataforma = objetos.Plataforma(x, y,variacao_x=(x-100, x+100), grupo_colisao = self.personagens)
-                        self.plataformas.add(self.plataforma)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, **settings)
+                        self.plataformas.add(plataforma)
+                        self.visible_sprites.add(plataforma)
+                        self.active_sprites.add(plataforma)
                     case 'V':
-                        self.plataforma = objetos.Plataforma(x, y,variacao_y=(y-100, y+100), grupo_colisao = self.personagens, horizontal=False)
-                        self.plataformas.add(self.plataforma)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+                        plataforma = objetos.Plataforma(x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, horizontal=False, **settings)
+                        self.plataformas.add(plataforma)
+                        self.visible_sprites.add(plataforma)
+                        self.active_sprites.add(plataforma)
                     case 'A':
-                        self.alavanca = objetos.Alavanca(x, y, self.personagens)
-                        self.alavancas.add(self.alavanca)
+                        alavanca = objetos.Alavanca(
+                            x, y, self.tile_size, self.personagens)
+                        self.alavancas.add(alavanca)
+                        self.visible_sprites.add(alavanca)
+                        self.active_sprites.add(alavanca)
                     case 'T':
-                        self.botao = objetos.Botao(x+20,y+50, self.botoes, self.personagens)
-                        self.botoes.add(self.botao)
+                        botao = objetos.Botao(
+                            x, y, self.tile_size, self.botoes, self.personagens)
+                        self.botoes.add(botao)
+                        self.visible_sprites.add(botao)
+                        self.active_sprites.add(botao)
                     case 'M':
-                        alavancas = self.alavancas.sprites()
-                        
-                        self.plataforma_condicional = objetos.Plataforma_com_alavanca(x, y, alavanca=alavancas[0],variacao_x=(x-100, x+100), grupo_colisao = self.personagens)
-                        self.plataformas_condicionais.add(self.plataforma_condicional)
+                        settings = sprite_settings[col][counter[col]]
+                        counter[col] += 1
+
+                        plataforma_condicional = objetos.Plataforma_com_alavanca(
+                            x, y, self.tile_size, grupo_colisao=self.personagens_e_robos, **settings)
+                        self.plataformas_condicionais.add(
+                            plataforma_condicional)
+                        self.visible_sprites.add(plataforma_condicional)
+                        self.active_sprites.add(plataforma_condicional)
+
+        connections = level_data['connections']
+        for plataforma_index, connection in enumerate(connections):
+            alavancas_index = connection['A']
+            botoes_index = connection['T']
+            alavancas = []
+            botoes = []
+
+            for index in alavancas_index:
+                alavancas.append(self.alavancas.sprites()[index])
+
+            for index in botoes_index:
+                botoes.append(self.botoes.sprites()[index])
+            
+            self.plataformas_condicionais.sprites()[plataforma_index].ativadores = alavancas + botoes
+            
+
 
     def draw(self):
-        self.tiles.draw(self.screen)
-        self.personagens.draw(self.screen)
-        self.robos.draw(self.screen)
-        self.alavancas.draw(self.screen)
-        self.chaves.draw(self.screen)
-        self.portoes.draw(self.screen)
-        self.botoes.draw(self.screen)
-        self.plataformas.draw(self.screen)
-        self.plataformas_condicionais.draw(self.screen)
-
-
-
-
+        self.visible_sprites.draw(self.screen)
+        self.screen.blit(self.left_wall, (self.left_wall_x, 0))
+        self.screen.blit(self.right_wall, (self.right_wall_x, 0))
 
     def update(self):
-        self.personagens.update()
-        self.robos.update()
-        self.alavancas.update()
-        self.chaves.update()
-        self.portoes.update()
-        self.plataformas.update()
-        self.botoes.update()
-        self.plataformas_condicionais.update()
+        self.active_sprites.update()

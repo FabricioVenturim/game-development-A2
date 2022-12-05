@@ -1,4 +1,7 @@
 import pygame
+import math
+
+
 class Alavanca(pygame.sprite.Sprite):
     """
         Classe da Alavanca
@@ -8,62 +11,51 @@ class Alavanca(pygame.sprite.Sprite):
             y (float): posição y que a alavanca será colocada
             grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca
         """
-    def __init__(self, x:float, y:float, grupo_colisao:pygame.sprite.Group):
+    def __init__(self, x:float, y:float, tile_size:float, grupo_colisao:pygame.sprite.Group):
         """
 
         Args:
             x (float): posição x que a alavanca será colocada
             y (float): posição y que a alavanca será colocada
+            tile_size (float): tamanho da tile
             grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca
         """
         super().__init__()
         self.x = x
         self.y = y
         self.on = False
-        self.alavanca_off = pygame.image.load("alavanca1.png")
-        self.alavanca_on = pygame.transform.flip(self.alavanca_off, True, False)
+        self.alavanca_off = pygame.image.load(
+            "img/alavanca1.png").convert_alpha()
+        self.alavanca_off = pygame.transform.smoothscale(
+            self.alavanca_off, (tile_size, tile_size))
+        self.alavanca_on = pygame.transform.flip(
+            self.alavanca_off, True, False)
         self.image = self.alavanca_off
-        self.rect = self.image.get_rect(topleft = (x,y))
+        self.rect = self.image.get_rect(
+            midbottom=(x + tile_size / 2, y + tile_size * 1.20))
         self.grupo_colisao = grupo_colisao
         self.iscolliding = False
-
-    def colisao(self):
-        """
-            Função que cria a colisão com a alavanca
-        """
-        for personagem in self.grupo_colisao:
-            if personagem.rect.colliderect(self.rect):
-                if personagem.direita == True:
-                    personagem.rect.right = self.rect.left
-                    #persongagem.rect.left = self.rect.right
-                    
-                else:
-                    personagem.rect.left = self.rect.right
-
 
     def mudar_direcao(self):
         """
             Função que altera muda a imagem da alavanca: ativada ou desativada
         """
+        self.on = not self.on
+
         if self.on == False:
             self.image = self.alavanca_off
         else:
             self.image = self.alavanca_on
 
-    
-
     def update(self):
-        collision = bool(pygame.sprite.spritecollideany(self, self.grupo_colisao))
+        collision = bool(pygame.sprite.spritecollideany(
+            self, self.grupo_colisao))
         if collision and not self.iscolliding:
-            self.on = not self.on
             self.mudar_direcao()
 
         self.iscolliding = collision
-        self.colisao()
-        
 
 
-            
 class Chave(pygame.sprite.Sprite):
     """
         Classe da Chave
@@ -71,23 +63,27 @@ class Chave(pygame.sprite.Sprite):
         Args:
             x (float): posição x que a chave será colocada
             y (float): posição y que a chave será colocada
+            tile_size (float): tamanho da tile
             grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave
     """
 
-    def __init__(self, x, y, grupo_colisao):
+    def __init__(self, x:float, y:float, tile_size:float, grupo_colisao:pygame.sprite.Group):
         """
 
         Args:
             x (float): posição x que a chave será colocada
             y (float): posição y que a chave será colocada
+            tile_size (float): tamanho da tile
             grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave
         """
         
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.transform.scale(pygame.image.load("chave.png"), (30,50)) 
-        self.rect = self.image.get_rect(center = (x,y))
+        self.image = pygame.transform.smoothscale(
+            pygame.image.load("img/chave.png"), (tile_size * 0.45, tile_size * 0.9)).convert_alpha()
+        self.rect = self.image.get_rect(
+            center=(x + tile_size / 2, y + tile_size / 2))
         self.grupo_colisao = grupo_colisao
         self.active = True
 
@@ -98,14 +94,13 @@ class Chave(pygame.sprite.Sprite):
             grupo_colisao (pygame.sprite.Group): Grupo que pode pegar a chave
         """
         for personagem in grupo_colisao.sprites():
-            if personagem.rect.colliderect(self.rect):
+            if personagem.collision_rect.colliderect(self.rect):
                 self.active = False
                 self.kill()
-            
 
     def update(self):
         self.pegar_chave(self.grupo_colisao)
-    
+
 
 class Portao(pygame.sprite.Sprite):
     
@@ -119,22 +114,38 @@ class Portao(pygame.sprite.Sprite):
                 portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos
     """
 
-    def __init__(self, x:float, y:float, grupo_colisao:pygame.sprite.Group, chaves:pygame.sprite.Group=None, portoes:pygame.sprite.Group=None):
+    def __init__(self, x:float, y:float, grupo_colisao:pygame.sprite.Group, tile_size:float, chaves:pygame.sprite.Group=None, portoes:pygame.sprite.Group=None):
         """
         Args:
             x (float): posição x que a chave será colocada
             y (float): posição y que a chave será colocada
             grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão
+            tile_size (float): tamanho da tile
             chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão. Defaults to None.
             portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos. Defaults to None.
         """
         super().__init__()
         self.x = x
         self.y = y
-        self.img_aberto = pygame.image.load("portao_aberto.png")
-        self.img_fechado = pygame.image.load("portao_fechado.png")
+        self.img_aberto = pygame.image.load(
+            "img/portao_aberto.png").convert_alpha()
+        self.img_fechado = pygame.image.load(
+            "img/portao_fechado.png").convert_alpha()
+
+        largura, altura = self.img_fechado.get_size()
+        fator = 2 * tile_size / largura
+        self.img_fechado = pygame.transform.smoothscale(self.img_fechado, (
+            largura * fator, altura * fator))
+
+        largura_aberto, altura_aberto = self.img_aberto.get_size()
+        self.img_aberto = pygame.transform.smoothscale(self.img_aberto, (
+            largura_aberto * fator, altura_aberto * fator))
+
         self.image = self.img_fechado
-        self.rect = self.image.get_rect(center = (x,y))
+        self.rect = self.img_fechado.get_rect(
+            midbottom=(x + tile_size, y + tile_size * 1.20))
+        self.rect_aberto = self.img_aberto.get_rect(
+            midbottom=(x + tile_size * 0.80, y + tile_size * 1.20))
         self.open = False
         self.grupo_colisao = grupo_colisao
         self.chaves = chaves
@@ -146,8 +157,8 @@ class Portao(pygame.sprite.Sprite):
         """
         self.open = True
         self.image = self.img_aberto
-        
-    
+        self.rect = self.rect_aberto
+
     def liberar_portao(self):
         """
             Função que libera o portão caso a chave tenha sido "pega"
@@ -156,22 +167,23 @@ class Portao(pygame.sprite.Sprite):
             if len(self.chaves.sprites()) == 0:
                 self.portoes.sprites()[0].abrir_portao()
 
-
     def update(self):
         self.liberar_portao()
+
 
 class Plataforma(pygame.sprite.Sprite):
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
-    def __init__(self, x:float, y:float, variacao_x:tuple=None, variacao_y:tuple=None, platform_vel:int=3, grupo_colisao:pygame.sprite.Group = None, horizontal:bool = True):
+    def __init__(self, x:float, y:float, tile_size:float, variacao_x:tuple=(0,), variacao_y:tuple=(0,), platform_vel:float=0.02, grupo_colisao:pygame.sprite.Group = None, horizontal:bool = True):
         """_summary_
 
         Args:
             x (float): posição x que a plataforma será colocada
             y (float): posição y que a plataforma será colocada
+            tile_size (float): tamanho da tile
             variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. Defaults to None.
             variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. Defaults to None.
-            platform_vel (int, optional): Velocidade da plataforma. Defaults to 3.
+            platform_vel (float, optional): Velocidade da plataforma. Defaults to 3.
             grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
             horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.
         """
@@ -179,15 +191,26 @@ class Plataforma(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("plataforma.png")
-        self.rect = self.image.get_rect(center = (x,y))
+        self.image = pygame.image.load("img/plataforma.png").convert_alpha()
+        self.image = pygame.transform.smoothscale(
+            self.image, (tile_size, tile_size / 2))
+        self.rect = self.image.get_rect(topleft=(x, y))
+        padding_x = tile_size * 0.1
+        padding_y = tile_size * 0.13
+        self.rect_collision = pygame.Rect(
+            x + padding_x,
+            y + padding_y,
+            tile_size - padding_x,
+            tile_size / 2 - padding_y
+        )
+        self.rect_over = self.rect.copy()
+        self.rect_test = pygame.Rect(0, 0, 0, 0)
         self.grupo_colisao = grupo_colisao
-        self.platform_vel = platform_vel
-        self.variacao_x = variacao_x
-        self.variacao_y = variacao_y
+        self.platform_vel = math.ceil(platform_vel * tile_size)
+        self.variacao_x = tuple(x + tile_size * lim for lim in variacao_x)
+        self.variacao_y = tuple(y + tile_size * lim for lim in variacao_y)
         self.horizontal = horizontal
-        
-    
+
     def movimentar_plataforma(self, horizontal):
         """Função que movimenta a plataforma
 
@@ -196,125 +219,166 @@ class Plataforma(pygame.sprite.Sprite):
         """
         self.horizontal = horizontal
         if self.horizontal == True:
-            x_min, x_max = self.variacao_x 
-            if self.rect.left >=x_max or self.rect.left <= x_min:
-                self.platform_vel*= -1
+            x_min, x_max = self.variacao_x
+            if self.rect.left >= x_max or self.rect.left <= x_min:
+                self.platform_vel *= -1
             self.rect.left += self.platform_vel
-            rect_over = self.rect.copy()
-            rect_over.y -= 1
+            self.rect_collision.center = self.rect.center
+            self.rect_over.update(self.rect_collision)
+            self.rect_over.y -= 1
             for personagens in self.grupo_colisao.sprites():
-                if personagens.rect.colliderect(rect_over) and not personagens.rect.colliderect(self.rect):
-                    personagens.rect.x += self.platform_vel
+                if personagens.collision_rect.colliderect(self.rect_over) and not personagens.collision_rect.colliderect(self.rect_collision):
+                    personagens.collision_rect.x += self.platform_vel
                     direita = personagens.direita
                     personagens.direita = self.platform_vel > 0
-                    personagens.check_horizontal_collisions()
+                    personagens.check_horizontal_collisions(2)
                     personagens.direita = direita
         else:
             y_min, y_max = self.variacao_y
-            if self.rect.top >=y_max or self.rect.top <= y_min:
-                self.platform_vel*= -1
+            if self.rect.top >= y_max or self.rect.top <= y_min:
+                self.platform_vel *= -1
             self.rect.bottom += self.platform_vel
+            self.rect_collision.center = self.rect.center
             if self.platform_vel > 0:
-                rect_over = self.rect.copy()
-                rect_over.y -= 1 + 2*self.platform_vel
+                self.rect_over.update(self.rect_collision)
+                self.rect_over.y -= 1 + 2*self.platform_vel
                 for personagens in self.grupo_colisao.sprites():
-                    if personagens.rect.colliderect(rect_over) and not personagens.rect.colliderect(self.rect):
-                        personagens.rect.bottom = self.rect.top
+                    if personagens.collision_rect.colliderect(self.rect_over) and not personagens.collision_rect.colliderect(self.rect_collision) and personagens.state != 1:
+                        personagens.collision_rect.bottom = self.rect_collision.top
                         personagens.check_vertical_collisions()
-    
+
     def colisao(self):
         """
         Função que cria a colisão dos personagens com a plataforma
         """
         for personagem in self.grupo_colisao.sprites():
-            if personagem.rect.left < self.rect.right and  personagem.rect.right > self.rect.left and personagem.rect.bottom > self.rect.top and personagem.rect.bottom < self.rect.bottom:
-                if personagem.state != 1:
+            aceleracao = -personagem.aceleracao
+
+            if not self.horizontal:
+                aceleracao_relativa = aceleracao - self.platform_vel
+            else:
+                aceleracao_relativa = aceleracao
+
+            if (
+                personagem.collision_rect.left < self.rect_collision.right and
+                personagem.collision_rect.right > self.rect_collision.left and
+                personagem.collision_rect.bottom > self.rect_collision.top and
+                personagem.collision_rect.bottom < self.rect_collision.bottom and
+                (aceleracao_relativa >= 0 or personagem.state == 2)
+            ):
+                self.rect_test.update(personagem.collision_rect)
+                self.rect_test.bottom = self.rect_collision.top
+                posicao_valida = True
+                for sprite in personagem.collision_sprites.sprites():
+                    if sprite.rect.colliderect(self.rect_test):
+                        posicao_valida = False
+                        break
+
+                if posicao_valida:
                     personagem.state = 0
-                    print(self.rect.top)
-                    personagem.rect.bottom = self.rect.top
-    
-        
+                    personagem.aceleracao = 0
+                    personagem.collision_rect.bottom = self.rect_collision.top
+
     def update(self):
         self.colisao()
         self.movimentar_plataforma(self.horizontal)
 
-        
 
 class Plataforma_com_alavanca(Plataforma):
-    def __init__(self, x:float, y:float, alavanca:Alavanca, variacao_x:tuple=None, variacao_y:tuple=None, platform_vel:int=3, grupo_colisao:pygame.sprite.Group=None, horizontal:bool=True):
+    def __init__(self, x:float, y:float, tile_size:float, ativadores:list=[], variacao_x:tuple=(0,), variacao_y:tuple=(0,), platform_vel:float=0.02, grupo_colisao:pygame.sprite.Group=None, horizontal:bool=True):
         """_summary_
 
         Args:
             x (float): posição x que a plataforma será colocada
             y (float): posição y que a plataforma será colocada
-            alavanca (Alavanca): Alavanca que caso ativada movimentará a plataforma
+            tile_size (float): tamanho da tile
+            ativadores (list): Lista dos ativadores da plataforma
             variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. Defaults to None.
             variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. Defaults to None.
-            platform_vel (int, optional): Velocidade da plataforma. Defaults to 3.
+            platform_vel (float, optional): Velocidade da plataforma. Defaults to 3.
             grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
             horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.
         """
-        super().__init__(x, y, variacao_x, variacao_y, platform_vel, grupo_colisao, horizontal)
-        self.alavanca = alavanca
+        super().__init__(x, y, tile_size, variacao_x, variacao_y, platform_vel, grupo_colisao, horizontal)
+        self.ativadores = ativadores
 
 
     def movimentar_condicional(self):
         """
             Função que movimenta a plataforma caso a alavanca ligada à ela esteja ativada
         """
-        if self.alavanca.on == True:
-            self.movimentar_plataforma(True)
-    
+        movimentar = False
+        for ativador in self.ativadores:
+            if ativador.on:
+                movimentar = True
+                break
+
+        if movimentar:
+            self.movimentar_plataforma(self.horizontal)
+
     def update(self):
         self.colisao()
         self.movimentar_condicional()
 
+
 class Botao(pygame.sprite.Sprite):
-    def __init__(self, x:float, y:float, grupo_colisao: pygame.sprite.Group):
+    def __init__(self, x:float, y:float, tile_size:float, grupo_colisao):
         """_summary_
 
         Args:
             x (float): posição x que a plataforma será colocada
             y (float): posição y que a plataforma será colocada
-            grupo_colisao (pygame.sprite.Group): Grupo que colide com o botão
+            tile_size (float): tamanho da tile
+           grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com o botão
         """
-        
         super().__init__()
         self.x = x
         self.y = y
-        self.image = pygame.image.load("botao.png")
-        self.rect = self.image.get_rect(midbottom = (x,y))
-        self.ativo = False
+
+        self.img_solto = pygame.image.load("img/botao.png").convert_alpha()
+        largura = self.img_solto.get_width()
+
+        self.img_solto = pygame.transform.smoothscale(
+            self.img_solto, (tile_size, tile_size * 0.6))
+        largura_scaled, altura_scaled = self.img_solto.get_size()
+
+        self.img_apertado = pygame.image.load(
+            "img/botao_apertado.png").convert_alpha()
+        largura_apertado = self.img_apertado.get_width()
+        fator = largura_apertado / largura
+
+        self.img_apertado = pygame.transform.smoothscale(
+            self.img_apertado, (largura_scaled * fator, altura_scaled * fator))
+
+        self.image = self.img_solto
+        self.midbottom = (x + tile_size / 2, y + tile_size)
+        self.rect = self.image.get_rect(
+            midbottom=self.midbottom)
+        self.on = False
         self.grupo_colisao = grupo_colisao
         self.rect_collision = self.rect
 
-
-    
     def abaixar_botao(self):
         """
             Função que faz o botão ser abaixado
         """
-        self.image = pygame.image.load("botao_apertado.png")
-        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
-        
-        
+        self.image = self.img_apertado
+        self.rect = self.image.get_rect(midbottom=self.midbottom)
 
     def apertar_botao(self):
         """
             Função que detecta a colisão com o grupo_colisao(personagens)
         """
-        self.ativo = False
+        self.on = False
         for personagens in self.grupo_colisao.sprites():
-            if personagens.rect.colliderect(self.rect_collision):
+            if personagens.collision_rect.colliderect(self.rect_collision):
                 self.abaixar_botao()
-                self.ativo = True
-        if not self.ativo:
-            self.image = pygame.image.load("botao.png") 
-            self.rect = self.image.get_rect(midbottom=(self.x, self.y))
-    
+                self.on = True
+        if not self.on:
+            self.image = self.img_solto
+            self.rect = self.image.get_rect(midbottom=self.midbottom)
+        # print(self.on)
+
     def update(self):
-        self.apertar_botao(self)
-
-
-    
-
+        self.apertar_botao()
+        # self.abaixar_botao()
