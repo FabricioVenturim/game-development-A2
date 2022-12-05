@@ -15,6 +15,13 @@ class Level:
         self.setup_level(level_data)
         self.perdeu = False
         self.venceu = False
+
+        fonte = pygame.font.Font("font/Pixeltype.ttf", int(height / 10))
+        self.texto = fonte.render("Pegue a chave!", True, (255, 255, 255))
+        self.texto_saida = fonte.render("Saia pela porta!", True, (255, 255, 255))
+
+        padding = int(height / 100)
+        self.texto_pos = (self.inicio_x + self.tile_size + padding, padding)
         
         background = pygame.image.load("img/bg.png").convert()
         largura, altura = background.get_size()
@@ -164,14 +171,20 @@ class Level:
             if portao.liberar_fase:
                 self.venceu = True
                 return
+    
+    def checa_chaves(self):
+        if len(self.chaves) == 0:
+            self.texto = self.texto_saida
 
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         self.visible_sprites.draw(self.screen)
         self.screen.blit(self.left_wall, (self.left_wall_x, 0))
         self.screen.blit(self.right_wall, (self.right_wall_x, 0))
+        self.screen.blit(self.texto, self.texto_pos)
 
     def update(self):
         self.active_sprites.update()
         self.checa_vitoria()
         self.checa_derrota()
+        self.checa_chaves()
