@@ -71,9 +71,9 @@ level_data = [
             'X                X',
             'X         M      X',
             'X                X',
-            'X   XXXX     XX  X',
-            'X      H         X',
-            'X             XXXX',
+            'X   XXXX         X',
+            'X      H       XXX',
+            'X             X  X',
             'X B        G   TCX',
             'XXXXXXXXXXXXXXXXXX'
         ], 'sprite_settings': {
@@ -87,11 +87,11 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 3
+                    'platform_vel': 1
                 },
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 3
+                    'platform_vel': 1
                 }
             ], 'V': [
                 {
