@@ -151,3 +151,11 @@ p{
     justify-content: space-around; /*Alinhar os itens flexíveis no centro do contêiner*/
     align-items: center; /*align-items: Alinha os itens na vertical*/ 
 }
+
+.diag_class{
+    text-align: center;
+}
+
+.img_class{
+    width: 90%;
+}
