@@ -11,6 +11,7 @@ class Alavanca(pygame.sprite.Sprite):
             y (float): posição y que a alavanca será colocada
             grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca
         """
+
     def __init__(self, x, y, tile_size, grupo_colisao):
         """
 
@@ -66,6 +67,7 @@ class Chave(pygame.sprite.Sprite):
             tile_size (float): tamanho da tile
             grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave
     """
+
     def __init__(self, x, y, tile_size, grupo_colisao):
         """
 
@@ -111,6 +113,7 @@ class Portao(pygame.sprite.Sprite):
                 chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão
                 portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos
     """
+
     def __init__(self, x, y, tile_size, grupo_colisao, chaves=None, portoes=None):
         """
         Classe de Portão
@@ -195,6 +198,7 @@ class Plataforma(pygame.sprite.Sprite):
         """
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
+
     def __init__(self, x, y, tile_size, variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
         super().__init__()
         self.x = x
@@ -305,6 +309,7 @@ class Plataforma_com_alavanca(Plataforma):
             grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
             horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.
         """
+
     def __init__(self, x, y, tile_size, ativadores=[], variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
         super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
@@ -338,6 +343,7 @@ class Botao(pygame.sprite.Sprite):
             tile_size (float): tamanho da tile
             grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com o botão
         """
+
     def __init__(self, x, y, tile_size, botoes, grupo_colisao):
         super().__init__()
         self.x = x

@@ -158,7 +158,7 @@ level_data = [
             }
         ]
     },
-        {
+    {
         'level_map': [
             'XXXXXXXXXXXXXXXXXX',
             'X               GX',
@@ -180,7 +180,7 @@ level_data = [
                     'campo_de_visao': 10,
                     'movimentacao': False,
                     'direita_movimentacao': False
-                },                
+                },
                 {
                     'x_distancia': 4,
                     'campo_de_visao': 3,
@@ -204,7 +204,7 @@ level_data = [
                     'variacao_x': (-1, 6),
                     'horizontal': True
                 },
-                                {
+                {
                     'variacao_x': (0, 6),
                     'horizontal': True
                 }
