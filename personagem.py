@@ -754,6 +754,8 @@ class Kunai(pygame.sprite.Sprite):
             image, (fator * largura, fator * altura))
         self.kunai_esquerda = pygame.transform.flip(
             self.kunai_direita, True, False)
+        self.image = self.kunai_direita
+
         self.rect = self.kunai_direita.get_rect()
         self.aceleracao_inicial = tile_size * VELOCIDADE_PULO_BLC
         self.aceleracao = self.aceleracao_inicial
@@ -781,8 +783,10 @@ class Kunai(pygame.sprite.Sprite):
         if self.direita:
             # posiciona o kunai na frente do personagem
             self.rect.midbottom = (x + 100, y)
+            self.image = self.kunai_direita
         else:
             self.rect.midbottom = (x, y)
+            self.image = self.kunai_esquerda
 
     def trajetoria(self):
         """_summary_: Função que faz o objeto Kunai seguir uma trajetória
@@ -794,11 +798,6 @@ class Kunai(pygame.sprite.Sprite):
 
         self.rect.y -= self.aceleracao
         self.aceleracao -= self.gravidade
-
-        if self.direita:
-            self.screen.blit(self.kunai_direita, self.rect)
-        else:
-            self.screen.blit(self.kunai_esquerda, self.rect)
 
     def checar_colisao(self):
         """_summary_: Função que checa se o kunai colidiu com algum objeto"""

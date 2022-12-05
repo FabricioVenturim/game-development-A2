@@ -78,6 +78,7 @@ class Level:
                         self.personagens_e_robos.add(self.girl)
                         self.visible_sprites.add(self.girl)
                         self.active_sprites.add(self.girl)
+                        self.visible_sprites.add(self.girl.kunai)
                     case 'R':
                         settings = sprite_settings[col][counter[col]]
                         counter[col] += 1
