@@ -9,9 +9,10 @@ class Level:
         level_map = level_data['level_map']
         self.screen = surface
         width, height = surface.get_size()
-        self.tile_size = height / len(level_map)
+        self.tile_size = height / (len(level_map) - 1)
         largura_level = len(max(level_map, key=len)) * self.tile_size
         self.inicio_x = (width - largura_level) / 2
+        self.inicio_y = -self.tile_size
         self.setup_level(level_data)
         self.perdeu = False
         self.venceu = False
@@ -63,7 +64,7 @@ class Level:
         for row_index, row in enumerate(level_map):
             for col_index, col in enumerate(row):
                 x = self.inicio_x + col_index * self.tile_size
-                y = row_index * self.tile_size
+                y = self.inicio_y + row_index * self.tile_size
                 match(col):
                     case 'X':
                         tile = Tile((x, y), self.tile_size)
