@@ -519,17 +519,20 @@ class GirlNinja(Personagem):
 
         self.read_input()
 
+        if self.deslizar:
+            self.collision_rect = self.deslizar_rect
+        else:
+            self.collision_rect = self.rect
+
         self.collision_rect.midbottom = self.rect.midbottom
         self.check_horizontal_collisions(4)
         self.rect.midbottom = self.collision_rect.midbottom
-        self.collision_rect = self.rect
 
         # controle de animação do personagem para cair
         if self.state == 2:
             self.cair()
         # controle de animação do personagem para deslizar
-        if self.deslizar:
-            self.collision_rect = self.deslizar_rect
+        elif self.deslizar:
             self.deslizar_animacao()
         # Controle de animação do personagem para correr
         elif self.correr and self.state != 1:
