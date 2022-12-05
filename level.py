@@ -14,6 +14,11 @@ class Level:
         self.inicio_x = (width - largura_level) / 2
         self.setup_level(level_data)
         
+        background = pygame.image.load("img/bg.png").convert()
+        largura, altura = background.get_size()
+        bg_width = largura * height / altura
+        self.background = pygame.transform.scale(background, (bg_width, height))
+        
         right_wall = pygame.image.load("img/wall.png").convert()
         largura, altura = right_wall.get_size()
         wall_width = largura * height / altura
@@ -146,6 +151,7 @@ class Level:
 
 
     def draw(self):
+        self.screen.blit(self.background, (0, 0))
         self.visible_sprites.draw(self.screen)
         self.screen.blit(self.left_wall, (self.left_wall_x, 0))
         self.screen.blit(self.right_wall, (self.right_wall_x, 0))

@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 import sys
+from level import Level
+import config
 
 #criando a classe interface
 class Interface:
@@ -19,7 +21,7 @@ class Interface:
         pygame.display.set_icon(icon)
 
         #definindo as propriedades da tela
-        self.tela = pygame.display.set_mode((0,0), pygame.RESIZABLE)
+        self.tela = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.fonte = pygame.font.SysFont("Arial", 36)
         self.tempo = pygame.time.Clock()
         self.rodando = True
@@ -37,8 +39,21 @@ class Interface:
     def rodar(self):
         """Função utilizada para gerar rodar o jogo
         """
+        pausa = Botao("II",75,75,(10,10),2, self.fonte)
+        
+        self.level_index = 0
+        self.level = Level(config.level_data[self.level_index], self.tela)
         self.jogando = True
+        
         while self.jogando:
+            self.level.update()
+            self.level.draw()
+
+            pausa.desenhar(self.tela)
+            if pausa.clicado == True:
+                self.tela_pausa()
+
+            pygame.display.update()
             self.tempo.tick(60)
             self.eventos()
 
@@ -220,7 +235,7 @@ class Interface:
                     #definindo R para reiniciar o jogo
                     if evento.key == K_r:
                         pausado = False
-                        #FUNÇÃO PARA COMEÇAR A FASE ----------------------------------- ATENCAO
+                        self.level = Level(config.level_data[self.level_index], self.tela)
 
                     #definindo o ESC para encerramento
                     elif evento.key == pygame.K_ESCAPE:
@@ -308,13 +323,13 @@ class Botao:
         """
         pos = pygame.mouse.get_pos()
 
+        self.clicado = False
         #deixando o botao vermelho com o mouse em cima
         if self.topo_ret.collidepoint(pos):
             self.topo_cor = (227, 53, 41)
-            if pygame.mouse.get_pressed()[0] and not self.clicado:
-                self.clicado = True
-            if not pygame.mouse.get_pressed()[0]:
-                self.clicado = False
+            self.clicado = pygame.mouse.get_pressed()[0]
+        else:
+            self.topo_cor = (105, 81, 31)
 
         #aplicando a elevacao no botao
         self.topo_ret.y = self.original_posicao_y - self.elevacao_dinamica

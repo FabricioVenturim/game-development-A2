@@ -574,7 +574,6 @@ class GirlNinja(Personagem):
                 if keys[pygame.K_UP]:
                     self.fun_pular()
                 elif keys[pygame.K_RSHIFT]:
-                    # TODO: consertar kunai
                     self.fun_atirar()
 
             if not self.deslizar and not self.atirar:
