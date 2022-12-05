@@ -69,7 +69,7 @@ class Interface:
                 self.tela_pausa()
 
             pygame.display.update()
-            self.tempo.tick(60)
+            self.tempo.tick(config.FPS)
             self.eventos()
 
     # possibilitando que as pessoas fechem o jogo
@@ -121,7 +121,7 @@ class Interface:
         esperando = True
         while esperando:
             # criando um botão de pausa
-            self.tempo.tick(60)
+            self.tempo.tick(config.FPS)
 
             # aparecendo o texto de teclar para começar
             botao_jogar = Botao_Clicavel("CONTROLES", 300, 120, (self.tela.get_width(
@@ -317,7 +317,7 @@ class Interface:
 
             self.eventos()
             pygame.display.update()
-            self.tempo.tick(60)
+            self.tempo.tick(config.FPS)
 
     def definir_level(self, level_index):
         """função para definir o level do fase
@@ -365,7 +365,7 @@ class Interface:
                     sys.exit()
 
                 pygame.display.update()
-                self.tempo.tick(60)
+                self.tempo.tick(config.FPS)
 
 
 # criando uma classe para botão
