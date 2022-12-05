@@ -282,8 +282,10 @@ class Interface:
 
     #criando uma funcao para a tela de derrota do jogo
     def tela_derrota(self):
+        """função para aparecer a tela de derrota
+        """
         self.tela.fill((66, 47, 7))
-        self.mostrar_texto("DERROTA", 100, (0,0,0), self.tela.get_width()/2.3, self.tela.get_height()/9)
+        self.mostrar_texto("DERROTA", 300, (255,255,255), self.tela.get_width()/2, self.tela.get_height()/6)
         reiniciar = Botao_Clicavel("TENTE NOVAMENTE", 300, 120, (self.tela.get_width()/2.3, self.tela.get_height()*3.5/5), 6, self.fonte)
         
         while self.jogando:
@@ -298,6 +300,11 @@ class Interface:
             self.tempo.tick(60)
     
     def definir_level(self, level_index):
+        """função para definir o level do fase
+
+        :param level_index: número da fase que o personagem
+        :type level_index: int
+        """
         self.level = Level(config.level_data[level_index], self.tela)
             
 #criando uma classe para botão

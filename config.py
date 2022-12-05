@@ -87,11 +87,11 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 1
+                    'platform_vel': 0.03
                 },
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 1
+                    'platform_vel': 0.03
                 }
             ], 'V': [
                 {
@@ -116,9 +116,9 @@ level_data = [
             'X                X',
             'X       R        X',
             'X    P  A        X',
-            'X    XXXX        X',
+            'X    XXXX       XX',
             'X                X',
-            'X   M          V X',
+            'X     M        V X',
             'X                X',
             'X       XXX      X',
             'X   V            X',
@@ -132,7 +132,7 @@ level_data = [
                     'campo_de_visao': 1,
                     'movimentacao': True,
                     'direita_movimentacao': True
-                }
+                },
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
