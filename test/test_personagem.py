@@ -8,6 +8,7 @@ sys.path.insert(0, './')
 import pygame
 import personagem
 import unittest
+from tile import Tile
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -15,15 +16,17 @@ screen = pygame.display.set_mode((800, 600))
 class MyTestCase(unittest.TestCase):
     def test_movimentacao_boy_direita(self):
         """Testa se o player boy se move para a esquerda"""
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+
+        self.boy = personagem.BoyNinja(50, 50, 50, self.tiles, self.robos)
 
         self.boy.fun_correr_direita()
 
         #test
-        expectativa = 50 + 6
+        expectativa = 50 + 8
         realidade = self.boy.rect.x
 
         # Assert
@@ -31,11 +34,13 @@ class MyTestCase(unittest.TestCase):
 
     def test_movimentacao_girl_direita(self):
         """Testa se o player girl se move para a esquerda"""
-        dict_animacoes_girl = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_girl = pygame.sprite.Group()
-        self.girl = personagem.GirlNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_girl, screen)
-        self.sprites_girl.add(self.girl)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+        self.alavancas = pygame.sprite.Group()
 
+        self.girl = personagem.GirlNinja(50, 50, 50, screen, self.tiles, self.robos, self.alavancas)
         self.girl.fun_correr_direita()
 
         #test
@@ -47,15 +52,17 @@ class MyTestCase(unittest.TestCase):
 
     def test_movimentacao_boy_esquerda(self):
         """Testa se o player boy se move para a esquerda"""
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+
+        self.boy = personagem.BoyNinja(50, 50, 50, self.tiles, self.robos)
 
         self.boy.fun_correr_esquerda()
 
         #test
-        expectativa = 50 - 6
+        expectativa = 50 - 2
         realidade = self.boy.rect.x
 
         # Assert
@@ -63,10 +70,12 @@ class MyTestCase(unittest.TestCase):
 
     def test_fun_planar(self):
         """Testa se o boy ativa o planar"""
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+
+        self.boy = personagem.BoyNinja(50, 50, 50, self.tiles, self.robos)
 
         self.boy.fun_planar()
 
@@ -79,10 +88,13 @@ class MyTestCase(unittest.TestCase):
 
     def test_fun_planar_gravidade(self):
         """Testa se o boy possui gravidade ao ativar o planar"""
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+
+        self.boy = personagem.BoyNinja(50, 50, 50, self.tiles, self.robos)
+
 
         self.boy.fun_planar()
 
@@ -95,31 +107,36 @@ class MyTestCase(unittest.TestCase):
 
     def teste_fun_deslizar_ativa(self):
         """Testa se o player girl corre mais ao ativar o deslizar"""
-        dict_animacoes_girl = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_girl = pygame.sprite.Group()
-        self.girl = personagem.GirlNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_girl, screen)
-        self.sprites_girl.add(self.girl)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+        self.alavancas = pygame.sprite.Group()
 
-        self.girl.fun_correr_esquerda()
+        self.girl = personagem.GirlNinja(50, 50, 50, screen, self.tiles, self.robos, self.alavancas)
+        self.girl.fun_deslizar()
 
         #test
-        expectativa = 2
-        realidade = self.girl.state
+        expectativa = True
+        realidade = self.girl.deslizar
 
         # Assert
         self.assertAlmostEqual(expectativa, realidade)
 
     def test_movimentacao_girl_esquerda(self):
         """Testa se o player girl se move para a esquerda"""
-        dict_animacoes_girl = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_girl = pygame.sprite.Group()
-        self.girl = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_girl)
-        self.sprites_girl.add(self.girl)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+        self.alavancas = pygame.sprite.Group()
+
+        self.girl = personagem.GirlNinja(50, 50, 50, screen, self.tiles, self.robos, self.alavancas)
 
         self.girl.fun_correr_esquerda()
 
         #test
-        expectativa = 50 - 6
+        expectativa = 50 - 4
         realidade = self.girl.rect.x
 
         # Assert
@@ -128,10 +145,13 @@ class MyTestCase(unittest.TestCase):
     def test_bater_boy(self):
         """Testa se o player boy bate"""
 
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(50, 50, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
+
+        self.boy = personagem.BoyNinja(50, 50, 50, self.tiles, self.robos)
+
 
         self.boy.fun_bater()
 
@@ -144,19 +164,16 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_longe_direita(self):
         """Testa se o robo não vê o player se estiver na mesma altura a direita"""
-        x = 50
-        y = 100
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.boy = personagem.BoyNinja(800, 200, 50, self.tiles, self.robos)
 
-        self.robo.verifica_player(self.boy)
+        self.robo = personagem.Robo(500, 100, 200, 1, 100, self.tiles, False, False)
+        self.robos.add(self.robo)
 
         #test
         expectativa = False
@@ -167,19 +184,16 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_longe_esquerda(self):
         """Testa se o robo não vê o player se estiver na mesma altura a esquerda"""
-        x = 1200
-        y = 100
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.boy = personagem.BoyNinja(100, 200, 50, self.tiles, self.robos)
 
-        self.robo.verifica_player(self.boy)
+        self.robo = personagem.Robo(400, 100, 200, 1, 100, self.tiles, False, True)
+        self.robos.add(self.robo)
 
         #test
         expectativa = False
@@ -190,19 +204,16 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_perto_direita(self):
         """Testa se o robo não vê o player se estiver na mesma altura a direita bem perto"""
-        x = 700
-        y = 100
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.boy = personagem.BoyNinja(610, 200, 50, self.tiles, self.robos)
 
-        self.robo.verifica_player(self.boy)
+        self.robo = personagem.Robo(500, 100, 200, 1, 100, self.tiles, False, True)
+        self.robos.add(self.robo)
 
         #test
         expectativa = False
@@ -213,17 +224,16 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_perto_esquerda(self):
         """Testa se o robo não vê o player se estiver na mesma altura a esquerda bem perto"""
-        x = 900
-        y = 100
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.boy = personagem.BoyNinja(290, 200, 50, self.tiles, self.robos)
+
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, False)
+        self.robos.add(self.robo)
 
         self.robo.verifica_player(self.boy)
 
@@ -236,17 +246,16 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_atrás_esquerda(self):
         """Testa se o robo não vê o player se ele estiver atrás do robô a esquerda"""
-        x = 850
-        y = 100
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = True)
-        self.sprites_robo.add(self.robo)
+        self.boy = personagem.BoyNinja(350, 200, 50, self.tiles, self.robos)
+
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, False)
+        self.robos.add(self.robo)
 
         self.robo.verifica_player(self.boy)
 
@@ -259,18 +268,18 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_mesma_altura_fora_atrás_direita(self):
         """Testa se o robo não vê o player se ele estiver atrás do robô a direita"""
-        x = 750
-        y = 100
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.boy = personagem.BoyNinja(450, 200, 50, self.tiles, self.robos)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, True)
+        self.robos.add(self.robo)
+
+        self.robo.verifica_player(self.boy)
 
         self.robo.verifica_player(self.boy)
 
@@ -283,18 +292,18 @@ class MyTestCase(unittest.TestCase):
     
     def test_verifica_player_altura_diferente(self):
         """Testa se o robo não vê o player se ele estiver em uma altura diferente"""
-        x = 800
-        y = 200
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.boy = personagem.BoyNinja(350, 500, 50, self.tiles, self.robos)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, True)
+        self.robos.add(self.robo)
+
+        self.robo.verifica_player(self.boy)
 
         self.robo.verifica_player(self.boy)
 
@@ -307,18 +316,18 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_dentro_direita(self):
         """Testa se o robo vê player no campo de visão pela direita"""
-        x = 750
-        y = 100
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.boy = personagem.BoyNinja(450, 200, 50, self.tiles, self.robos)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = True)
-        self.sprites_robo.add(self.robo)
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, False)
+        self.robos.add(self.robo)
+
+        self.robo.verifica_player(self.boy)
 
         self.robo.verifica_player(self.boy)
 
@@ -331,18 +340,18 @@ class MyTestCase(unittest.TestCase):
 
     def test_verifica_player_dentro_esquerda(self):
         """Testa se o robo vê player no campo de visão pela esquerda"""
-        x = 850
-        y = 100
+        self.personagens = pygame.sprite.Group()
+        self.robos = pygame.sprite.Group()
+        self.tiles = pygame.sprite.Group()
+        tile = Tile((20, 20), 2)
+        self.tiles.add(tile)
 
-        dict_animacoes_boy = {"parado": [0, 232, 455, 10, 3.1], "correndo": [5940, 363, 455, 10, 3.1], "pulando": [2325, 362, 483, 10, 3.1], "batendo": [19410, 536, 495, 10, 3.1], "voando": [24787,443, 454, 10, 3.1]}
-        self.sprites_boy = pygame.sprite.Group()
-        self.boy = personagem.BoyNinja(x, y, "img/spritesheet_boy.png", dict_animacoes_boy)
-        self.sprites_boy.add(self.boy)
+        self.boy = personagem.BoyNinja(350, 200, 50, self.tiles, self.robos)
 
-        dict_animacoes_robo= {"parado": [0, 567, 555, 10, 3.5], "correndo": [5670, 567, 550, 8, 3.5], "morrendo": [10190 , 562, 519, 10,3.5]}
-        self.sprites_robo = pygame.sprite.Group()
-        self.robo = personagem.Robo(800, 450, 100, 100, "img/spritesheet_robo.png", dict_animacoes_robo, direita_movimentacao = False)
-        self.sprites_robo.add(self.robo)
+        self.robo = personagem.Robo(400, 100, 200, 2, 100, self.tiles, False, True)
+        self.robos.add(self.robo)
+
+        self.robo.verifica_player(self.boy)
 
         self.robo.verifica_player(self.boy)
 
