@@ -39,7 +39,7 @@ class Interface:
     def rodar(self):
         """Função utilizada para gerar rodar o jogo
         """
-        pausa = Botao("II",75,75,(10,10),2, self.fonte)
+        pausa = Botao_Clicavel("II",75,75,(10,10),2, self.fonte)
         
         self.level_index = 0
         self.level = Level(config.level_data[self.level_index], self.tela)
@@ -48,6 +48,9 @@ class Interface:
         while self.jogando:
             self.level.update()
             self.level.draw()
+
+            if self.level.perdeu:
+                self.tela_derrota()
 
             pausa.desenhar(self.tela)
             if pausa.clicado == True:
@@ -109,7 +112,7 @@ class Interface:
             self.tempo.tick(60)
 
             #aparecendo o texto de teclar para começar
-            botao_jogar = Botao("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*3/5), 0, self.fonte)
+            botao_jogar = Botao_Clicavel("CONTROLES", 300, 120, (self.tela.get_width()*2.1/12, self.tela.get_height()*3/5), 0, self.fonte)
             botao_jogar.desenhar(self.tela)
             if botao_jogar.clicado == True:
                 self.tela_controles()     
@@ -149,7 +152,7 @@ class Interface:
                 break
             
             #criando um botão de pausa
-            pausa = Botao("II",75,75,(10,10),2, self.fonte)
+            pausa = Botao_Clicavel("II",75,75,(10,10),2, self.fonte)
             pausa.desenhar(self.tela)
 
             #definindo a função do botão
@@ -174,7 +177,7 @@ class Interface:
                 for evento in pygame.event.get():
 
                     #criando o botão para voltar da interface de controles
-                    voltar = Botao("VOLTAR",200,100,(15,15), 3, self.fonte)
+                    voltar = Botao_Clicavel("VOLTAR",200,100,(15,15), 3, self.fonte)
                     voltar.desenhar(self.tela)
                     pygame.display.update()
 
@@ -235,7 +238,7 @@ class Interface:
                     #definindo R para reiniciar o jogo
                     if evento.key == K_r:
                         pausado = False
-                        self.level = Level(config.level_data[self.level_index], self.tela)
+                        self.definir_level(self.level_index)
 
                     #definindo o ESC para encerramento
                     elif evento.key == pygame.K_ESCAPE:
@@ -246,7 +249,7 @@ class Interface:
             self.tela.fill((66, 47, 7))
             
             #criando um botão de controles para a interface de pausa
-            controles = Botao("CONTROLES", 300, 120, (self.tela.get_width()*5/12, self.tela.get_height()*2.7/5), 0, self.fonte)
+            controles = Botao_Clicavel("CONTROLES", 300, 120, (self.tela.get_width()*5/12, self.tela.get_height()*2.7/5), 0, self.fonte)
             controles.desenhar(self.tela)
 
             if controles.clicado == True:
@@ -272,19 +275,35 @@ class Interface:
 
     #criando uma funcao para a tela de derrota do jogo
     def tela_derrota(self):
-        return
+        self.tela.fill((66, 47, 7))
+        self.mostrar_texto("DERROTA", 100, (0,0,0), self.tela.get_width()/2.3, self.tela.get_height()/9)
+        reiniciar = Botao_Clicavel("TENTE NOVAMENTE", 300, 120, (self.tela.get_width()/2.3, self.tela.get_height()*3.5/5), 6, self.fonte)
+        
+        while self.jogando:
+            reiniciar.desenhar(self.tela)
 
+            if reiniciar.clicado == True:
+                self.definir_level(self.level_index)
+                return
+            
+            self.eventos()
+            pygame.display.update()
+            self.tempo.tick(60)
+    
+    def definir_level(self, level_index):
+        self.level = Level(config.level_data[level_index], self.tela)
+            
 #criando uma classe para botão
-class Botao:
-    def __init__ (self, texto, x, y, posicao, elevacao, fonte):
+class Botao_Clicavel:
+    def __init__ (self, texto, comprimento, altura, posicao, elevacao, fonte):
         """Função utilizada para criar o botão e suas propriedades
 
         :param texto: texto do botão
         :type texto: str
-        :param x: comprimento do botão
-        :type x: float
-        :param y: altura do botão
-        :type y: float
+        :param comprimento: comprimento do botão
+        :type comprimento: float
+        :param altura: altura do botão
+        :type altura: float
         :param posicao: as coordenadas da tela que o botão aparece
         :type posicao: tuple
         :param elevacao: a elevação do botão
@@ -303,11 +322,11 @@ class Botao:
         self.clicado = False
 
         #retangulo de cima do botao
-        self.topo_ret = pygame.Rect(posicao, (x, y))
+        self.topo_ret = pygame.Rect(posicao, (comprimento, altura))
         self.topo_cor = (105, 81, 31)
 
         #retangulo de baixo
-        self.baixo_ret = pygame.Rect(posicao, (x, y))
+        self.baixo_ret = pygame.Rect(posicao, (comprimento, altura))
         self.baixo_cor = (56, 43, 16)
 
         #o texto do botao

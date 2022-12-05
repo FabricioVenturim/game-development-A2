@@ -649,14 +649,12 @@ class Robo(Personagem):
         if self.direita:     # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
             if self.collision_rect.x < player.collision_rect.x < self.collision_rect.x + self.campo_de_visao and self.collision_rect.y - 50 <= player.collision_rect.y <= self.collision_rect.y + 50:
                 self.correr = False
-                print("DIREITAA campo de visão")
                 return True  # Para fazer o test do player
             else:
                 return False
         else:  # verifica se o player está no campo de visão x        # verifica se o player está no campo de visão y
             if self.collision_rect.x > player.collision_rect.x > self.collision_rect.x - self.campo_de_visao and self.collision_rect.y - 50 <= player.collision_rect.y <= self.collision_rect.y + 50:
                 self.correr = False
-                print("ESQUERDA campo de visão")
                 return True  # Para fazer o test do player
             else:
                 return False
