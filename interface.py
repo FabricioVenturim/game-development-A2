@@ -52,7 +52,8 @@ class Interface:
             if self.level.venceu:
                 self.level_index += 1
                 if self.level_index >= len(config.level_data):
-                    self.jogando = False # TODO: tela de vitória
+                    self.jogando = False
+                    self.tela_vitoria()
                 else:
                     self.definir_level(self.level_index)
 
@@ -68,9 +69,9 @@ class Interface:
             self.eventos()
 
     #possibilitando que as pessoas fechem o jogo 
+    def eventos(self):
         """Função utilizada para promover os eventos básicos
         """
-    def eventos(self):
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 if self.jogando:
@@ -146,12 +147,14 @@ class Interface:
                     self.rodar = False
                     pygame.quit()
        
-                #defininido a tecla para COMEÇAR O JOGO -------------------------------- ATENCAO
+                #defininido a tecla para COMEÇAR O JOGO
                 if evento.type == pygame.KEYUP and evento.key == K_SPACE:
                     esperando = False
                     pygame.mixer.music.stop()
-                    pygame.mixer.Sound("audio/trilha sonora.mp3").play()
+                    pygame.mixer.music.load("audio/trilha sonora.mp3")
+                    pygame.mixer.music.play()
                     self.rodar()
+
             try:
                 pygame.display.update()
             except:
@@ -307,6 +310,46 @@ class Interface:
         """
         self.level = Level(config.level_data[level_index], self.tela)
             
+    def tela_vitoria(self):
+        """função para aparecer a tela de vitória do jogo
+        """
+        rodar = True
+        while rodar:
+            self.tela.fill((66, 47, 7))
+            self.mostrar_texto("PARABÉNS, VOCÊS PASSARAM!", 100, (255,255,255), self.tela.get_width()/2, self.tela.get_height()/6)
+            voltar = Botao_Clicavel("VOLTAR", 300, 120, (self.tela.get_width()/2.3, self.tela.get_height()*3.5/5), 6, self.fonte)
+            voltar.desenhar(self.tela)
+    
+
+            for evento in pygame.event.get():
+                #garantindo que quando clicado a imagem suma
+                if voltar.clicado == True:
+                    
+                    #imagem de fundo
+                    fundo = pygame.image.load("img/fundo2.jpg")
+                    fundo = pygame.transform.scale(fundo,(self.tela.get_width(),self.tela.get_height()))
+
+                    #logo do jogo
+                    logo = pygame.image.load("img/logo.png")
+                    logo = pygame.transform.scale(logo,(960,600))
+
+                    
+                    self.tela.blits([(fundo, (0,0)),(logo, (self.tela.get_width()/15, self.tela.get_height()/100))])
+                    self.tela_start()
+                    pygame.display.update()
+                    
+
+                #definindo ESC para sair do jogos
+                if evento.type == KEYUP and evento.key == K_ESCAPE:
+                    self.rodando = False
+                    rodar = False
+                    pygame.quit()
+                    sys.exit()
+
+                pygame.display.update()
+                self.tempo.tick(60)
+        
+
 #criando uma classe para botão
 class Botao_Clicavel:
     def __init__ (self, texto, comprimento, altura, posicao, elevacao, fonte):
