@@ -2,11 +2,16 @@ import pygame
 from math import ceil
 
 class Tile(pygame.sprite.Sprite):
+    image = None
+    size = 0
+
     def __init__(self, pos, size):
         super().__init__()
         rounded_up = ceil(size)
-        # Um bloco branco como placeholder
-        self.image = pygame.Surface((rounded_up, rounded_up))
-        self.image.fill((255, 255, 255))
         
-        self.rect = self.image.get_rect(topleft=pos)
+        if Tile.image is None or size != rounded_up:
+            Tile.image = pygame.image.load("img/tile.png").convert()
+            Tile.image = pygame.transform.scale(Tile.image, (rounded_up, rounded_up))
+            Tile.size = rounded_up
+        
+        self.rect = Tile.image.get_rect(topleft=pos)
