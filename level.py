@@ -13,6 +13,7 @@ class Level:
         largura_level = len(max(level_map, key=len)) * self.tile_size
         self.inicio_x = (width - largura_level) / 2
         self.setup_level(level_data)
+        self.perdeu = False
         
         background = pygame.image.load("img/bg.png").convert()
         largura, altura = background.get_size()
@@ -148,7 +149,12 @@ class Level:
             
             self.plataformas_condicionais.sprites()[plataforma_index].ativadores = alavancas + botoes
             
-
+    def visto_por_robo(self):
+        for robo in self.robos:
+            for personagem in self.personagens:
+                if robo.verifica_player(personagem):
+                    self.perdeu = True
+                    return
 
     def draw(self):
         self.screen.blit(self.background, (0, 0))
@@ -158,3 +164,4 @@ class Level:
 
     def update(self):
         self.active_sprites.update()
+        self.visto_por_robo()

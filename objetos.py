@@ -3,7 +3,23 @@ import math
 
 
 class Alavanca(pygame.sprite.Sprite):
+    """
+        Classe da Alavanca
+
+        Args:
+            x (float): posição x que a alavanca será colocada
+            y (float): posição y que a alavanca será colocada
+            grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca
+        """
     def __init__(self, x, y, tile_size, grupo_colisao):
+        """
+
+        Args:
+            x (float): posição x que a alavanca será colocada
+            y (float): posição y que a alavanca será colocada
+            tile_size (float): tamanho da tile
+            grupo_colisao (pygame.sprite.Group): grupo que pode ativar a alavanca
+        """
         super().__init__()
         self.x = x
         self.y = y
@@ -21,6 +37,9 @@ class Alavanca(pygame.sprite.Sprite):
         self.iscolliding = False
 
     def mudar_direcao(self):
+        """
+            Função que altera muda a imagem da alavanca: ativada ou desativada
+        """
         self.on = not self.on
 
         if self.on == False:
@@ -38,7 +57,25 @@ class Alavanca(pygame.sprite.Sprite):
 
 
 class Chave(pygame.sprite.Sprite):
+    """
+        Classe da Chave
+
+        Args:
+            x (float): posição x que a chave será colocada
+            y (float): posição y que a chave será colocada
+            tile_size (float): tamanho da tile
+            grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave
+    """
     def __init__(self, x, y, tile_size, grupo_colisao):
+        """
+
+        Args:
+            x (float): posição x que a chave será colocada
+            y (float): posição y que a chave será colocada
+            tile_size (float): tamanho da tile
+            grupo_colisao (pygame.sprite.Group): grupo que pode pegar a chave
+        """
+
         super().__init__()
         self.x = x
         self.y = y
@@ -50,6 +87,11 @@ class Chave(pygame.sprite.Sprite):
         self.active = True
 
     def pegar_chave(self, grupo_colisao):
+        """Função que apaga a chave da fase caso algum integrante do grupo_colisao toque na chave
+
+        Args:
+            grupo_colisao (pygame.sprite.Group): Grupo que pode pegar a chave
+        """
         for personagem in grupo_colisao.sprites():
             if personagem.collision_rect.colliderect(self.rect):
                 self.active = False
@@ -60,7 +102,25 @@ class Chave(pygame.sprite.Sprite):
 
 
 class Portao(pygame.sprite.Sprite):
+    """
+        Classe de Portão
+            Args:
+                x (float): posição x que o portão será colocado
+                y (float): posição y que o portão será colocado
+                grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão
+                chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão
+                portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos
+    """
     def __init__(self, x, y, tile_size, grupo_colisao, chaves=None, portoes=None):
+        """
+        Classe de Portão
+            Args:
+                x (float): posição x que o portão será colocado
+                y (float): posição y que o portão será colocado
+                grupo_colisao (pygame.sprite.Group): Grupo que colide com o portão
+                chaves (pygame.sprite.Group, optional): Grupo de chaves que abre o portão
+                portoes (pygame.sprite.Group, optional): Grupo de portões que podem ser abertos
+        """
         super().__init__()
         self.x = x
         self.y = y
@@ -87,22 +147,52 @@ class Portao(pygame.sprite.Sprite):
         self.grupo_colisao = grupo_colisao
         self.chaves = chaves
         self.portoes = portoes
+        self.pers_no_portao = None
+        self.liberar_fase = False
+
+    def verificar_personagens_portao(self):
+        if self.open == True:
+            self.pers_no_portao = 0
+            for personagem in self.grupo_colisao.sprites():
+                if self.rect.contains(personagem.rect):
+                    self.pers_no_portao += 1
+            if self.pers_no_portao == len(self.grupo_colisao.sprites()):
+                self.liberar_fase = True
 
     def abrir_portao(self):
+        """
+        Função que mostra a imagem do portão aberto
+        """
         self.open = True
         self.image = self.img_aberto
         self.rect = self.rect_aberto
 
     def liberar_portao(self):
+        """
+            Função que libera o portão caso a chave tenha sido "pega"
+        """
         if self.chaves != None and self.portoes != None:
             if len(self.chaves.sprites()) == 0:
                 self.portoes.sprites()[0].abrir_portao()
 
     def update(self):
         self.liberar_portao()
+        self.verificar_personagens_portao()
 
 
 class Plataforma(pygame.sprite.Sprite):
+    """
+    Classe das plataformas
+        Args:
+            x (float): posição x que a plataforma será colocada
+            y (float): posição y que a plataforma será colocada
+            tile_size (float): tamanho da tile
+            variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. Defaults to None.
+            variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. Defaults to None.
+            platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.
+            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
+            horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.
+        """
     # variacao_x e variacao_y são uma tupla com dois valores: máximos e mínimos de x e y
     # Se o movimento for horizontal=True colocar True, se for vertical colocar horizontal = False
     def __init__(self, x, y, tile_size, variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
@@ -130,6 +220,11 @@ class Plataforma(pygame.sprite.Sprite):
         self.horizontal = horizontal
 
     def movimentar_plataforma(self, horizontal):
+        """Função que movimenta a plataforma
+
+        Args:
+            horizontal (bool): Movimentação horizontal da plataforma
+        """
         self.horizontal = horizontal
         if self.horizontal == True:
             x_min, x_max = self.variacao_x
@@ -161,6 +256,9 @@ class Plataforma(pygame.sprite.Sprite):
                         personagens.check_vertical_collisions()
 
     def colisao(self):
+        """
+        Função que cria a colisão dos personagens com a plataforma
+        """
         for personagem in self.grupo_colisao.sprites():
             aceleracao = -personagem.aceleracao
 
@@ -195,12 +293,27 @@ class Plataforma(pygame.sprite.Sprite):
 
 
 class Plataforma_com_alavanca(Plataforma):
+    """Classe da plataforma que é ativada por alvanca
+        Args:
+            x (float): posição x que a plataforma será colocada
+            y (float): posição y que a plataforma será colocada
+            tile_size (float): tamanho da tile
+            ativadores (list): Lista dos ativadores da plataforma
+            variacao_x (tuple, optional): Variação na horizontal que a plataforma se movimenta. 
+            variacao_y (tuple, optional): Variação na vertical que a plataforma se movimenta. 
+            platform_vel (float, optional): Velocidade da plataforma. Defaults to 0.02.
+            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com a plataforma. Defaults to None.
+            horizontal (bool, optional): Movimentação horizontal da plataforma. Defaults to True.
+        """
     def __init__(self, x, y, tile_size, ativadores=[], variacao_x=(0,), variacao_y=(0,), platform_vel=0.02, grupo_colisao=None, horizontal=True):
         super().__init__(x, y, tile_size, variacao_x, variacao_y,
                          platform_vel, grupo_colisao, horizontal)
         self.ativadores = ativadores
 
     def movimentar_condicional(self):
+        """
+            Função que movimenta a plataforma caso a alavanca ligada à ela esteja ativada
+        """
         movimentar = False
         for ativador in self.ativadores:
             if ativador.on:
@@ -216,6 +329,15 @@ class Plataforma_com_alavanca(Plataforma):
 
 
 class Botao(pygame.sprite.Sprite):
+    """
+    Classe dos botões
+
+        Args:
+            x (float): posição x que o botao será colocado
+            y (float): posição y que o botao será colocado
+            tile_size (float): tamanho da tile
+            grupo_colisao (pygame.sprite.Group, optional): Grupo que pode colide com o botão
+        """
     def __init__(self, x, y, tile_size, botoes, grupo_colisao):
         super().__init__()
         self.x = x
@@ -247,10 +369,16 @@ class Botao(pygame.sprite.Sprite):
         self.rect_collision = self.rect
 
     def abaixar_botao(self):
+        """
+            Função que faz o botão ser abaixado
+        """
         self.image = self.img_apertado
         self.rect = self.image.get_rect(midbottom=self.midbottom)
 
     def apertar_botao(self):
+        """
+            Função que detecta a colisão com o grupo_colisao(personagens)
+        """
         self.on = False
         for personagens in self.grupo_colisao.sprites():
             if personagens.collision_rect.colliderect(self.rect_collision):
