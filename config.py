@@ -42,7 +42,7 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 3
+                    'platform_vel': 0.03
                 }
             ], 'V': [
                 {
@@ -87,11 +87,19 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
+<<<<<<< HEAD
                     'platform_vel': 1
                 },
                 {
                     'variacao_x': (-1, 1),
                     'platform_vel': 1
+=======
+                    'platform_vel': 0.03
+                },
+                {
+                    'variacao_x': (-1, 1),
+                    'platform_vel': 0.03
+>>>>>>> 58b13992cbbae004b1cd5f3e9d87fbf605eb5b8e
                 }
             ], 'V': [
                 {
@@ -136,7 +144,7 @@ level_data = [
             ], 'H': [
                 {
                     'variacao_x': (-1, 1),
-                    'platform_vel': 3
+                    'platform_vel': 0.03
                 }
             ], 'V': [
                 {
