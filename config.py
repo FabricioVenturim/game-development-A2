@@ -18,6 +18,44 @@ FPS = 60
 level_data = [
     {
         'level_map': [
+            'XXXXXXXXXXXXXX',
+            'XXX          X',
+            'XXX          X',
+            'X        RTP X',
+            'XB R     XXXXX',
+            'XXXXM    XXXXX',
+            'X  X     XXXXX',
+            'XG       XXXXX',
+            'XXXXXXXXXXXXXX'
+        ], 'sprite_settings': {
+            'R': [
+                {
+                    'x_distancia': 3,
+                    'campo_de_visao': 5,
+                    'movimentacao': False,
+                    'direita_movimentacao': True
+                },
+                {
+                    'x_distancia': 1,
+                    'campo_de_visao': 5,
+                    'movimentacao': False,
+                    'direita_movimentacao': False
+                }
+            ], 'M': [
+                {
+                    'variacao_x': (-0.1, 4),
+                    'horizontal': True
+                },
+            ]
+        }, 'connections': [
+            {
+                'A': [],
+                'T': [0]
+            }
+        ]
+    },
+    {
+        'level_map': [
             'XXXXXXXXXXXXXXXXXX',
             'X                X',
             'X       R        X',
