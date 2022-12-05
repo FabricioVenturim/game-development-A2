@@ -60,9 +60,7 @@ level_data = [
                 'T': [0]
             }
         ]
-    }]
-
-level_data2 = [
+    },
     {
         'level_map': [
             'XXXXXXXXXXXXXXXXXX',
@@ -111,9 +109,7 @@ level_data2 = [
                 'T': [0]
             }
         ]
-    }]
-
-level_data3 = [
+    },
     {
         'level_map': [
             'XXXXXXXXXXXXXXXXXX',
