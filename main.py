@@ -1,5 +1,5 @@
-from duoninja import DuoNinja
+from interface import Interface
 
 if __name__ == "__main__":
-    space_rocks = DuoNinja()
-    space_rocks.main_loop()
+    jogo = Interface()
+    jogo.tela_start()
