@@ -19,7 +19,7 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
         rounded_up = ceil(size)
 
-        if Tile.image is None or size != rounded_up:
+        if Tile.image is None or Tile.size != rounded_up:
             Tile.image = pygame.image.load("img/tile.png").convert()
             Tile.image = pygame.transform.scale(
                 Tile.image, (rounded_up, rounded_up))
